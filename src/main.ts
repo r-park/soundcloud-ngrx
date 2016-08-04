@@ -5,6 +5,9 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 
 // core
 import { API_PROVIDERS } from './core/api';
+import { EFFECTS_PROVIDERS } from './core/effects';
+import { STORE_PROVIDERS } from './core/store';
+import { TRACKLISTS_PROVIDERS } from './core/tracklists';
 
 // route configuration
 import { ROUTER_PROVIDERS } from './views/routes';
@@ -26,7 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     disableDeprecatedForms(),
     provideForms(),
     API_PROVIDERS,
+    EFFECTS_PROVIDERS,
     HTTP_PROVIDERS,
-    ROUTER_PROVIDERS
+    ROUTER_PROVIDERS,
+    STORE_PROVIDERS,
+    TRACKLISTS_PROVIDERS
   ]).catch((error: Error) => console.error(error));
 });
