@@ -10,5 +10,8 @@ import '@ngrx/effects';
 import '@ngrx/router';
 import '@ngrx/store';
 
+// RxJS
+import 'rxjs/add/operator/map';
+
 // Immutable
 import 'immutable';

@@ -3,6 +3,9 @@ import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
+// core
+import { API_PROVIDERS } from './core/api';
+
 // route configuration
 import { ROUTER_PROVIDERS } from './views/routes';
 
@@ -22,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   bootstrap(App, [
     disableDeprecatedForms(),
     provideForms(),
+    API_PROVIDERS,
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS
   ]).catch((error: Error) => console.error(error));
