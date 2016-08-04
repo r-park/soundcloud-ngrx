@@ -3,6 +3,13 @@ import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
+// core
+import { API_PROVIDERS } from './core/api';
+import { EFFECTS_PROVIDERS } from './core/effects';
+import { SEARCH_PROVIDERS } from './core/search';
+import { STORE_PROVIDERS } from './core/store';
+import { TRACKLISTS_PROVIDERS } from './core/tracklists';
+
 // route configuration
 import { ROUTER_PROVIDERS } from './views/routes';
 
@@ -22,7 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
   bootstrap(App, [
     disableDeprecatedForms(),
     provideForms(),
+    API_PROVIDERS,
+    EFFECTS_PROVIDERS,
     HTTP_PROVIDERS,
-    ROUTER_PROVIDERS
+    ROUTER_PROVIDERS,
+    SEARCH_PROVIDERS,
+    STORE_PROVIDERS,
+    TRACKLISTS_PROVIDERS
   ]).catch((error: Error) => console.error(error));
 });
