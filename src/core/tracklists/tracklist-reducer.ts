@@ -1,6 +1,7 @@
 import { Action, ActionReducer } from '@ngrx/store';
 import { List } from 'immutable';
 import { TRACKS_PER_PAGE } from 'src/core/constants';
+import { SearchActions } from 'src/core/search';
 import { TrackData } from 'src/core/tracks';
 import { Tracklist, TracklistRecord } from './tracklist';
 import { TracklistActions } from './tracklist-actions';
@@ -27,6 +28,11 @@ export const tracklistReducer: ActionReducer<Tracklist> = (state: Tracklist = in
       return state.hasNextPageInStore ?
              state.merge(updatePagination(state, state.currentPage + 1)) as Tracklist :
              state.set('isPending', true) as Tracklist;
+
+    case SearchActions.LOAD_SEARCH_RESULTS:
+      return state.isNew ?
+             state.merge({id: payload.tracklistId, isPending: true}) as Tracklist :
+             state.merge(updatePagination(state, 1)) as Tracklist;
 
     default:
       return state;

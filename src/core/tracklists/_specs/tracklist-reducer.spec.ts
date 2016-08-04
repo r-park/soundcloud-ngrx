@@ -1,5 +1,6 @@
 import { is, List } from 'immutable';
 import { TRACKS_PER_PAGE } from 'src/core/constants';
+import { SearchActions } from 'src/core/search';
 import { testUtils } from 'src/core/utils/test';
 import { Tracklist, TracklistRecord } from '../tracklist';
 import { TracklistActions } from '../tracklist-actions';
@@ -257,6 +258,60 @@ describe('tracklists', () => {
         let tracklist = tracklistReducer(initialTracklist, actions.loadNextTracks());
 
         expect(tracklist.isPending).toBe(true);
+      });
+    });
+
+
+    describe('LOAD_SEARCH_RESULTS action', () => {
+      let query: string;
+      let searchActions: SearchActions;
+      let tracklistId: string;
+
+      beforeEach(() => {
+        query = 'query';
+        searchActions = new SearchActions();
+        tracklistId = 'search/query';
+      });
+
+      it('should set tracklist id if tracklist is new', () => {
+        let initialTracklist = new TracklistRecord() as Tracklist;
+        let tracklist = tracklistReducer(initialTracklist, searchActions.loadSearchResults(query));
+        expect(tracklist.id).toBe(tracklistId);
+      });
+
+      it('should set tracklist.isPending to true if tracklist is new', () => {
+        initialTracklist = initialTracklist.set('isPending', false);
+        let tracklist = tracklistReducer(initialTracklist, searchActions.loadSearchResults(query));
+        expect(tracklist.isPending).toBe(true);
+      });
+
+      it('should reset pagination if tracklist is NOT new', () => {
+        let pageCount = 2;
+        let trackCount = TRACKS_PER_PAGE * pageCount;
+
+        initialTracklist = initialTracklist.merge({
+          currentPage: 2,
+          hasNextPage: false,
+          hasNextPageInStore: false,
+          isNew: false,
+          isPending: false,
+          pageCount: 2,
+          trackIds: List(testUtils.createIds(trackCount))
+        }) as Tracklist;
+
+        expectedTracklist = expectedTracklist.merge({
+          currentPage: 1,
+          hasNextPage: true,
+          hasNextPageInStore: true,
+          isNew: false,
+          isPending: false,
+          pageCount: 2,
+          trackIds: List(testUtils.createIds(trackCount))
+        });
+
+        let tracklist = tracklistReducer(initialTracklist, searchActions.loadSearchResults(query));
+
+        expect(is(tracklist, expectedTracklist)).toBe(true);
       });
     });
   });

@@ -1,9 +1,11 @@
 import { Observable } from 'rxjs/Observable';
+import { SearchState } from './search';
 import { TracklistsState } from './tracklists';
 import { TracksState } from './tracks';
 
 
 export interface AppState {
+  search: SearchState;
   tracklists: TracklistsState;
   tracks: TracksState;
 }

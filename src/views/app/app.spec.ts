@@ -1,10 +1,19 @@
+import { Component } from '@angular/core';
 import { inject, TestComponentBuilder } from '@angular/core/testing';
+import { SearchFormComponent } from '../components/search-form';
 import { App } from './app';
+
+
+@Component({
+  selector: 'search-form',
+  template: ''
+})
+class SearchFormComponentStub {}
 
 
 describe('views', () => {
   describe('App', () => {
-    let builder;
+    let builder: TestComponentBuilder;
 
     beforeEach(() => {
       inject([TestComponentBuilder], tcb => {
@@ -14,6 +23,7 @@ describe('views', () => {
 
     it('should have a `route-view`', () => {
       builder
+        .overrideDirective(App, SearchFormComponent, SearchFormComponentStub)
         .createAsync(App)
         .then(fixture => {
           fixture.detectChanges();
