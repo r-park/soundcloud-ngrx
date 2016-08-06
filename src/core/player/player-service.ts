@@ -11,6 +11,7 @@ import { AudioService } from './audio-service';
 import { AudioSource } from './audio-source';
 import { PlayerActions } from './player-actions';
 import { PlayerState } from './player-state';
+import { playerStorage } from './player-storage';
 import { getPlayer, getPlayerTrack, getPlayerTracklistCursor } from './selectors';
 
 
@@ -25,7 +26,7 @@ export class PlayerService extends AudioService {
     super(actions, audio);
 
     this.events$.subscribe(action => store$.dispatch(action));
-    this.volume = PLAYER_INITIAL_VOLUME;
+    this.volume = playerStorage.volume || PLAYER_INITIAL_VOLUME;
 
     this.cursor$ = store$.let(getPlayerTracklistCursor());
     this.player$ = store$.let(getPlayer());

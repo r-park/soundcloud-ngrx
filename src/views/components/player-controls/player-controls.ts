@@ -2,10 +2,14 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { PlayerState } from 'src/core/player';
 import { TracklistCursor } from 'src/core/tracklists';
 import { Track } from 'src/core/tracks';
+import { FormatVolumePipe } from '../../pipes/format-volume';
 
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  pipes: [
+    FormatVolumePipe
+  ],
   selector: 'player-controls',
   template: `
     <div *ngIf="track">
@@ -20,7 +24,7 @@ import { Track } from 'src/core/tracks';
 
       <div>
         <button (click)="decreaseVolume.emit()">–</button>
-        <span>{{player.volume}}</span>
+        <span>{{player.volume | formatVolume}}</span>
         <button (click)="increaseVolume.emit()">+</button>
       </div>
     </div>
