@@ -13,6 +13,7 @@ import { TracklistItemsComponent } from './tracklist-items';
   template: `
     <tracklist-items
       [player]="player.player$ | async"
+      [times]="player.times$"
       [tracklist]="tracklist.tracklist$ | async"
       [tracks]="tracklist.tracks$"
       (pause)="player.pause()"

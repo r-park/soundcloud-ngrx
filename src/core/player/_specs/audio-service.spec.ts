@@ -56,6 +56,22 @@ describe('player', () => {
         audio.dispatchEvent(new Event('playing'));
       });
 
+      it('`timeupdate` event should dispatch AUDIO_TIME_UPDATED action', () => {
+        let times = {
+          bufferedTime: 0,
+          currentTime: 0,
+          duration: NaN,
+          percentBuffered: '0%',
+          percentCompleted: '0%'
+        };
+
+        audioService.events$.subscribe(action => {
+          expect(action).toEqual(actions.audioTimeUpdated(times));
+        });
+
+        audio.dispatchEvent(new Event('timeupdate'));
+      });
+
       it('`volumechange` event should dispatch AUDIO_VOLUME_CHANGED action', () => {
         audioService.events$.subscribe(action => {
           expect(action).toEqual(actions.audioVolumeChanged(50));
@@ -127,6 +143,14 @@ describe('player', () => {
         let streamUrl = 'https://stream/';
         audioService.play(streamUrl);
         expect(audio.src).toBe(streamUrl);
+      });
+    });
+
+
+    describe('seek()', () => {
+      it('should set audio.currentTime', () => {
+        audioService.seek(100);
+        expect(audio.currentTime).toBe(100);
       });
     });
   });

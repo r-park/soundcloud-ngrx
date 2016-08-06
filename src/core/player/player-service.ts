@@ -1,4 +1,5 @@
 import 'rxjs/add/operator/let';
+import 'rxjs/add/operator/pluck';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -12,13 +13,16 @@ import { AudioSource } from './audio-source';
 import { PlayerActions } from './player-actions';
 import { PlayerState } from './player-state';
 import { playerStorage } from './player-storage';
-import { getPlayer, getPlayerTrack, getPlayerTracklistCursor } from './selectors';
+import { getPlayer, getPlayerTrack, getPlayerTracklistCursor, getTimes } from './selectors';
+import { TimesState } from './times-state';
 
 
 @Injectable()
 export class PlayerService extends AudioService {
+  currentTime$: Observable<number>;
   cursor$: Observable<TracklistCursor>;
   player$: Observable<PlayerState>;
+  times$: Observable<TimesState>;
   track$: Observable<Track>;
 
 
@@ -33,6 +37,9 @@ export class PlayerService extends AudioService {
 
     this.track$ = store$.let(getPlayerTrack());
     this.track$.subscribe(track => this.play(track.streamUrl));
+
+    this.times$ = store$.let(getTimes());
+    this.currentTime$ = this.times$.pluck<number>('currentTime');
   }
 
 

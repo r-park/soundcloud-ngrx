@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
-import { PlayerState } from 'src/core/player';
+import { PlayerState, TimesState } from 'src/core/player';
 import { Tracklist } from 'src/core/tracklists';
 import { Track } from 'src/core/tracks';
 import { TrackCardComponent } from '../track-card';
@@ -19,6 +19,7 @@ import { TrackCardComponent } from '../track-card';
         *ngFor="let track of tracks | async"
         [isPlaying]="track.id === player.trackId && player.isPlaying"
         [isSelected]="track.id === player.trackId"
+        [times]="times"
         [track]="track"
         (pause)="pause.emit()"
         (play)="track.id === player.trackId ? play.emit() : select.emit({trackId: track.id, tracklistId: tracklist.id})"
@@ -37,6 +38,7 @@ import { TrackCardComponent } from '../track-card';
 
 export class TracklistItemsComponent {
   @Input() player: PlayerState;
+  @Input() times: Observable<TimesState>;
   @Input() tracklist: Tracklist;
   @Input() tracks: Observable<List<Track>>;
 

@@ -1,10 +1,12 @@
 import { Action } from '@ngrx/store';
+import { Times } from './times-state';
 
 
 export class PlayerActions {
   static AUDIO_ENDED = 'AUDIO_ENDED';
   static AUDIO_PAUSED = 'AUDIO_PAUSED';
   static AUDIO_PLAYING = 'AUDIO_PLAYING';
+  static AUDIO_TIME_UPDATED = 'AUDIO_TIME_UPDATED';
   static AUDIO_VOLUME_CHANGED = 'AUDIO_VOLUME_CHANGED';
   static PLAY_SELECTED_TRACK = 'PLAY_SELECTED_TRACK';
 
@@ -24,6 +26,13 @@ export class PlayerActions {
   audioPlaying(): Action {
     return {
       type: PlayerActions.AUDIO_PLAYING
+    };
+  }
+
+  audioTimeUpdated(times: Times): Action {
+    return {
+      type: PlayerActions.AUDIO_TIME_UPDATED,
+      payload: times
     };
   }
 

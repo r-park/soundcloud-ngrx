@@ -6,12 +6,14 @@ import { TrackRecord, tracksReducer } from 'src/core/tracks';
 import { testUtils } from 'src/core/utils/test';
 import { PlayerActions } from '../player-actions';
 import { initialState as initialPlayerState, playerReducer } from '../player-reducer';
+import { initialState as initialTimesState, timesReducer } from '../times-reducer';
 import {
   getPlayer,
   getPlayerTrack,
   getPlayerTrackId,
   getPlayerTracklist,
-  getPlayerTracklistCursor
+  getPlayerTracklistCursor,
+  getTimes
 } from '../selectors';
 
 
@@ -28,6 +30,7 @@ describe('player', () => {
         provideStore(
           {
             player: playerReducer,
+            times: timesReducer,
             tracklists: tracklistsReducer,
             tracks: tracksReducer
           },
@@ -244,6 +247,46 @@ describe('player', () => {
           nextTrackId: null,
           previousTrackId: 2
         });
+      });
+    });
+
+
+    describe('getTimes() selector', () => {
+      it('should return observable that emits TimesState on change', () => {
+        let count = 0;
+        let timesState = null;
+
+        let times = {
+          bufferedTime: 200,
+          currentTime: 100,
+          duration: 400,
+          percentBuffered: '50%',
+          percentCompleted: '25%'
+        };
+
+        store
+          .let(getTimes())
+          .subscribe(value => {
+            count++;
+            timesState = value;
+          });
+
+        // auto-emitting initial value
+        expect(count).toBe(1);
+        expect(timesState).toBe(initialTimesState);
+
+        // changing times
+        store.dispatch(playerActions.audioTimeUpdated(times));
+        expect(count).toBe(2);
+        expect(timesState.toJS()).toEqual(times);
+
+        // should not emit: same time values
+        store.dispatch(playerActions.audioTimeUpdated(times));
+        expect(count).toBe(2);
+
+        // dispatching unrelated action should not emit
+        store.dispatch({type: 'UNDEFINED'});
+        expect(count).toBe(2);
       });
     });
   });

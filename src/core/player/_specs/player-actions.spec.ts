@@ -40,6 +40,25 @@ describe('player', () => {
     });
 
 
+    describe('audioTimeUpdated()', () => {
+      it('should create an action', () => {
+        let times = {
+          bufferedTime: 200,
+          currentTime: 100,
+          duration: 400,
+          percentBuffered: '50%',
+          percentCompleted: '25%'
+        };
+
+        expect(actions.audioTimeUpdated(times))
+          .toEqual({
+            type: PlayerActions.AUDIO_TIME_UPDATED,
+            payload: times
+          });
+      });
+    });
+
+
     describe('audioVolumeChanged()', () => {
       it('should create an action', () => {
         expect(actions.audioVolumeChanged(5))

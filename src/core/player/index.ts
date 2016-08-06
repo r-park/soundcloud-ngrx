@@ -7,6 +7,8 @@ export { PlayerService };
 export { PlayerEffects } from './player-effects';
 export { playerReducer } from './player-reducer';
 export { PlayerState } from './player-state';
+export { timesReducer } from './times-reducer';
+export { TimesState } from './times-state';
 
 
 export const PLAYER_PROVIDERS = [

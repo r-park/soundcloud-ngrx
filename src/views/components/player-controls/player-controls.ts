@@ -1,13 +1,16 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { PlayerState } from 'src/core/player';
 import { TracklistCursor } from 'src/core/tracklists';
 import { Track } from 'src/core/tracks';
+import { FormatTimePipe } from '../../pipes/format-time';
 import { FormatVolumePipe } from '../../pipes/format-volume';
 
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   pipes: [
+    FormatTimePipe,
     FormatVolumePipe
   ],
   selector: 'player-controls',
@@ -20,6 +23,7 @@ import { FormatVolumePipe } from '../../pipes/format-volume';
         <button (click)="next()">Next</button>
       </div>
 
+      <div>{{currentTime | async | formatTime}} / {{track.duration | formatTime:'ms'}}</div>
       <div>{{track.title}}</div>
 
       <div>
@@ -32,6 +36,7 @@ import { FormatVolumePipe } from '../../pipes/format-volume';
 })
 
 export class PlayerControlsComponent {
+  @Input() currentTime: Observable<number>;
   @Input() cursor: TracklistCursor;
   @Input() player: PlayerState;
   @Input() track: Track;

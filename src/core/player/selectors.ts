@@ -9,6 +9,7 @@ import { AppState, Selector } from 'src/core/interfaces';
 import { getTracklistCursor, getTracklists, Tracklist, TracklistCursor } from 'src/core/tracklists';
 import { getTracks, Track } from 'src/core/tracks';
 import { PlayerState } from './player-state';
+import { TimesState } from './times-state';
 
 
 export function getPlayer(): Selector<AppState,PlayerState> {
@@ -47,4 +48,10 @@ export function getPlayerTracklistCursor(distinct: boolean = true): Selector<App
     if (distinct) source$ = source$.distinctUntilChanged();
     return source$.combineLatest(state$.let(getPlayerTracklist()), getTracklistCursor);
   };
+}
+
+export function getTimes(): Selector<AppState,TimesState> {
+  return state$ => state$
+    .map(state => state.times)
+    .distinctUntilChanged();
 }
