@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
+import { PlayerState } from 'src/core/player';
 import { Tracklist } from 'src/core/tracklists';
 import { Track } from 'src/core/tracks';
 import { TrackCardComponent } from '../track-card';
@@ -16,8 +17,13 @@ import { TrackCardComponent } from '../track-card';
     <div *ngIf="tracklist">
       <track-card
         *ngFor="let track of tracks | async"
-        [track]="track"></track-card>
-  
+        [isPlaying]="track.id === player.trackId && player.isPlaying"
+        [isSelected]="track.id === player.trackId"
+        [track]="track"
+        (pause)="pause.emit()"
+        (play)="track.id === player.trackId ? play.emit() : select.emit({trackId: track.id, tracklistId: tracklist.id})"
+        (seek)="seek.emit($event)"></track-card>
+
       <div *ngIf="tracklist.isPending">
         <h1>Loading Tracks</h1>
       </div>
@@ -30,8 +36,13 @@ import { TrackCardComponent } from '../track-card';
 })
 
 export class TracklistItemsComponent {
+  @Input() player: PlayerState;
   @Input() tracklist: Tracklist;
   @Input() tracks: Observable<List<Track>>;
 
   @Output() loadNextTracks = new EventEmitter(false);
+  @Output() pause = new EventEmitter(false);
+  @Output() play = new EventEmitter(false);
+  @Output() seek = new EventEmitter(false);
+  @Output() select = new EventEmitter(false);
 }
