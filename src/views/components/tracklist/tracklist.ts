@@ -16,11 +16,11 @@ import { TracklistItemsComponent } from './tracklist-items';
       [times]="player.times$"
       [tracklist]="tracklist.tracklist$ | async"
       [tracks]="tracklist.tracks$"
+      (loadNextTracks)="tracklist.loadNextTracks()"
       (pause)="player.pause()"
       (play)="player.play()"
       (seek)="player.seek($event)"
-      (select)="player.select($event)"
-      (loadNextTracks)="tracklist.loadNextTracks()"></tracklist-items>
+      (select)="player.select($event)"></tracklist-items>
   `
 })
 

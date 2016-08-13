@@ -13,10 +13,14 @@ import { TrackCardComponent } from '../track-card';
     TrackCardComponent
   ],
   selector: 'tracklist-items',
+  styles: [
+    require('./tracklist-items.scss')
+  ],
   template: `
-    <div *ngIf="tracklist">
+    <div *ngIf="tracklist" class="g-row tracklist-items">
       <track-card
         *ngFor="let track of tracks | async"
+        class="g-col"
         [isPlaying]="track.id === player.trackId && player.isPlaying"
         [isSelected]="track.id === player.trackId"
         [times]="times"
@@ -24,10 +28,6 @@ import { TrackCardComponent } from '../track-card';
         (pause)="pause.emit()"
         (play)="track.id === player.trackId ? play.emit() : select.emit({trackId: track.id, tracklistId: tracklist.id})"
         (seek)="seek.emit($event)"></track-card>
-
-      <div *ngIf="tracklist.isPending">
-        <h1>Loading Tracks</h1>
-      </div>
   
       <div *ngIf="tracklist.hasNextPage">
         <button (click)="loadNextTracks.emit()" type="button">Next</button>

@@ -4,17 +4,26 @@ import {
   EventEmitter,
   HostListener,
   Input,
-  Output
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
 import { TimesState } from 'src/core/player';
 
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
   selector: 'audio-timeline',
+  styles: [
+    require('./audio-timeline.scss')
+  ],
   template: `
-    <div [ngStyle]="{'width': times?.percentBuffered}" style="height: 5px; background: #afa;"></div>
-    <div [ngStyle]="{'width': times?.percentCompleted}" style="height: 5px; background: #6b6;"></div>
+    <div class="bar bar--buffered"
+      [ngClass]="{'bar--animated': times?.bufferedTime !== 0}"
+      [ngStyle]="{'width': times?.percentBuffered}"></div>
+
+    <div class="bar bar--elapsed"
+      [ngStyle]="{'width': times?.percentCompleted}"></div>
   `
 })
 

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
 import { PlayerComponent } from '../components/player';
-import { SearchFormComponent } from '../components/search-form';
-import { App } from './app';
+import { AppHeaderComponent } from '../components/app-header';
+import { AppComponent } from './app';
 
 
 @Component({
@@ -12,14 +12,14 @@ import { App } from './app';
 class PlayerComponentStub {}
 
 @Component({
-  selector: 'search-form',
+  selector: 'app-header',
   template: ''
 })
-class SearchFormComponentStub {}
+class AppHeaderComponentStub {}
 
 
-describe('views', () => {
-  describe('App', () => {
+describe('components', () => {
+  describe('AppComponent', () => {
     let builder: TestComponentBuilder;
 
     beforeEach(() => {
@@ -29,11 +29,11 @@ describe('views', () => {
     });
 
 
-    function buildComponent(): Promise<ComponentFixture<App>> {
+    function buildComponent(): Promise<ComponentFixture<AppComponent>> {
       return builder
-        .overrideDirective(App, PlayerComponent, PlayerComponentStub)
-        .overrideDirective(App, SearchFormComponent, SearchFormComponentStub)
-        .createAsync(App);
+        .overrideDirective(AppComponent, AppHeaderComponent, AppHeaderComponentStub)
+        .overrideDirective(AppComponent, PlayerComponent, PlayerComponentStub)
+        .createAsync(AppComponent);
     }
 
 

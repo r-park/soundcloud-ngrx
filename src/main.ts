@@ -15,7 +15,7 @@ import { TRACKLISTS_PROVIDERS } from './core/tracklists';
 import { ROUTER_PROVIDERS } from './views/routes';
 
 // root component
-import { App } from './views/app';
+import { AppComponent } from './views/app';
 
 // common styles
 import './views/styles/common.scss';
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  bootstrap(App, [
+  bootstrap(AppComponent, [
     disableDeprecatedForms(),
     provideForms(),
     API_PROVIDERS,

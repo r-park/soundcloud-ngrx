@@ -1,9 +1,7 @@
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
-html {
-  box-sizing: border-box;
-}
+@import
+'styles/base',
+'node_modules/minx/src/reset',
+'node_modules/minx/src/elements',
+'styles/elements',
+'styles/layout',
+'styles/buttons';

@@ -6,22 +6,31 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { QueryParams } from '@ngrx/router';
 import { Subject } from 'rxjs/Subject';
 import { SearchService } from 'src/core/search';
+
+import { ContentHeaderComponent } from '../../components/content-header';
 import { TracklistComponent } from '../../components/tracklist';
 
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [
+    ContentHeaderComponent,
     TracklistComponent
   ],
-  selector: 'search-page',
   template: `
-    <tracklist></tracklist>
+    <section>
+      <content-header 
+        [section]="section" 
+        [title]="search.query$ | async"></content-header>
+  
+      <tracklist></tracklist>
+    </section>
   `
 })
 
-export class SearchPage {
+export class SearchPageComponent {
   ngOnDestroy$ = new Subject<boolean>();
+  section = 'Search Results';
 
   constructor(public params$: QueryParams, public search: SearchService) {
     params$

@@ -98,6 +98,6 @@
     "webpack-dev-server": "~1.14.1",
     "webpack-md5-hash": "~0.0.5",
     "yargs": "~4.8.1",
-    "zone.js": "~0.6.12"
+    "zone.js": "0.6.12"
   }
 }

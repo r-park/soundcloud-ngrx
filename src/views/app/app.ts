@@ -1,27 +1,29 @@
 import { Component } from '@angular/core';
+
+import { AppHeaderComponent } from '../components/app-header';
 import { PlayerComponent } from '../components/player';
-import { SearchFormComponent } from '../components/search-form';
 
 
 @Component({
   directives: [
-    PlayerComponent,
-    SearchFormComponent
+    AppHeaderComponent,
+    PlayerComponent
   ],
   selector: 'app',
+  styles: [`
+    .main {
+      padding-bottom: 200px;
+    }
+  `],
   template: `
-    <main>
-      <player></player>
+    <app-header></app-header>
 
-      <br><br>
-
-      <search-form></search-form>
-
-      <br><br>
-
+    <main class="main">
       <route-view></route-view>
     </main>
+
+    <player></player>
   `
 })
 
-export class App {}
+export class AppComponent {}
