@@ -5,6 +5,7 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 
 // core
 import { API_PROVIDERS } from './core/api';
+import { BROWSER_PROVIDERS } from './core/browser';
 import { EFFECTS_PROVIDERS } from './core/effects';
 import { PLAYER_PROVIDERS } from './core/player';
 import { SEARCH_PROVIDERS } from './core/search';
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     disableDeprecatedForms(),
     provideForms(),
     API_PROVIDERS,
+    BROWSER_PROVIDERS,
     EFFECTS_PROVIDERS,
     HTTP_PROVIDERS,
     PLAYER_PROVIDERS,
