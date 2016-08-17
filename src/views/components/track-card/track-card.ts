@@ -5,17 +5,17 @@ import { Track } from 'src/core/tracks';
 
 import { FormatIntegerPipe } from '../../pipes/format-integer';
 import { FormatTimePipe } from '../../pipes/format-time';
-import { AudioTimelineComponent } from '../audio-timeline';
 import { IconComponent } from '../icon';
 import { IconButtonComponent } from '../icon-button';
+import { WaveformTimelineComponent } from '../waveform-timeline';
 
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [
-    AudioTimelineComponent,
     IconComponent,
-    IconButtonComponent
+    IconButtonComponent,
+    WaveformTimelineComponent
   ],
   encapsulation: ViewEncapsulation.None,
   pipes: [
@@ -36,10 +36,12 @@ import { IconButtonComponent } from '../icon-button';
         <div class="track-card__username">{{track.username}}</div>
         <h1 class="track-card__title">{{track.title}}</h1>
 
-        <audio-timeline
-            *ngIf="isSelected"
-            [times]="times | async"
-            (seek)="seek.emit($event)"></audio-timeline>   
+        <waveform-timeline
+          *ngIf="!compact"
+          [isActive]="isSelected"
+          [times]="times"
+          [waveformUrl]="track.waveformUrl"
+          (seek)="seek.emit($event)"></waveform-timeline>
 
         <div class="track-card__actions" *ngIf="track.streamable">
           <div class="cell">

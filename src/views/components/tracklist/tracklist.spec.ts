@@ -1,10 +1,22 @@
+import { Component, Input } from '@angular/core';
 import { addProviders, ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { PlayerService } from 'src/core/player';
 import { TracklistService } from 'src/core/tracklists';
 import { createTrack } from 'src/core/tracks';
 import { testUtils } from 'src/core/utils/test';
+import { WaveformComponent } from '../waveform';
+import { WaveformTimelineComponent } from '../waveform-timeline';
 import { TracklistComponent } from './tracklist';
+
+
+@Component({
+  selector: 'waveform',
+  template: ''
+})
+class WaveformComponentStub {
+  @Input() src: string;
+}
 
 
 describe('components', () => {
@@ -61,6 +73,7 @@ describe('components', () => {
 
     function buildComponent(): Promise<ComponentFixture<TracklistComponent>> {
       return builder
+        .overrideDirective(WaveformTimelineComponent, WaveformComponent, WaveformComponentStub)
         .createAsync(TracklistComponent);
     }
 

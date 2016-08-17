@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { createTrack } from 'src/core/tracks';
 import { testUtils } from 'src/core/utils/test';
+import { WaveformComponent } from '../waveform';
+import { WaveformTimelineComponent } from '../waveform-timeline';
 import { TrackCardComponent } from './track-card';
 
 
@@ -12,6 +14,14 @@ import { TrackCardComponent } from './track-card';
 })
 class TestComponent {
   @ViewChild(TrackCardComponent) trackCard: TrackCardComponent;
+}
+
+@Component({
+  selector: 'waveform',
+  template: ''
+})
+class WaveformComponentStub {
+  @Input() src: string;
 }
 
 
@@ -46,6 +56,7 @@ describe('components', () => {
           [track]="track"></track-card>`;
 
       return builder
+        .overrideDirective(WaveformTimelineComponent, WaveformComponent, WaveformComponentStub)
         .overrideTemplate(TestComponent, template)
         .createAsync(TestComponent)
         .then((fixture: ComponentFixture<TestComponent>) => {
@@ -117,10 +128,9 @@ describe('components', () => {
         });
     });
 
-    it('should emit `seek` event when audio timeline is clicked (compact mode)', () => {
+    it('should emit `seek` event when waveform timeline is clicked (full mode)', () => {
       buildComponent()
         .then(fixture => {
-          fixture.componentInstance.compact = true;
           fixture.componentInstance.isSelected = true;
           fixture.detectChanges();
 
@@ -129,7 +139,7 @@ describe('components', () => {
 
           expect(trackCard.seek.emit).not.toHaveBeenCalled();
 
-          fixture.nativeElement.querySelector('audio-timeline').click();
+          fixture.nativeElement.querySelector('waveform-timeline audio-timeline').click();
 
           expect(trackCard.seek.emit).toHaveBeenCalledTimes(1);
           expect(typeof trackCard.seek.emit.calls.argsFor(0)[0]).toBe('number');
