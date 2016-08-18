@@ -19,7 +19,7 @@ import { SearchBarComponent } from '../search-bar';
   ],
   template: `
     <header class="header">
-      <div class="g-row">
+      <div class="g-row g-cont">
         <div class="g-col">
           <h1 class="header__title"><a [linkTo]="'/'">SoundCloud • Angular2 NgRx</a></h1>
           <ul class="header__actions">
@@ -38,7 +38,7 @@ import { SearchBarComponent } from '../search-bar';
         </div>
       </div>
 
-      <div class="g-row">
+      <div class="g-row g-cont">
         <div class="g-col">
           <search-bar [open]="open"></search-bar>
         </div>

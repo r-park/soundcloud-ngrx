@@ -5,6 +5,7 @@ import { Track } from 'src/core/tracks';
 
 import { FormatIntegerPipe } from '../../pipes/format-integer';
 import { FormatTimePipe } from '../../pipes/format-time';
+import { AudioTimelineComponent } from '../audio-timeline';
 import { IconComponent } from '../icon';
 import { IconButtonComponent } from '../icon-button';
 import { WaveformTimelineComponent } from '../waveform-timeline';
@@ -13,6 +14,7 @@ import { WaveformTimelineComponent } from '../waveform-timeline';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [
+    AudioTimelineComponent,
     IconComponent,
     IconButtonComponent,
     WaveformTimelineComponent
@@ -27,12 +29,19 @@ import { WaveformTimelineComponent } from '../waveform-timeline';
     require('./track-card.scss')
   ],
   template: `
-    <article class="track-card">
+    <article class="track-card" [ngClass]="{'track-card--compact': compact, 'track-card--full': !compact}">
       <div class="track-card__image">
         <img [src]="track.artworkUrl">
       </div>
 
       <div class="track-card__main">
+        <div class="track-card__timeline" *ngIf="compact">
+          <audio-timeline
+            *ngIf="isSelected"
+            [times]="times | async"
+            (seek)="seek.emit($event)"></audio-timeline>      
+        </div>
+
         <div class="track-card__username">{{track.username}}</div>
         <h1 class="track-card__title">{{track.title}}</h1>
 
@@ -51,12 +60,12 @@ import { WaveformTimelineComponent } from '../waveform-timeline';
             <span class="meta-duration">{{track.duration | formatTime:'ms'}}</span>
           </div>
 
-          <div class="cell">
+          <div class="cell" *ngIf="!compact">
             <icon name="headset" className="icon--small"></icon>
             <span class="meta-playback-count">{{track.playbackCount | formatInteger}}</span>
           </div>
 
-          <div class="cell">
+          <div class="cell" *ngIf="!compact">
             <icon name="favorite-border" className="icon--small"></icon>
             <span class="meta-likes-count">{{track.likesCount | formatInteger}}</span>
           </div>
@@ -73,6 +82,7 @@ import { WaveformTimelineComponent } from '../waveform-timeline';
 })
 
 export class TrackCardComponent {
+  @Input() compact: boolean = false;
   @Input() isPlaying = false;
   @Input() isSelected = false;
   @Input() times: Observable<TimesState>;

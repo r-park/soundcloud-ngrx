@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
+import { MediaQueryResults } from 'src/core/browser';
 import { PlayerState, TimesState } from 'src/core/player';
 import { Tracklist } from 'src/core/tracklists';
 import { Track } from 'src/core/tracks';
@@ -19,10 +20,12 @@ import { TrackCardComponent } from '../track-card';
     require('./tracklist-items.scss')
   ],
   template: `
-    <div *ngIf="tracklist" class="g-row tracklist-items">
+    <div *ngIf="media && tracklist" class="g-row g-cont tracklist-items" [ngClass]="{'has-line-clamp': hasLineClamp}">
       <track-card
         *ngFor="let track of tracks | async"
         class="g-col"
+        [ngClass]="{'sm-2/4 md-1/3 lg-1/4': !media.large || layout === 'compact'}"
+        [compact]="!media.large || layout === 'compact'"
         [isPlaying]="track.id === player.trackId && player.isPlaying"
         [isSelected]="track.id === player.trackId"
         [times]="times"
@@ -37,6 +40,8 @@ import { TrackCardComponent } from '../track-card';
 })
 
 export class TracklistItemsComponent {
+  @Input() layout: string;
+  @Input() media: MediaQueryResults;
   @Input() player: PlayerState;
   @Input() times: Observable<TimesState>;
   @Input() tracklist: Tracklist;
@@ -46,4 +51,8 @@ export class TracklistItemsComponent {
   @Output() play = new EventEmitter(false);
   @Output() seek = new EventEmitter(false);
   @Output() select = new EventEmitter(false);
+
+  get hasLineClamp(): boolean {
+    return '-webkit-line-clamp' in document.body.style;
+  }
 }

@@ -49,7 +49,8 @@ describe('components', () => {
 
     function buildComponent(): Promise<ComponentFixture<TestComponent>> {
       let template = `
-        <track-card
+        <track-card 
+          [compact]="compact"
           [isPlaying]="isPlaying"
           [isSelected]="isSelected"
           [times]="times"
@@ -60,6 +61,7 @@ describe('components', () => {
         .overrideTemplate(TestComponent, template)
         .createAsync(TestComponent)
         .then((fixture: ComponentFixture<TestComponent>) => {
+          fixture.componentInstance.compact = false;
           fixture.componentInstance.isPlaying = false;
           fixture.componentInstance.isSelected = false;
           fixture.componentInstance.times = times;
@@ -125,6 +127,25 @@ describe('components', () => {
           let el = fixture.nativeElement.querySelector('.meta-likes-count');
 
           expect(el.textContent).toBe('1,000');
+        });
+    });
+
+    it('should emit `seek` event when audio timeline is clicked (compact mode)', () => {
+      buildComponent()
+        .then(fixture => {
+          fixture.componentInstance.compact = true;
+          fixture.componentInstance.isSelected = true;
+          fixture.detectChanges();
+
+          let trackCard = fixture.componentInstance.trackCard;
+          spyOn(trackCard.seek, 'emit');
+
+          expect(trackCard.seek.emit).not.toHaveBeenCalled();
+
+          fixture.nativeElement.querySelector('.track-card__timeline audio-timeline').click();
+
+          expect(trackCard.seek.emit).toHaveBeenCalledTimes(1);
+          expect(typeof trackCard.seek.emit.calls.argsFor(0)[0]).toBe('number');
         });
     });
 
