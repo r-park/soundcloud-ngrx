@@ -5,6 +5,7 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 
 // core
 import { API_PROVIDERS } from './core/api';
+import { BROWSER_PROVIDERS } from './core/browser';
 import { EFFECTS_PROVIDERS } from './core/effects';
 import { PLAYER_PROVIDERS } from './core/player';
 import { SEARCH_PROVIDERS } from './core/search';
@@ -15,7 +16,7 @@ import { TRACKLISTS_PROVIDERS } from './core/tracklists';
 import { ROUTER_PROVIDERS } from './views/routes';
 
 // root component
-import { App } from './views/app';
+import { AppComponent } from './views/app';
 
 // common styles
 import './views/styles/common.scss';
@@ -27,10 +28,11 @@ if (process.env.NODE_ENV === 'production') {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  bootstrap(App, [
+  bootstrap(AppComponent, [
     disableDeprecatedForms(),
     provideForms(),
     API_PROVIDERS,
+    BROWSER_PROVIDERS,
     EFFECTS_PROVIDERS,
     HTTP_PROVIDERS,
     PLAYER_PROVIDERS,

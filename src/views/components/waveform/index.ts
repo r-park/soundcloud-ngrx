@@ -1,0 +1,1 @@
+export { WaveformComponent } from './waveform';

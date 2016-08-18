@@ -16,6 +16,7 @@ export const testUtils = {
       duration: 240000, // 4 minutes
       id,
       likes_count: id,
+      permalink_url: `https://soundcloud.com/user-${id}/track-name-${id}`,
       playback_count: id,
       stream_url: `https://api.soundcloud.com/tracks/${id}/stream`,
       streamable: true,
@@ -23,7 +24,8 @@ export const testUtils = {
       user: {
         avatar_url: `https://i1.sndcdn.com/avatars-${id}-large.jpg`,
         id: 100 + id,
-        username: `User-${id}`
+        username: `User-${id}`,
+        permalink_url: `https://soundcloud.com/user-${id}`
       },
       user_favorite: false,
       waveform_url: `https://w1.sndcdn.com/${id}_m.png`

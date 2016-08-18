@@ -2,7 +2,7 @@ import { testUtils } from 'src/core/utils/test';
 import { FormatVolumePipe } from './format-volume';
 
 
-describe('player', () => {
+describe('pipes', () => {
   describe('FormatVolumePipe', () => {
     it('should format volume values', () => {
       let pipe = new FormatVolumePipe();

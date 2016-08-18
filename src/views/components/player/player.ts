@@ -1,20 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
 import { PlayerService } from 'src/core/player';
+
 import { AudioTimelineComponent } from '../audio-timeline';
 import { PlayerControlsComponent } from '../player-controls';
 
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
   directives: [
     AudioTimelineComponent,
     PlayerControlsComponent
   ],
   selector: 'player',
+  styles: [
+    require('./player.scss')
+  ],
   template: `
-    <div>
+    <div class="player-timeline">
       <audio-timeline
-        style="display: block;"
         [times]="player.times$ | async"
         (seek)="player.seek($event)"></audio-timeline>
     </div>
@@ -33,5 +37,12 @@ import { PlayerControlsComponent } from '../player-controls';
 })
 
 export class PlayerComponent {
-  constructor(public player: PlayerService) {}
+  constructor(public el: ElementRef, public player: PlayerService, public renderer: Renderer) {
+    let sub = player.player$.subscribe(player => {
+      if (player.isPlaying) {
+        renderer.setElementClass(el.nativeElement, 'open', true);
+        sub.unsubscribe();
+      }
+    });
+  }
 }

@@ -1,35 +1,43 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { PlayerState } from 'src/core/player';
 import { TracklistCursor } from 'src/core/tracklists';
 import { Track } from 'src/core/tracks';
+
 import { FormatTimePipe } from '../../pipes/format-time';
 import { FormatVolumePipe } from '../../pipes/format-volume';
+import { IconButtonComponent } from '../icon-button';
 
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  directives: [
+    IconButtonComponent
+  ],
+  encapsulation: ViewEncapsulation.None,
   pipes: [
     FormatTimePipe,
     FormatVolumePipe
   ],
   selector: 'player-controls',
+  styles: [
+    require('./player-controls.scss')
+  ],
   template: `
-    <div *ngIf="track">
+    <div class="player-controls" *ngIf="track">
       <div>
-        <button (click)="previous()">Previous</button>
-        <button (click)="pause.emit()">Pause</button>
-        <button (click)="play.emit()">Play</button>
-        <button (click)="next()">Next</button>
+        <icon-button icon="skip-previous" (onClick)="previous()"></icon-button>
+        <icon-button [icon]="player.isPlaying ? 'pause' : 'play'" (onClick)="player.isPlaying ? pause.emit() : play.emit()"></icon-button>
+        <icon-button icon="skip-next" (onClick)="next()"></icon-button>
       </div>
 
-      <div>{{currentTime | async | formatTime}} / {{track.duration | formatTime:'ms'}}</div>
-      <div>{{track.title}}</div>
+      <div class="player-controls__time">{{currentTime | async | formatTime}} / {{track.duration | formatTime:'ms'}}</div>
+      <div class="player-controls__title">{{track.title}}</div>
 
-      <div>
-        <button (click)="decreaseVolume.emit()">–</button>
+      <div class="player-controls__volume">
+        <icon-button icon="remove" (onClick)="decreaseVolume.emit()"></icon-button>
         <span>{{player.volume | formatVolume}}</span>
-        <button (click)="increaseVolume.emit()">+</button>
+        <icon-button icon="add" (onClick)="increaseVolume.emit()"></icon-button>
       </div>
     </div>
   `

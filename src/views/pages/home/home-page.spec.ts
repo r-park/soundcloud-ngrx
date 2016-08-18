@@ -1,9 +1,9 @@
 import { inject, TestComponentBuilder } from '@angular/core/testing';
-import { HomePage } from './home-page';
+import { HomePageComponent } from './home-page';
 
 
-describe('views', () => {
-  describe('HomePage', () => {
+describe('components', () => {
+  describe('HomePageComponent', () => {
     let builder;
 
     beforeEach(() => {
@@ -14,7 +14,7 @@ describe('views', () => {
 
     it('should have a title', () => {
       builder
-        .createAsync(HomePage)
+        .createAsync(HomePageComponent)
         .then(fixture => {
           fixture.detectChanges();
           let title = fixture.nativeElement.querySelector('h1');
