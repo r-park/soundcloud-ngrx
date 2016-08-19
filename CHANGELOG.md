@@ -1,3 +1,17 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/r-park/soundcloud-ngrx/compare/v0.2.0...v0.3.0) (2016-08-19)
+
+
+### Features
+
+* **views:** infinite scrolling ([e1035bd](https://github.com/r-park/soundcloud-ngrx/commit/e1035bd))
+* **views:** load and display waveform data ([a1ffd42](https://github.com/r-park/soundcloud-ngrx/commit/a1ffd42))
+* **views:** observe MediaQueryList changes ([01f0f17](https://github.com/r-park/soundcloud-ngrx/commit/01f0f17))
+* **views:** styling and behaviour ([ccaf5c8](https://github.com/r-park/soundcloud-ngrx/commit/ccaf5c8))
+* **views:** tiled layout for smaller screens ([9a82900](https://github.com/r-park/soundcloud-ngrx/commit/9a82900))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/r-park/soundcloud-ngrx/compare/v0.1.0...v0.2.0) (2016-08-07)
 
