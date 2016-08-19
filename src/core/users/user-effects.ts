@@ -39,7 +39,7 @@ export class UserEffects {
 
   @Effect()
   loadUserLikes$: Observable<Action> = this.updates$
-    .whenAction(UserActions.LOAD_USER_LIKES)
+    .whenAction(UserActions.LOAD_USER_LIKES, TracklistActions.LOAD_FEATURED_TRACKS)
     .let(applySelector(getCurrentTracklist()))
     .filter(update => update.state.isNew)
     .map(toPayload)

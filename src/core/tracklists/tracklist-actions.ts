@@ -1,10 +1,12 @@
 import { Action } from '@ngrx/store';
 import { PaginatedData } from 'src/core/api';
+import { FEATURED_TRACKLIST_ID, FEATURED_TRACKLIST_USER_ID } from 'src/core/constants';
 
 
 export class TracklistActions {
   static FETCH_TRACKS_FAILED = 'FETCH_TRACKS_FAILED';
   static FETCH_TRACKS_FULFILLED = 'FETCH_TRACKS_FULFILLED';
+  static LOAD_FEATURED_TRACKS = 'LOAD_FEATURED_TRACKS';
   static LOAD_NEXT_TRACKS = 'LOAD_NEXT_TRACKS';
   static MOUNT_TRACKLIST = 'MOUNT_TRACKLIST';
 
@@ -20,6 +22,16 @@ export class TracklistActions {
     return {
       type: TracklistActions.FETCH_TRACKS_FULFILLED,
       payload: Object.assign({}, data, {tracklistId})
+    };
+  }
+
+  loadFeaturedTracks(): Action {
+    return {
+      type: TracklistActions.LOAD_FEATURED_TRACKS,
+      payload: {
+        tracklistId: FEATURED_TRACKLIST_ID,
+        userId: FEATURED_TRACKLIST_USER_ID
+      }
     };
   }
 

@@ -27,6 +27,7 @@ export const tracklistsReducer: ActionReducer<TracklistsState> = (state: Trackli
         tracklistReducer(state.get(state.get('currentTracklistId')), action)
       );
 
+    case TracklistActions.LOAD_FEATURED_TRACKS:
     case SearchActions.LOAD_SEARCH_RESULTS:
     case UserActions.LOAD_USER_LIKES:
     case UserActions.LOAD_USER_TRACKS:

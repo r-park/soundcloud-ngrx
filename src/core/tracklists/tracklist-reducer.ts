@@ -30,6 +30,7 @@ export const tracklistReducer: ActionReducer<Tracklist> = (state: Tracklist = in
              state.merge(updatePagination(state, state.currentPage + 1)) as Tracklist :
              state.set('isPending', true) as Tracklist;
 
+    case TracklistActions.LOAD_FEATURED_TRACKS:
     case SearchActions.LOAD_SEARCH_RESULTS:
     case UserActions.LOAD_USER_LIKES:
     case UserActions.LOAD_USER_TRACKS:
