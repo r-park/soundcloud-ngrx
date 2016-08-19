@@ -3,7 +3,8 @@ import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Http, Request, RequestMethod, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { API_TRACKS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'src/core/constants';
+import { API_TRACKS_URL, API_USERS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'src/core/constants';
+import { UserData } from 'src/core/users';
 import { PaginatedData, RequestArgs, RequestOptions } from './interfaces';
 
 
@@ -20,6 +21,26 @@ export class ApiService {
       paginate: true,
       query: `q=${query}`,
       url: API_TRACKS_URL
+    });
+  }
+
+  fetchUser(userId: number): Observable<UserData> {
+    return this.request({
+      url: `${API_USERS_URL}/${userId}`
+    });
+  }
+
+  fetchUserLikes(userId: number): Observable<PaginatedData> {
+    return this.request({
+      paginate: true,
+      url: `${API_USERS_URL}/${userId}/favorites`
+    });
+  }
+
+  fetchUserTracks(userId: number): Observable<PaginatedData> {
+    return this.request({
+      paginate: true,
+      url: `${API_USERS_URL}/${userId}/tracks`
     });
   }
 

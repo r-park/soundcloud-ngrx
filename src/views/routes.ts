@@ -3,11 +3,13 @@ import { provideRouter, Routes } from '@ngrx/router';
 
 import { HomePageComponent } from './pages/home';
 import { SearchPageComponent } from './pages/search';
+import { UserPageComponent } from './pages/user';
 
 
 const routes: Routes = [
   {path: '/', component: HomePageComponent},
-  {path: '/search', component: SearchPageComponent}
+  {path: '/search', component: SearchPageComponent},
+  {path: '/users/:id(\\d+)/:resource(likes|tracks)', component: UserPageComponent}
 ];
 
 

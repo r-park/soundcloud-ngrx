@@ -42,7 +42,7 @@ import { WaveformTimelineComponent } from '../waveform-timeline';
             (seek)="seek.emit($event)"></audio-timeline>      
         </div>
 
-        <div class="track-card__username">{{track.username}}</div>
+        <a class="track-card__username" [linkTo]="'/users/' + track.userId + '/tracks'">{{track.username}}</a>
         <h1 class="track-card__title">{{track.title}}</h1>
 
         <waveform-timeline
@@ -82,7 +82,7 @@ import { WaveformTimelineComponent } from '../waveform-timeline';
 })
 
 export class TrackCardComponent {
-  @Input() compact: boolean = false;
+  @Input() compact = false;
   @Input() isPlaying = false;
   @Input() isSelected = false;
   @Input() times: Observable<TimesState>;

@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { addProviders, ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
+import { APP_BASE_HREF } from '@angular/common';
+import { provideRouter } from '@ngrx/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MediaQueryService } from 'src/core/browser';
 import { PlayerService } from 'src/core/player';
@@ -10,6 +12,12 @@ import { WaveformComponent } from '../waveform';
 import { WaveformTimelineComponent } from '../waveform-timeline';
 import { TracklistComponent } from './tracklist';
 
+
+@Component({
+  selector: 'test-page',
+  template: ''
+})
+class TestPage {}
 
 @Component({
   selector: 'waveform',
@@ -62,6 +70,8 @@ describe('components', () => {
       };
 
       addProviders([
+        provideRouter([{path: '/users/:id/:resource', component: TestPage}]),
+        {provide: APP_BASE_HREF, useValue: '/'},
         {provide: MediaQueryService, useValue: mediaQueryStub},
         {provide: PlayerService, useValue: playerServiceStub},
         {provide: TracklistService, useValue: tracklistServiceStub}

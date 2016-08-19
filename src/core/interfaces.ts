@@ -3,6 +3,7 @@ import { PlayerState, TimesState } from './player';
 import { SearchState } from './search';
 import { TracklistsState } from './tracklists';
 import { TracksState } from './tracks';
+import { UsersState } from './users';
 
 
 export interface AppState {
@@ -11,6 +12,7 @@ export interface AppState {
   times: TimesState;
   tracklists: TracklistsState;
   tracks: TracksState;
+  users: UsersState;
 }
 
 export interface Selector<T,V> {
