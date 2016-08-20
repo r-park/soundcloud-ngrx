@@ -1,3 +1,14 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/r-park/soundcloud-ngrx/compare/v0.3.0...v0.4.0) (2016-08-20)
+
+
+### Features
+
+* **homepage:** display featured tracks ([607ee99](https://github.com/r-park/soundcloud-ngrx/commit/607ee99))
+* **users:** user detail page with likes and tracks ([5c2e00b](https://github.com/r-park/soundcloud-ngrx/commit/5c2e00b))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/r-park/soundcloud-ngrx/compare/v0.2.0...v0.3.0) (2016-08-19)
 
