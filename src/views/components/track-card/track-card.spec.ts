@@ -1,5 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
+import { addProviders, ComponentFixture, inject, TestComponentBuilder } from '@angular/core/testing';
+import { APP_BASE_HREF } from '@angular/common';
+import { provideRouter } from '@ngrx/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { createTrack } from 'src/core/tracks';
 import { testUtils } from 'src/core/utils/test';
@@ -17,6 +19,12 @@ class TestComponent {
 }
 
 @Component({
+  selector: 'test-page',
+  template: ''
+})
+class TestPage {}
+
+@Component({
   selector: 'waveform',
   template: ''
 })
@@ -32,6 +40,11 @@ describe('components', () => {
     let track;
 
     beforeEach(() => {
+      addProviders([
+        provideRouter([{path: '/users/:id/:resource', component: TestPage}]),
+        {provide: APP_BASE_HREF, useValue: '/'}
+      ]);
+
       inject([TestComponentBuilder], tcb => {
         builder = tcb;
       })();
@@ -86,6 +99,15 @@ describe('components', () => {
           fixture.detectChanges();
           let el = fixture.nativeElement.querySelector('.track-card__username');
           expect(el.textContent).toBe(track.username);
+        });
+    });
+
+    it('should link track username to user tracks route', () => {
+      buildComponent()
+        .then(fixture => {
+          fixture.detectChanges();
+          let el = fixture.nativeElement.querySelector('.track-card__username');
+          expect(el.getAttribute('href')).toBe(`/users/${track.userId}/tracks`);
         });
     });
 

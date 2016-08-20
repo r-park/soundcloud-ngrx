@@ -1,4 +1,5 @@
 import { TrackData } from 'src/core/tracks';
+import { UserData } from 'src/core/users';
 
 
 export const testUtils = {
@@ -36,6 +37,22 @@ export const testUtils = {
     let tracks = [];
     for (let i = startId; i <= count; i++) tracks.push(testUtils.createTrack(i));
     return tracks;
+  },
+
+  createUser: (id: number = 1): UserData => {
+    return {
+      avatar_url: `https://i1.sndcdn.com/avatars-${id}-large.jpg`,
+      city: 'City Name',
+      country: 'Country Name',
+      followers_count: 10000,
+      followings_count: 1000,
+      full_name: 'Full Name',
+      id,
+      playlist_count: 1,
+      public_favorites_count: 10,
+      track_count: 100,
+      username: `user-${id}`
+    };
   },
 
   getVolumes: (): {actual: number, input: number, display: string}[] => {

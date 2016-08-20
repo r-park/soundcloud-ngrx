@@ -11,6 +11,7 @@ import { PLAYER_PROVIDERS } from './core/player';
 import { SEARCH_PROVIDERS } from './core/search';
 import { STORE_PROVIDERS } from './core/store';
 import { TRACKLISTS_PROVIDERS } from './core/tracklists';
+import { USERS_PROVIDERS } from './core/users';
 
 // route configuration
 import { ROUTER_PROVIDERS } from './views/routes';
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ROUTER_PROVIDERS,
     SEARCH_PROVIDERS,
     STORE_PROVIDERS,
-    TRACKLISTS_PROVIDERS
+    TRACKLISTS_PROVIDERS,
+    USERS_PROVIDERS
   ]).catch((error: Error) => console.error(error));
 });

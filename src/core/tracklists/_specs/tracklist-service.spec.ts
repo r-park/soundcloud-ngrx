@@ -103,6 +103,17 @@ describe('tracklists', () => {
     });
 
 
+    describe('loadFeaturedTracks()', () => {
+      it('should call store.dispatch() with LOAD_FEATURED_TRACKS action', () => {
+        spyOn(store, 'dispatch');
+        service.loadFeaturedTracks();
+
+        expect(store.dispatch).toHaveBeenCalledTimes(1);
+        expect(store.dispatch).toHaveBeenCalledWith(actions.loadFeaturedTracks());
+      });
+    });
+
+
     describe('loadNextTracks()', () => {
       it('should call store.dispatch() with LOAD_NEXT_TRACKS action', () => {
         spyOn(store, 'dispatch');

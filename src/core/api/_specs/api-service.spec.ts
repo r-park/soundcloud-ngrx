@@ -2,7 +2,8 @@ import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, RequestMethod, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
-import { API_TRACKS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'src/core/constants';
+import { API_TRACKS_URL, API_USERS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'src/core/constants';
+import { UserData } from 'src/core/users';
 import { ApiService } from '../api-service';
 import { PaginatedData } from '../interfaces';
 
@@ -84,8 +85,11 @@ describe('api', () => {
 
     describe('requests', () => {
       let paginatedDataResponse;
+      let userId;
 
       beforeEach(() => {
+        userId = 123;
+
         paginatedDataResponse = new Response(new ResponseOptions({
           body: JSON.stringify({collection: []})
         }));
@@ -128,6 +132,73 @@ describe('api', () => {
         it('should return response data', () => {
           backend.connections.subscribe((c: MockConnection) => c.mockRespond(paginatedDataResponse));
           service.fetchSearchResults(queryValue)
+            .subscribe((res: PaginatedData) => {
+              expect(res).toBeDefined();
+              expect(Array.isArray(res.collection)).toBe(true);
+            });
+        });
+      });
+
+      describe('fetchUser()', () => {
+        it('should perform GET request to provided url', () => {
+          backend.connections.subscribe((c: MockConnection) => {
+            expect(c.request.method).toBe(RequestMethod.Get);
+            expect(c.request.url).toMatch(`${API_USERS_URL}/${userId}`);
+            expect(c.request.url).toMatch(CLIENT_ID_PARAM);
+          });
+
+          service.fetchUser(userId);
+        });
+
+        it('should return response data', () => {
+          let response = new Response(new ResponseOptions({
+            body: JSON.stringify({id: userId})
+          }));
+
+          backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+          service.fetchUser(userId)
+            .subscribe((res: UserData) => {
+              expect(res).toBeDefined();
+              expect(res.id).toBe(userId);
+            });
+        });
+      });
+
+      describe('fetchUserLikes()', () => {
+        it('should perform GET request to provided url', () => {
+          backend.connections.subscribe((c: MockConnection) => {
+            expect(c.request.method).toBe(RequestMethod.Get);
+            expect(c.request.url).toMatch(`${API_USERS_URL}/${userId}/favorites`);
+            expect(c.request.url).toMatch(CLIENT_ID_PARAM);
+          });
+
+          service.fetchUserLikes(userId);
+        });
+
+        it('should return response data', () => {
+          backend.connections.subscribe((c: MockConnection) => c.mockRespond(paginatedDataResponse));
+          service.fetchUserLikes(userId)
+            .subscribe((res: PaginatedData) => {
+              expect(res).toBeDefined();
+              expect(Array.isArray(res.collection)).toBe(true);
+            });
+        });
+      });
+
+      describe('fetchUserTracks()', () => {
+        it('should perform GET request to provided url', () => {
+          backend.connections.subscribe((c: MockConnection) => {
+            expect(c.request.method).toBe(RequestMethod.Get);
+            expect(c.request.url).toMatch(`${API_USERS_URL}/${userId}/tracks`);
+            expect(c.request.url).toMatch(CLIENT_ID_PARAM);
+          });
+
+          service.fetchUserTracks(userId);
+        });
+
+        it('should return response data', () => {
+          backend.connections.subscribe((c: MockConnection) => c.mockRespond(paginatedDataResponse));
+          service.fetchUserTracks(userId)
             .subscribe((res: PaginatedData) => {
               expect(res).toBeDefined();
               expect(Array.isArray(res.collection)).toBe(true);

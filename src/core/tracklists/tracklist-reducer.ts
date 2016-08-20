@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import { TRACKS_PER_PAGE } from 'src/core/constants';
 import { SearchActions } from 'src/core/search';
 import { TrackData } from 'src/core/tracks';
+import { UserActions } from 'src/core/users';
 import { Tracklist, TracklistRecord } from './tracklist';
 import { TracklistActions } from './tracklist-actions';
 
@@ -29,7 +30,10 @@ export const tracklistReducer: ActionReducer<Tracklist> = (state: Tracklist = in
              state.merge(updatePagination(state, state.currentPage + 1)) as Tracklist :
              state.set('isPending', true) as Tracklist;
 
+    case TracklistActions.LOAD_FEATURED_TRACKS:
     case SearchActions.LOAD_SEARCH_RESULTS:
+    case UserActions.LOAD_USER_LIKES:
+    case UserActions.LOAD_USER_TRACKS:
       return state.isNew ?
              state.merge({id: payload.tracklistId, isPending: true}) as Tracklist :
              state.merge(updatePagination(state, 1)) as Tracklist;

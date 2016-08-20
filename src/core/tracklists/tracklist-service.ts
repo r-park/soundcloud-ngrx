@@ -21,6 +21,12 @@ export class TracklistService {
     this.tracks$ = store$.let(getTracksForCurrentTracklist());
   }
 
+  loadFeaturedTracks(): void {
+    this.store$.dispatch(
+      this.actions.loadFeaturedTracks()
+    );
+  }
+
   loadNextTracks(): void {
     this.store$.dispatch(
       this.actions.loadNextTracks()
