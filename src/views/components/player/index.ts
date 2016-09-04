@@ -1,1 +1,0 @@
-export { PlayerComponent } from './player';

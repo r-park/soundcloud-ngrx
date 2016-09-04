@@ -4,10 +4,11 @@ import '@angular/core';
 import '@angular/forms';
 import '@angular/http';
 import '@angular/platform-browser-dynamic';
+import '@angular/router';
 
 // NgRx
+import '@ngrx/core/add/operator/enterZone';
 import '@ngrx/effects';
-import '@ngrx/router';
 import '@ngrx/store';
 
 // RxJS
