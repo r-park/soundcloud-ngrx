@@ -6,10 +6,15 @@ require('core-js/es6/symbol');
 require('core-js/es7/reflect');
 require('core-js/fn/array/includes');
 require('core-js/fn/object/assign');
+
 require('zone.js/dist/zone');
+require('zone.js/dist/long-stack-trace-zone');
+require('zone.js/dist/proxy');
+require('zone.js/dist/sync-test');
 require('zone.js/dist/jasmine-patch');
 require('zone.js/dist/async-test');
 require('zone.js/dist/fake-async-test');
+
 require('ts-helpers');
 
 
@@ -17,13 +22,12 @@ Error.stackTraceLimit = Infinity;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
 
 
-// Specify platform and application providers
 var browser = require('@angular/platform-browser-dynamic/testing');
 var testing = require('@angular/core/testing');
 
-testing.setBaseTestProviders(
-  browser.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-  browser.TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
+testing.TestBed.initTestEnvironment(
+  browser.BrowserDynamicTestingModule,
+  browser.platformBrowserDynamicTesting()
 );
 
 

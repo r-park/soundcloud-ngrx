@@ -21,11 +21,31 @@ const PORT = process.env.PORT || 3000;
 
 
 //=========================================================
+//  LOADERS
+//---------------------------------------------------------
+const loaders = {
+  componentStyles: {
+    test: /\.scss$/,
+    loader: 'raw!postcss!sass',
+    exclude: path.resolve('src/shared/styles')
+  },
+  sharedStyles: {
+    test: /\.scss$/,
+    loader: 'style!css!postcss!sass',
+    include: path.resolve('src/shared/styles')
+  },
+  typescript: {
+    test: /\.ts$/,
+    loader: 'ts',
+    exclude: /node_modules/
+  }
+};
+
+
+//=========================================================
 //  CONFIG
 //---------------------------------------------------------
-const config = {};
-module.exports = config;
-
+const config = module.exports = {};
 
 config.resolve = {
   extensions: ['', '.ts', '.js'],
@@ -35,17 +55,8 @@ config.resolve = {
 
 config.module = {
   loaders: [
-    {
-      test: /\.ts$/,
-      loader: 'ts',
-      exclude: /node_modules/
-    },
-    {
-      test: /\.scss$/,
-      loader: 'raw!postcss!sass',
-      exclude: path.resolve('src/views/styles'),
-      include: path.resolve('src/views')
-    }
+    loaders.typescript,
+    loaders.componentStyles
   ]
 };
 
@@ -61,7 +72,7 @@ config.postcss = [
 ];
 
 config.sassLoader = {
-  includePaths: ['src/views'],
+  includePaths: ['src/shared'],
   outputStyle: 'compressed',
   precision: 10,
   sourceComments: false
@@ -108,20 +119,13 @@ if (ENV_DEVELOPMENT) {
 
   config.entry.main.unshift(`webpack-dev-server/client?http://${HOST}:${PORT}`);
 
-  config.module.loaders.push(
-    {
-      test: /\.scss$/,
-      loader: 'style!css!postcss!sass',
-      include: path.resolve('src/views/styles')
-    }
-  );
+  config.module.loaders.push(loaders.sharedStyles);
 
   config.devServer = {
     contentBase: './src',
     historyApiFallback: true,
     host: HOST,
     port: PORT,
-    publicPath: config.output.publicPath,
     stats: {
       cached: true,
       cachedAssets: true,
@@ -145,20 +149,20 @@ if (ENV_PRODUCTION) {
 
   config.output.filename = '[name].[chunkhash].js';
 
-  config.module.loaders.push(
-    {
-      test: /\.scss$/,
-      loader: ExtractTextPlugin.extract('css?-autoprefixer!postcss!sass'),
-      include: path.resolve('src/views/styles')
-    }
-  );
+  config.module.loaders.push({
+    test: /\.scss$/,
+    loader: ExtractTextPlugin.extract('css?-autoprefixer!postcss!sass'),
+    include: path.resolve('src/shared/styles')
+  });
 
   config.plugins.push(
     new WebpackMd5Hash(),
     new ExtractTextPlugin('styles.[contenthash].css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      mangle: true,
+      mangle: {
+        screw_ie8: true  // eslint-disable-line camelcase
+      },
       compress: {
         dead_code: true, // eslint-disable-line camelcase
         screw_ie8: true, // eslint-disable-line camelcase
@@ -176,25 +180,17 @@ if (ENV_PRODUCTION) {
 if (ENV_TEST) {
   config.devtool = 'inline-source-map';
 
-  config.module.loaders.push(
-    {
-      test: /\.scss$/,
-      loader: 'style!css!postcss!sass',
-      include: path.resolve('src/views/styles')
-    }
-  );
+  config.module.loaders.push(loaders.sharedStyles);
 
   if (argv.coverage) {
-    config.module.postLoaders = [
-      {
-        test: /\.(js|ts)$/,
-        loader: 'istanbul-instrumenter-loader',
-        include: path.resolve('./src'),
-        exclude: [
-          /\.spec\.ts$/,
-          /node_modules/
-        ]
-      }
-    ];
+    config.module.postLoaders = [{
+      test: /\.ts$/,
+      loader: 'istanbul-instrumenter-loader',
+      include: path.resolve('src'),
+      exclude: [
+        /\.spec\.ts$/,
+        /node_modules/
+      ]
+    }];
   }
 }
