@@ -1,7 +1,7 @@
 {
   "name": "soundcloud-ngrx",
   "version": "0.4.0",
-  "description": "soundcloud-ngrx",
+  "description": "SoundCloud API client with Angular2 and NgRx",
   "homepage": "https://github.com/r-park/soundcloud-ngrx",
   "repository": {
     "type": "git",
