@@ -6,7 +6,9 @@
 A basic SoundCloud API client built with Angular2 and NgRx. Try the [live demo](https://soundcloud-ngrx.herokuapp.com).
 
 
-## Stack
+Stack
+-----
+
 - Angular2
 - NgRx Effects
 - NgRx Store
@@ -19,3 +21,26 @@ A basic SoundCloud API client built with Angular2 and NgRx. Try the [live demo](
 - Karma
 - Typescript
 - Webpack
+
+
+Quick Start
+-----------
+
+```shell
+$ git clone https://github.com/r-park/soundcloud-ngrx.git
+$ cd soundcloud-ngrx
+$ npm install
+$ npm start
+```
+
+
+NPM Commands
+------------
+
+|Command|Description|
+|---|---|
+|npm start|Start webpack development server @ **localhost:3000**|
+|npm run build|Build production bundles to **./target** directory|
+|npm run server|Start express server @ **localhost:3000** to serve built artifacts from **./target** directory|
+|npm test|Run tests and generate coverage report to **./coverage** directory|
+|npm run test:watch|Run tests; watch for changes to re-run tests|
