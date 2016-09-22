@@ -6,10 +6,6 @@ dependencies:
   pre:
     - rm -rf node_modules
 
-test:
-  post:
-    - mv ./coverage ${CIRCLE_ARTIFACTS}
-
 deployment:
   dev:
     branch: /^dev.*/
