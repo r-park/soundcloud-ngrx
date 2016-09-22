@@ -1,13 +1,19 @@
+const path = require('path');
+
 const autoprefixer = require('autoprefixer');
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
+const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-const webpack = require('webpack');
+const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
+const ProgressPlugin = require('webpack/lib/ProgressPlugin');
+const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 
 
 //=========================================================
-//  ENVIRONMENT VARS
+//  VARS
 //---------------------------------------------------------
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -15,8 +21,8 @@ const ENV_DEVELOPMENT = NODE_ENV === 'development';
 const ENV_PRODUCTION = NODE_ENV === 'production';
 const ENV_TEST = NODE_ENV === 'test';
 
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
+const PORT = 3000;
 
 
 //=========================================================
@@ -47,9 +53,12 @@ const loaders = {
 const config = module.exports = {};
 
 config.resolve = {
-  extensions: ['', '.ts', '.js'],
-  modulesDirectories: ['node_modules'],
-  root: path.resolve('.')
+  extensions: ['.ts', '.js'],
+  mainFields: ['module', 'browser', 'main'],
+  modules: [
+    path.resolve('.'),
+    'node_modules'
+  ]
 };
 
 config.module = {
@@ -60,10 +69,18 @@ config.module = {
 };
 
 config.plugins = [
-  new webpack.DefinePlugin({
+  new DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     'process.env.SOUNDCLOUD_CLIENT_ID': JSON.stringify(process.env.SOUNDCLOUD_CLIENT_ID)
-  })
+  }),
+  new LoaderOptionsPlugin({
+    debug: false,
+    minimize: ENV_PRODUCTION
+  }),
+  new ContextReplacementPlugin(
+    /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+    path.resolve('src')
+  )
 ];
 
 config.postcss = [
@@ -83,20 +100,18 @@ config.sassLoader = {
 //-------------------------------------
 if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
   config.entry = {
-    main: ['./src/main.ts'],
-    polyfills: './src/polyfills.ts',
-    vendor: './src/vendor.ts'
+    main: './src/main.ts',
+    polyfills: './src/polyfills.ts'
   };
 
   config.output = {
-    filename: '[name].js',
     path: path.resolve('./target'),
     publicPath: '/'
   };
 
   config.plugins.push(
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['vendor', 'polyfills'],
+    new CommonsChunkPlugin({
+      name: ['polyfills'],
       minChunks: Infinity
     }),
     new HtmlWebpackPlugin({
@@ -116,9 +131,11 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
 if (ENV_DEVELOPMENT) {
   config.devtool = 'cheap-module-source-map';
 
-  config.entry.main.unshift(`webpack-dev-server/client?http://${HOST}:${PORT}`);
+  config.output.filename = '[name].js';
 
   config.module.loaders.push(loaders.sharedStyles);
+
+  config.plugins.push(new ProgressPlugin());
 
   config.devServer = {
     contentBase: './src',
@@ -157,16 +174,16 @@ if (ENV_PRODUCTION) {
   config.plugins.push(
     new WebpackMd5Hash(),
     new ExtractTextPlugin('styles.[contenthash].css'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: {
-        screw_ie8: true  // eslint-disable-line camelcase
-      },
+    new UglifyJsPlugin({
+      comments: false,
       compress: {
         dead_code: true, // eslint-disable-line camelcase
         screw_ie8: true, // eslint-disable-line camelcase
         unused: true,
         warnings: false
+      },
+      mangle: {
+        screw_ie8: true  // eslint-disable-line camelcase
       }
     })
   );
