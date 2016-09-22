@@ -42,5 +42,5 @@ NPM Commands
 |npm start|Start webpack development server @ **localhost:3000**|
 |npm run build|Build production bundles to **./target** directory|
 |npm run server|Start express server @ **localhost:3000** to serve built artifacts from **./target** directory|
-|npm test|Run tests and generate coverage report to **./coverage** directory|
+|npm test|Lint and run tests|
 |npm run test:watch|Run tests; watch for changes to re-run tests|

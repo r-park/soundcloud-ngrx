@@ -32,14 +32,5 @@ testing.TestBed.initTestEnvironment(
 
 
 // Load source files
-var context = require.context('./src', true, /\.ts/);
-
-var exclude = [
-  './main.ts',
-  './polyfill.ts',
-  './vendor.ts'
-];
-
-context.keys().forEach(function(key) {
-  if (exclude.indexOf(key) === -1) context(key);
-});
+var context = require.context('./src', true, /\.spec\.ts/);
+context.keys().forEach(context);
