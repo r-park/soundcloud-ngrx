@@ -28,7 +28,7 @@ const PORT = 3000;
 //=========================================================
 //  LOADERS
 //---------------------------------------------------------
-const loaders = {
+const rules = {
   componentStyles: {
     test: /\.scss$/,
     loader: 'raw!postcss!sass',
@@ -62,9 +62,9 @@ config.resolve = {
 };
 
 config.module = {
-  loaders: [
-    loaders.typescript,
-    loaders.componentStyles
+  rules: [
+    rules.typescript,
+    rules.componentStyles
   ]
 };
 
@@ -75,24 +75,25 @@ config.plugins = [
   }),
   new LoaderOptionsPlugin({
     debug: false,
-    minimize: ENV_PRODUCTION
+    minimize: ENV_PRODUCTION,
+    options: {
+      postcss: [
+        autoprefixer({browsers: ['last 3 versions']})
+      ],
+      resolve: {},
+      sassLoader: {
+        includePaths: ['src/shared'],
+        outputStyle: 'compressed',
+        precision: 10,
+        sourceComments: false
+      }
+    }
   }),
   new ContextReplacementPlugin(
     /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
     path.resolve('src')
   )
 ];
-
-config.postcss = [
-  autoprefixer({browsers: ['last 3 versions']})
-];
-
-config.sassLoader = {
-  includePaths: ['src/shared'],
-  outputStyle: 'compressed',
-  precision: 10,
-  sourceComments: false
-};
 
 
 //=====================================
@@ -133,7 +134,7 @@ if (ENV_DEVELOPMENT) {
 
   config.output.filename = '[name].js';
 
-  config.module.loaders.push(loaders.sharedStyles);
+  config.module.rules.push(rules.sharedStyles);
 
   config.plugins.push(new ProgressPlugin());
 
@@ -161,11 +162,11 @@ if (ENV_DEVELOPMENT) {
 //  PRODUCTION
 //-------------------------------------
 if (ENV_PRODUCTION) {
-  config.devtool = 'source-map';
+  config.devtool = 'hidden-source-map';
 
   config.output.filename = '[name].[chunkhash].js';
 
-  config.module.loaders.push({
+  config.module.rules.push({
     test: /\.scss$/,
     loader: ExtractTextPlugin.extract('css?-autoprefixer!postcss!sass'),
     include: path.resolve('src/shared/styles')
@@ -196,5 +197,5 @@ if (ENV_PRODUCTION) {
 if (ENV_TEST) {
   config.devtool = 'inline-source-map';
 
-  config.module.loaders.push(loaders.sharedStyles);
+  config.module.rules.push(rules.sharedStyles);
 }
