@@ -89,8 +89,8 @@
     "ts-loader": "~0.8.2",
     "tslint": "~3.15.1",
     "typescript": "~2.0.3",
-    "webpack": "2.1.0-beta.22",
-    "webpack-dev-server": "2.1.0-beta.4",
+    "webpack": "2.1.0-beta.25",
+    "webpack-dev-server": "2.1.0-beta.5",
     "webpack-md5-hash": "~0.0.5",
     "zone.js": "~0.6.25"
   }
