@@ -55,7 +55,7 @@
     "@ngrx/core": "1.2.0",
     "@ngrx/effects": "2.0.0",
     "@ngrx/store": "2.2.1",
-    "@types/jasmine": "~2.5.35",
+    "@types/jasmine": "2.5.35",
     "@types/node": "~6.0.45",
     "autoprefixer": "~6.5.1",
     "ava": "~0.16.0",
