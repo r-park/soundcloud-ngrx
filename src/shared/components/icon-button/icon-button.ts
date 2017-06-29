@@ -4,9 +4,7 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'icon-button',
-  styles: [
-    require('./icon-button.scss')
-  ],
+  styleUrls: ['icon-button.scss'],
   template: `
     <button
       [attr.aria-label]="label"

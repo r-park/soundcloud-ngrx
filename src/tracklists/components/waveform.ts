@@ -15,9 +15,7 @@ import { ApiService } from 'src/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   selector: 'waveform',
-  styles: [
-    require('./waveform.scss')
-  ],
+  styleUrls: ['waveform.scss'],
   template: ''
 })
 export class WaveformComponent implements OnInit {

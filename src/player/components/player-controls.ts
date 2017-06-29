@@ -8,9 +8,7 @@ import { PlayerState } from '../reducers/player-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   selector: 'player-controls',
-  styles: [
-    require('./player-controls.scss')
-  ],
+  styleUrls: ['player-controls.scss'],
   template: `
     <div class="player-controls" *ngIf="track">
       <div>

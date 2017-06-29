@@ -3,9 +3,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'content-header',
-  styles: [
-    require('./content-header.scss')
-  ],
+  styleUrls: ['content-header.scss'],
   template: `
     <header class="content-header">
       <div class="g-row g-cont">

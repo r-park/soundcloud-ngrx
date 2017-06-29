@@ -10,9 +10,7 @@ import { Track } from '../models/track';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'tracklist-items',
-  styles: [
-    require('./tracklist-items.scss')
-  ],
+  styleUrls: ['tracklist-items.scss'],
   template: `
     <div *ngIf="media && tracklist" class="g-row g-cont tracklist-items" [ngClass]="{'has-line-clamp': hasLineClamp}">
       <track-card

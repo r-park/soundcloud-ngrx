@@ -6,9 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'search-bar',
-  styles: [
-    require('./search-bar.scss')
-  ],
+  styleUrls: ['search-bar.scss'],
   template: `
     <div class="search-bar" [ngClass]="{'search-bar--open': open}" role="search">
       <form class="search-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>

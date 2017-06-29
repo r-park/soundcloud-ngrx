@@ -6,9 +6,7 @@ import { PlayerService } from '../player-service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   selector: 'player',
-  styles: [
-    require('./player.scss')
-  ],
+  styleUrls: ['player.scss'],
   template: `
     <div class="player-timeline">
       <audio-timeline

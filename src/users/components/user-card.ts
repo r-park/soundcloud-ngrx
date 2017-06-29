@@ -5,9 +5,7 @@ import { User } from '../models/user';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'user-card',
-  styles: [
-    require('./user-card.scss')
-  ],
+  styleUrls: ['user-card.scss'],
   template: `
     <article class="user-card">
       <div class="g-row g-cont" *ngIf="user">

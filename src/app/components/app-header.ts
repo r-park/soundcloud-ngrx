@@ -5,9 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'app-header',
-  styles: [
-    require('./app-header.scss')
-  ],
+  styleUrls: ['app-header.scss'],
   template: `
     <header class="header">
       <div class="g-row g-cont">

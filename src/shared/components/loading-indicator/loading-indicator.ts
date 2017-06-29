@@ -3,9 +3,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'loading-indicator',
-  styles: [
-    require('./loading-indicator.scss')
-  ],
+  styleUrls: ['loading-indicator.scss'],
   template: `
     <div class="loading-indicator">
       <div class="circle circle--1"></div>

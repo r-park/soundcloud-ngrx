@@ -14,9 +14,7 @@ import { TimesState } from 'src/player';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   selector: 'audio-timeline',
-  styles: [
-    require('./audio-timeline.scss')
-  ],
+  styleUrls: ['audio-timeline.scss'],
   template: `
     <div class="bar bar--buffered"
       [ngClass]="{'bar--animated': times?.bufferedTime !== 0}"

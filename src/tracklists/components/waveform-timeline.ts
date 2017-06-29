@@ -6,9 +6,7 @@ import { TimesState } from 'src/player';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'waveform-timeline',
-  styles: [
-    require('./waveform-timeline.scss')
-  ],
+  styleUrls: ['waveform-timeline.scss'],
   template: `
     <div class="waveform-timeline" [ngClass]="{'waveform-timeline--ready': ready}">
       <audio-timeline
