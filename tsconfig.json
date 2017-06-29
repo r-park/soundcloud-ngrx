@@ -3,6 +3,8 @@
     "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
     "lib": [
       "dom",
       "es6"
