@@ -38,7 +38,7 @@ export class PlayerService extends AudioService {
     this.track$.subscribe(track => this.play(track.streamUrl));
 
     this.times$ = store$.let(getTimes());
-    this.currentTime$ = this.times$.pluck<number>('currentTime');
+    this.currentTime$ = this.times$.pluck('currentTime');
   }
 
 

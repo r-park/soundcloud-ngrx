@@ -1,17 +1,18 @@
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/fromEventPattern';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publishReplay';
 import '@ngrx/core/add/operator/enterZone';
 
-import { Inject, Injectable, NgZone, OpaqueToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { MediaQueryResults, MediaQueryRule, MediaQueryUpdate } from './interfaces';
 import { getMedia } from './utils';
 
 
-export const MEDIA_QUERY_RULES = new OpaqueToken('MEDIA_QUERY_RULES');
+export const MEDIA_QUERY_RULES = new InjectionToken<MediaQueryRule[]>('MEDIA_QUERY_RULES');
 
 
 @Injectable()
@@ -23,6 +24,7 @@ export class MediaQueryService {
       .combineLatest(...this.getMqlObservables(rules))
       .debounceTime(5)
       .map(this.getResults)
+      .delay(1)
       .enterZone(zone)
       .publishReplay(1)
       .refCount();

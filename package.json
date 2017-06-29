@@ -44,19 +44,21 @@
     "winston": "~2.2.0"
   },
   "devDependencies": {
-    "@angular/common": "2.1.1",
-    "@angular/compiler": "2.1.1",
-    "@angular/core": "2.1.1",
-    "@angular/forms": "2.1.1",
-    "@angular/http": "2.1.1",
-    "@angular/platform-browser": "2.1.1",
-    "@angular/platform-browser-dynamic": "2.1.1",
-    "@angular/router": "3.1.1",
+    "@angular/common": "4.2.4",
+    "@angular/compiler": "4.2.4",
+    "@angular/compiler-cli": "4.2.4",
+    "@angular/core": "4.2.4",
+    "@angular/forms": "4.2.4",
+    "@angular/http": "4.2.4",
+    "@angular/platform-browser": "4.2.4",
+    "@angular/platform-browser-dynamic": "4.2.4",
+    "@angular/platform-server": "4.2.4",
+    "@angular/router": "4.2.4",
     "@ngrx/core": "1.2.0",
     "@ngrx/effects": "2.0.0",
     "@ngrx/store": "2.2.1",
-    "@types/jasmine": "2.5.35",
-    "@types/node": "~6.0.45",
+    "@types/jasmine": "2.5.45",
+    "@types/node": "~8.0.1",
     "autoprefixer": "~6.5.1",
     "ava": "~0.16.0",
     "conventional-changelog-cli": "~1.2.0",
@@ -81,7 +83,7 @@
     "npm-run-all": "~3.1.1",
     "postcss-loader": "~1.0.0",
     "raw-loader": "~0.5.1",
-    "rxjs": "5.0.0-beta.12",
+    "rxjs": "5.4.1",
     "sass-loader": "~4.0.2",
     "style-loader": "~0.13.1",
     "supertest": "~2.0.1",
@@ -92,6 +94,6 @@
     "webpack": "2.1.0-beta.25",
     "webpack-dev-server": "2.1.0-beta.5",
     "webpack-md5-hash": "~0.0.5",
-    "zone.js": "~0.6.26"
+    "zone.js": "~0.8.12"
   }
 }
