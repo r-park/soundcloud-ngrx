@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TracklistService } from 'src/tracklists';
+import { TracklistService } from 'src/app/tracklists';
 
 
 @Component({

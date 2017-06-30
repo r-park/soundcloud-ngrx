@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { AppState } from 'src/app';
 import { Tracklist } from './models/tracklist';
 import { Track } from './models/track';
-import { getCurrentTracklist, getTracksForCurrentTracklist } from './reducers/selectors';
+import { getCurrentTracklist, getTracksForCurrentTracklist } from './state/selectors';
 import { TracklistActions } from './tracklist-actions';
 
 

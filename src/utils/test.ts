@@ -1,4 +1,4 @@
-import { TrackData } from 'src/tracklists';
+import { TrackData } from 'src/app/tracklists';
 import { UserData } from 'src/users';
 
 

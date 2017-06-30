@@ -3,8 +3,8 @@ import { Store, StoreModule } from '@ngrx/store';
 import { TRACKS_PER_PAGE } from 'src/constants';
 import { testUtils } from 'src/utils/test';
 import { TracklistRecord } from './models/tracklist';
-import { initialState, tracklistsReducer } from './reducers/tracklists-reducer';
-import { tracksReducer } from './reducers/tracks-reducer';
+import { initialState, tracklistsReducer } from './state/tracklists-reducer';
+import { tracksReducer } from './state/tracks-reducer';
 import { TracklistActions } from './tracklist-actions';
 import { TracklistService } from './tracklist-service';
 

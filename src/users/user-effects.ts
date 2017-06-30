@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { AppState } from 'src/app';
 import { ApiService } from 'src/app/core';
-import { getCurrentTracklist, TracklistActions } from 'src/tracklists';
+import { getCurrentTracklist, TracklistActions } from 'src/app/tracklists';
 import { getCurrentUser } from './reducers/selectors';
 import { UserActions } from './user-actions';
 

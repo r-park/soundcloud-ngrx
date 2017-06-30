@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { List, Map } from 'immutable';
-import { TracklistActions, TracklistRecord, tracklistsReducer, TrackRecord, tracksReducer } from 'src/tracklists';
+import { TracklistActions, TracklistRecord, tracklistsReducer, TrackRecord, tracksReducer } from 'src/app/tracklists';
 import { testUtils } from 'src/utils/test';
 import { PlayerActions } from '../player-actions';
 import { initialState as initialPlayerState, playerReducer } from './player-reducer';

@@ -1,6 +1,6 @@
 import { Action, ActionReducer } from '@ngrx/store';
 import { Map } from 'immutable';
-import { TracklistActions } from 'src/tracklists';
+import { TracklistActions } from 'src/app/tracklists';
 import { createUser } from '../models/user';
 import { UserActions } from '../user-actions';
 

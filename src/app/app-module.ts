@@ -13,7 +13,7 @@ import { HomeModule } from './home';
 import { PlayerModule } from './player';
 import { SearchModule } from './search';
 import { SharedModule } from './shared';
-import { TracklistsModule } from 'src/tracklists';
+import { TracklistsModule } from './tracklists';
 import { UsersModule } from 'src/users';
 import { AppStateModule } from './app-state';
 

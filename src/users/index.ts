@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 
 import { SharedModule } from 'src/app/shared';
-import { TracklistsModule } from 'src/tracklists';
+import { TracklistsModule } from 'src/app/tracklists';
 
 import { UserCardComponent } from './components/user-card';
 import { UserPageComponent } from './pages/user-page';

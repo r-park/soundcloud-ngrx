@@ -5,8 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomePageComponent } from './pages/home-page';
 
 // modules
-import { SharedModule } from 'src/app/shared';
-import { TracklistsModule } from 'src/tracklists';
+import { SharedModule } from '../shared';
+import { TracklistsModule } from '../tracklists';
 
 // routes
 const routes: Routes = [

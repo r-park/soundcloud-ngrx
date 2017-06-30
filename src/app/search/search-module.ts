@@ -8,8 +8,8 @@ import { SearchBarComponent } from './components/search-bar';
 import { SearchPageComponent } from './pages/search-page';
 
 // modules
-import { SharedModule } from 'src/app/shared';
-import { TracklistsModule } from 'src/tracklists';
+import { SharedModule } from '../shared';
+import { TracklistsModule } from '../tracklists';
 
 // services
 import { SearchActions } from './search-actions';

@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { PLAYER_INITIAL_VOLUME } from 'src/constants';
 import { AppState } from 'src/app';
-import { Track, TracklistCursor } from 'src/tracklists';
+import { Track, TracklistCursor } from 'src/app/tracklists';
 import { PlayerState } from './state/player-state';
 import { getPlayer, getPlayerTrack, getPlayerTracklistCursor, getTimes } from './state/selectors';
 import { TimesState } from './state/times-state';
