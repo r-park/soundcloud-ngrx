@@ -1,7 +1,7 @@
 import { is, List } from 'immutable';
 import { TRACKS_PER_PAGE } from 'src/constants';
 import { SearchActions } from 'src/app/search/search-actions';
-import { testUtils } from 'src/utils/test';
+import { testUtils } from 'src/app/utils/test';
 import { Tracklist, TracklistRecord } from '../models/tracklist';
 import { TracklistActions } from '../tracklist-actions';
 import { tracklistReducer } from './tracklist-reducer';

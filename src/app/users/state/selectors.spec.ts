@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { TracklistActions } from 'src/app/tracklists';
-import { testUtils } from 'src/utils/test';
+import { testUtils } from 'src/app/utils/test';
 import { createUser } from '../models/user';
 import { UserActions } from '../user-actions';
 import { getCurrentUser, getUsers } from './selectors';

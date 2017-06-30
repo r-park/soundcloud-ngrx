@@ -1,5 +1,5 @@
 import { PLAYER_STORAGE_KEY } from 'src/constants';
-import { localStorageAdapter } from 'src/utils/local-storage';
+import { localStorageAdapter } from 'src/app/utils/local-storage';
 
 
 export const playerStorage = {
