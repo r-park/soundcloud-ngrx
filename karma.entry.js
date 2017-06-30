@@ -15,8 +15,6 @@ require('zone.js/dist/jasmine-patch');
 require('zone.js/dist/async-test');
 require('zone.js/dist/fake-async-test');
 
-require('ts-helpers');
-
 
 Error.stackTraceLimit = Infinity;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;

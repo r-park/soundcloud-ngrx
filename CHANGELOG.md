@@ -1,3 +1,15 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/r-park/soundcloud-ngrx/compare/v0.4.0...v1.0.0) (2017-06-30)
+
+
+### Bug Fixes
+
+* **scripts:** `prebuild` script should clean `dist` directory ([c2b2834](https://github.com/r-park/soundcloud-ngrx/commit/c2b2834))
+* **server:** specs should pass ([ceaa70a](https://github.com/r-park/soundcloud-ngrx/commit/ceaa70a))
+* **typings:** freeze jasmine typings version to prevent error TS2304 ([fa6f415](https://github.com/r-park/soundcloud-ngrx/commit/fa6f415)), closes [#16](https://github.com/r-park/soundcloud-ngrx/issues/16)
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/r-park/soundcloud-ngrx/compare/v0.3.0...v0.4.0) (2016-08-20)
 

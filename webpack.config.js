@@ -1,12 +1,12 @@
 const path = require('path');
+const pkg = require('./package.json');
 
-const autoprefixer = require('autoprefixer');
+const BannerPlugin = require('webpack/lib/BannerPlugin');
+const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
@@ -21,28 +21,39 @@ const ENV_DEVELOPMENT = NODE_ENV === 'development';
 const ENV_PRODUCTION = NODE_ENV === 'production';
 const ENV_TEST = NODE_ENV === 'test';
 
-const HOST = '0.0.0.0';
-const PORT = 3000;
+const PACKAGE_NAME = pkg.name;
+const PACKAGE_VERSION = pkg.version;
+
+const SERVER_HOST = '0.0.0.0';
+const SERVER_PORT = 3000;
 
 
 //=========================================================
 //  LOADERS
 //---------------------------------------------------------
 const rules = {
-  componentStyles: {
+  scss: {
     test: /\.scss$/,
-    loader: 'raw!postcss!sass',
-    exclude: path.resolve('src/shared/styles')
-  },
-  sharedStyles: {
-    test: /\.scss$/,
-    loader: 'style!css!postcss!sass',
-    include: path.resolve('src/shared/styles')
+    use: [
+      'raw-loader',
+      'postcss-loader',
+      {
+        loader: 'sass-loader',
+        options: {
+          includePaths: ['src'],
+          outputStyle: 'compressed',
+          precision: 10,
+          sourceComments: false
+        }
+      }
+    ]
   },
   typescript: {
     test: /\.ts$/,
-    loader: 'ts',
-    exclude: /node_modules/
+    use: [
+      'awesome-typescript-loader',
+      'angular2-template-loader'
+    ]
   }
 };
 
@@ -54,44 +65,28 @@ const config = module.exports = {};
 
 config.resolve = {
   extensions: ['.ts', '.js'],
-  mainFields: ['module', 'browser', 'main'],
   modules: [
-    path.resolve('.'),
-    'node_modules'
+    path.resolve('./src'),
+    path.resolve('./node_modules')
   ]
 };
 
 config.module = {
   rules: [
     rules.typescript,
-    rules.componentStyles
+    rules.scss
   ]
 };
 
 config.plugins = [
+  new CheckerPlugin(),
   new DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     'process.env.SOUNDCLOUD_CLIENT_ID': JSON.stringify(process.env.SOUNDCLOUD_CLIENT_ID)
   }),
-  new LoaderOptionsPlugin({
-    debug: false,
-    minimize: ENV_PRODUCTION,
-    options: {
-      postcss: [
-        autoprefixer({browsers: ['last 3 versions']})
-      ],
-      resolve: {},
-      sassLoader: {
-        includePaths: ['src/shared'],
-        outputStyle: 'compressed',
-        precision: 10,
-        sourceComments: false
-      }
-    }
-  }),
   new ContextReplacementPlugin(
-    /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-    path.resolve('src')
+    /angular([\\/])core([\\/])@angular/,
+    path.resolve('./src')
   )
 ];
 
@@ -106,20 +101,24 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
   };
 
   config.output = {
-    path: path.resolve('./target'),
+    path: path.resolve('./dist'),
     publicPath: '/'
   };
 
   config.plugins.push(
     new CommonsChunkPlugin({
-      name: ['polyfills'],
-      minChunks: Infinity
+      name: 'polyfills',
+      chunks: ['polyfills']
+    }),
+    new CommonsChunkPlugin({
+      name: 'vendor',
+      chunks: ['main'],
+      minChunks: module => /node_modules/.test(module.resource)
     }),
     new HtmlWebpackPlugin({
-      chunkSortMode: 'dependency',
       filename: 'index.html',
       hash: false,
-      inject: 'body',
+      inject: false,
       template: './src/index.html'
     })
   );
@@ -134,15 +133,13 @@ if (ENV_DEVELOPMENT) {
 
   config.output.filename = '[name].js';
 
-  config.module.rules.push(rules.sharedStyles);
-
   config.plugins.push(new ProgressPlugin());
 
   config.devServer = {
     contentBase: './src',
     historyApiFallback: true,
-    host: HOST,
-    port: PORT,
+    host: SERVER_HOST,
+    port: SERVER_PORT,
     stats: {
       cached: true,
       cachedAssets: true,
@@ -153,6 +150,9 @@ if (ENV_DEVELOPMENT) {
       reasons: true,
       timings: true,
       version: false
+    },
+    watchOptions: {
+      ignored: /node_modules/
     }
   };
 }
@@ -166,27 +166,31 @@ if (ENV_PRODUCTION) {
 
   config.output.filename = '[name].[chunkhash].js';
 
-  config.module.rules.push({
-    test: /\.scss$/,
-    loader: ExtractTextPlugin.extract('css?-autoprefixer!postcss!sass'),
-    include: path.resolve('src/shared/styles')
-  });
-
   config.plugins.push(
-    new WebpackMd5Hash(),
-    new ExtractTextPlugin('styles.[contenthash].css'),
     new UglifyJsPlugin({
       comments: false,
       compress: {
+        comparisons: true,
+        conditionals: true,
         dead_code: true, // eslint-disable-line camelcase
+        evaluate: true,
+        if_return: true, // eslint-disable-line camelcase
+        join_vars: true, // eslint-disable-line camelcase
+        negate_iife: false, // eslint-disable-line camelcase
         screw_ie8: true, // eslint-disable-line camelcase
+        sequences: true,
         unused: true,
         warnings: false
       },
       mangle: {
-        screw_ie8: true  // eslint-disable-line camelcase
-      }
-    })
+        screw_ie8: true // eslint-disable-line camelcase
+      },
+      sourceMaps: false
+    }),
+    new BannerPlugin({
+      banner: `${PACKAGE_NAME} v${PACKAGE_VERSION} -- ${new Date().toString()}`
+    }),
+    new WebpackMd5Hash()
   );
 }
 
@@ -196,6 +200,4 @@ if (ENV_PRODUCTION) {
 //-------------------------------------
 if (ENV_TEST) {
   config.devtool = 'inline-source-map';
-
-  config.module.rules.push(rules.sharedStyles);
 }

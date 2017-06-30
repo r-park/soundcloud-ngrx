@@ -10,6 +10,3 @@ import 'core-js/fn/object/assign';
 
 // Zone
 import 'zone.js/dist/zone';
-
-// Typescript helpers
-import 'ts-helpers';

@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
     "lib": [
       "dom",
       "es6"
@@ -20,8 +22,13 @@
   },
 
   "exclude": [
+    "dist",
     "node_modules",
-    "target",
     "tmp"
-  ]
+  ],
+
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true,
+    "useWebpackText": true
+  }
 }

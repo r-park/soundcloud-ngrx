@@ -1,9 +1,9 @@
 #======================================
 # Directories
 #--------------------------------------
+dist/
 coverage/
 node_modules/
-target/
 tmp/
 
 

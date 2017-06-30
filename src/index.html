@@ -7,12 +7,14 @@
 
   <title>SoundCloud • Angular2 NgRx</title>
 
+  <style><%= require('./styles/styles.scss') %></style>
+
   <script src="https://use.typekit.net/wqt1ymx.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 
 <body>
-  <%= require('raw!./shared/assets/icons.svg') %>
+  <%= require('raw-loader!./assets/icons.svg') %>
 
   <app></app>
 
@@ -24,5 +26,9 @@
     ga('create', 'UA-64158810-12', 'auto');
     ga('send', 'pageview');
   </script>
+
+  <script src="<%= htmlWebpackPlugin.files.js[0] %>"></script>
+  <script src="<%= htmlWebpackPlugin.files.js[1] %>"></script>
+  <script src="<%= htmlWebpackPlugin.files.js[2] %>"></script>
 </body>
 </html>
