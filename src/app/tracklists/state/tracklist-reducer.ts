@@ -1,4 +1,4 @@
-import { Action, ActionReducer } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { List } from 'immutable';
 import { TRACKS_PER_PAGE } from 'app/app-config';
 import { SearchActions } from 'app/search/search-actions';
@@ -10,7 +10,7 @@ import { TracklistActions } from '../tracklist-actions';
 const initialState: Tracklist = new TracklistRecord() as Tracklist;
 
 
-export const tracklistReducer: ActionReducer<Tracklist> = (state: Tracklist = initialState, {payload, type}: Action) => {
+export function tracklistReducer(state: Tracklist = initialState, {payload, type}: Action): Tracklist {
   switch (type) {
     case TracklistActions.FETCH_TRACKS_FULFILLED:
       return state.withMutations((tracklist: any) => {
@@ -40,7 +40,7 @@ export const tracklistReducer: ActionReducer<Tracklist> = (state: Tracklist = in
     default:
       return state;
   }
-};
+}
 
 
 function mergeTrackIds(trackIds: List<number>, collection: TrackData[]): List<number> {

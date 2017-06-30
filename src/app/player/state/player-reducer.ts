@@ -1,4 +1,4 @@
-import { Action, ActionReducer } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { PlayerActions } from '../player-actions';
 import { PlayerState, PlayerStateRecord } from './player-state';
 
@@ -6,7 +6,7 @@ import { PlayerState, PlayerStateRecord } from './player-state';
 export const initialState: PlayerState = new PlayerStateRecord() as PlayerState;
 
 
-export const playerReducer: ActionReducer<PlayerState> = (state: PlayerState = initialState, {payload, type}: Action) => {
+export function playerReducer(state: PlayerState = initialState, {payload, type}: Action): PlayerState {
   switch (type) {
     case PlayerActions.AUDIO_ENDED:
     case PlayerActions.AUDIO_PAUSED:
@@ -27,4 +27,4 @@ export const playerReducer: ActionReducer<PlayerState> = (state: PlayerState = i
     default:
       return state;
   }
-};
+}

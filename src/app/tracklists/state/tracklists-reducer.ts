@@ -1,4 +1,4 @@
-import { Action, ActionReducer } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Map } from 'immutable';
 import { SearchActions } from 'app/search/search-actions';
 import { UserActions } from 'app/users/user-actions';
@@ -13,7 +13,7 @@ export const initialState: TracklistsState = Map<string,any>({
 });
 
 
-export const tracklistsReducer: ActionReducer<TracklistsState> = (state: TracklistsState = initialState, action: Action) => {
+export function tracklistsReducer(state: TracklistsState = initialState, action: Action): TracklistsState {
   switch (action.type) {
     case TracklistActions.FETCH_TRACKS_FULFILLED:
       return state.set(
@@ -44,4 +44,4 @@ export const tracklistsReducer: ActionReducer<TracklistsState> = (state: Trackli
     default:
       return state;
   }
-};
+}

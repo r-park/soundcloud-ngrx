@@ -11,7 +11,7 @@ A basic SoundCloud API client built with Angular and NgRx. Try the [live demo](h
 Stack
 -----
 
-- Angular
+- Angular with AOT compilation
 - NgRx Effects
 - NgRx Store
 - RxJS
@@ -42,7 +42,7 @@ NPM Commands
 |Command|Description|
 |---|---|
 |npm start|Start webpack development server @ **localhost:3000**|
-|npm run build|Build production bundles to **./dist** directory|
+|npm run build|Build production bundles to **./dist** directory; includes AOT compilation and tree-shaking|
 |npm run server|Start express server @ **localhost:3000** to serve built artifacts from **./dist** directory|
 |npm test|Lint and run tests|
 |npm run test:watch|Run tests; watch for changes to re-run tests|

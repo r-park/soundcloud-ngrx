@@ -7,6 +7,7 @@ const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NgcWebpackPlugin = require('ngc-webpack').NgcWebpackPlugin;
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
@@ -51,7 +52,12 @@ const rules = {
   typescript: {
     test: /\.ts$/,
     use: [
-      'awesome-typescript-loader',
+      {
+        loader: 'awesome-typescript-loader',
+        options: {
+          configFileName: ENV_PRODUCTION ? 'tsconfig.aot.json' : 'tsconfig.json'
+        }
+      },
       'angular2-template-loader'
     ]
   }
@@ -96,7 +102,6 @@ config.plugins = [
 //-------------------------------------
 if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
   config.entry = {
-    main: './src/main.ts',
     polyfills: './src/polyfills.ts'
   };
 
@@ -131,6 +136,8 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
 if (ENV_DEVELOPMENT) {
   config.devtool = 'cheap-module-source-map';
 
+  config.entry.main = './src/main.jit.ts';
+
   config.output.filename = '[name].js';
 
   config.plugins.push(new ProgressPlugin());
@@ -164,9 +171,15 @@ if (ENV_DEVELOPMENT) {
 if (ENV_PRODUCTION) {
   config.devtool = 'hidden-source-map';
 
+  config.entry.main = './src/main.aot.ts';
+
   config.output.filename = '[name].[chunkhash].js';
 
   config.plugins.push(
+    new NgcWebpackPlugin({
+      disabled: false,
+      tsConfig: path.resolve('tsconfig.aot.json')
+    }),
     new UglifyJsPlugin({
       comments: false,
       compress: {
