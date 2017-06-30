@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { UserData } from './models/user';
+import { UserData } from './models';
 import { tracklistIdForUserLikes, tracklistIdForUserTracks } from './utils';
 
 

@@ -1,5 +1,5 @@
-import { CLIENT_ID } from 'src/app/app-config';
-import { TrackData } from './models/track';
+import { CLIENT_ID } from 'app/app-config';
+import { TrackData } from './models';
 import { formatTrackTitle, streamUrl, trackImageUrl, waveformUrl } from './utils';
 
 

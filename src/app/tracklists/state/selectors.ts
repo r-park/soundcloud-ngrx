@@ -5,11 +5,10 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/withLatestFrom';
 
 import { List } from 'immutable';
-import { AppState } from 'src/app';
-import { TRACKS_PER_PAGE } from 'src/app/app-config';
-import { Selector } from 'src/app/core';
-import { Tracklist } from '../models/tracklist';
-import { Track } from '../models/track';
+import { AppState } from 'app';
+import { TRACKS_PER_PAGE } from 'app/app-config';
+import { Selector } from 'app/core';
+import { Track, Tracklist } from '../models';
 import { TracklistsState } from './tracklists-reducer';
 import { TracksState } from './tracks-reducer';
 

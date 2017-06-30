@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { TimesState } from 'src/app/player';
-import { Track } from '../models/track';
+import { TimesState } from 'app/player';
+import { Track } from '../models';
 
 
 @Component({

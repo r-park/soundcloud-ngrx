@@ -7,7 +7,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { TimesState } from 'src/app/player';
+import { TimesState } from 'app/player';
 
 
 @Component({

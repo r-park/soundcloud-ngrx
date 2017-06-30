@@ -1,5 +1,5 @@
 import { is, Record } from 'immutable';
-import { CLIENT_ID_PARAM } from 'src/app/app-config';
+import { CLIENT_ID_PARAM } from 'app/app-config';
 import { createTrack, TrackRecord } from './track';
 
 

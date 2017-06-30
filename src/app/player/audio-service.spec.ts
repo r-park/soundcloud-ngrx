@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { testUtils } from 'src/app/utils/test';
+import { testUtils } from 'app/utils/test';
 import { AudioService } from './audio-service';
 import { AudioSource, AUDIO_SOURCE_PROVIDER } from './audio-source';
 import { PlayerActions } from './player-actions';

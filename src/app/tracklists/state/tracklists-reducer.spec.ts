@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { SearchActions } from 'src/app/search/search-actions';
+import { SearchActions } from 'app/search/search-actions';
 import { TracklistRecord } from '../models/tracklist';
 import { TracklistActions } from '../tracklist-actions';
 import { tracklistsReducer } from './tracklists-reducer';

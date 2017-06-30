@@ -2,8 +2,8 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { SharedModule } from 'src/app/shared';
-import { testUtils } from 'src/app/utils/test';
+import { SharedModule } from 'app/shared';
+import { testUtils } from 'app/utils/test';
 import { createTrack } from '../models/track';
 import { TrackCardComponent } from './track-card';
 

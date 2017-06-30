@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { TimesState } from 'src/app/player';
+import { TimesState } from 'app/player';
 
 
 @Component({

@@ -1,4 +1,4 @@
-import { testUtils } from 'src/app/utils/test';
+import { testUtils } from 'app/utils/test';
 import { FormatVolumePipe } from './format-volume';
 
 

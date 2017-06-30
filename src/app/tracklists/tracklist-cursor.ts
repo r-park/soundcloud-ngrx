@@ -1,5 +1,5 @@
 import { Map, Record } from 'immutable';
-import { Tracklist } from './models/tracklist';
+import { Tracklist } from './models';
 
 
 export interface TracklistCursor extends Map<string,number> {

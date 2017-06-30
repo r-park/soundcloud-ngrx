@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, ConnectionBackend, Http, RequestMethod, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
-import { API_TRACKS_URL, API_USERS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'src/app/app-config';
-import { UserData } from 'src/app/users';
+import { API_TRACKS_URL, API_USERS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'app/app-config';
+import { UserData } from 'app/users';
 import { ApiService } from './api-service';
 import { PaginatedData } from './interfaces';
 

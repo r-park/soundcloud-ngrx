@@ -8,7 +8,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { ApiService } from 'src/app/core';
+import { ApiService } from 'app/core';
 
 
 @Component({

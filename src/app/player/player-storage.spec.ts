@@ -1,4 +1,4 @@
-import { PLAYER_STORAGE_KEY } from 'src/app/app-config';
+import { PLAYER_STORAGE_KEY } from 'app/app-config';
 import { playerStorage } from './player-storage';
 
 

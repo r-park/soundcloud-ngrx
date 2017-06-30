@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Times } from './state/times-state';
+import { Times } from './state';
 
 
 export class PlayerActions {

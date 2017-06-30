@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs/Subject';
-import { ApiService } from 'src/app/core';
+import { ApiService } from 'app/core';
 import { WaveformComponent } from './waveform';
 import { waveformData } from './waveform.data';
 

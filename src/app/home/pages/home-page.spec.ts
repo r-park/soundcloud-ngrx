@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { SharedModule } from 'src/app/shared';
-import { TracklistService } from 'src/app/tracklists/tracklist-service';
+import { SharedModule } from 'app/shared';
+import { TracklistService } from 'app/tracklists/tracklist-service';
 import { HomePageComponent } from './home-page';
 
 

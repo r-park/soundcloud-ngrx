@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Track, TracklistCursor } from 'src/app/tracklists';
+import { Track, TracklistCursor } from 'app/tracklists';
 import { PlayerState } from '../state/player-state';
 
 

@@ -1,10 +1,9 @@
 import { Action, ActionReducer } from '@ngrx/store';
 import { List } from 'immutable';
-import { TRACKS_PER_PAGE } from 'src/app/app-config';
-import { SearchActions } from 'src/app/search/search-actions';
-import { UserActions } from 'src/app/users/user-actions';
-import { TrackData } from '../models/track';
-import { Tracklist, TracklistRecord } from '../models/tracklist';
+import { TRACKS_PER_PAGE } from 'app/app-config';
+import { SearchActions } from 'app/search/search-actions';
+import { UserActions } from 'app/users/user-actions';
+import { TrackData, Tracklist, TracklistRecord } from '../models';
 import { TracklistActions } from '../tracklist-actions';
 
 

@@ -1,8 +1,8 @@
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 
-import { AppState } from 'src/app';
-import { Selector } from 'src/app/core';
+import { AppState } from 'app';
+import { Selector } from 'app/core';
 
 
 export function getSearchQuery(): Selector<AppState,string> {

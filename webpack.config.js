@@ -66,7 +66,7 @@ const config = module.exports = {};
 config.resolve = {
   extensions: ['.ts', '.js'],
   modules: [
-    path.resolve('.'),
+    path.resolve('./src'),
     path.resolve('./node_modules')
   ]
 };

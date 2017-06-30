@@ -1,5 +1,5 @@
 import { List, Record } from 'immutable';
-import { Tracklist, TracklistRecord } from './models/tracklist';
+import { Tracklist, TracklistRecord } from './models';
 import { getTracklistCursor, TracklistCursor, TracklistCursorRecord } from './tracklist-cursor';
 
 

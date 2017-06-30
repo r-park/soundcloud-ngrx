@@ -3,8 +3,8 @@ import 'rxjs/add/operator/let';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { AppState } from 'src/app';
-import { User } from './models/user';
+import { AppState } from 'app';
+import { User } from './models';
 import { getCurrentUser } from './state/selectors';
 import { UserActions } from './user-actions';
 
