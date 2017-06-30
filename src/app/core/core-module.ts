@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
-import { ApiService } from './api';
-import { MEDIA_QUERY_PROVIDERS, MediaQueryResults, MediaQueryService } from './media-query';
-
-
-export { ApiService, MediaQueryResults, MediaQueryService };
-export * from './interfaces';
+// services
+import { ApiService } from './services/api';
+import { MEDIA_QUERY_PROVIDERS } from './services/media-query';
 
 
 @NgModule({

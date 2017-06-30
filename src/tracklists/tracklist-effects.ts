@@ -10,7 +10,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { AppState } from 'src/app';
-import { ApiService } from 'src/core';
+import { ApiService } from 'src/app/core';
 import { getCurrentTracklist } from './reducers/selectors';
 import { TracklistActions } from './tracklist-actions';
 

@@ -10,7 +10,7 @@ import 'rxjs/add/operator/takeUntil';
 import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Selector } from 'src/core';
+import { Selector } from 'src/app/core';
 import { Tracklist } from '../models/tracklist';
 import { TracklistService } from '../tracklist-service';
 

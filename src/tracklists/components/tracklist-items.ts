@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
-import { MediaQueryResults } from 'src/core';
+import { MediaQueryResults } from 'src/app/core';
 import { PlayerState, TimesState } from 'src/player';
 import { Tracklist } from '../models/tracklist';
 import { Track } from '../models/track';

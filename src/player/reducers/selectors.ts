@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/withLatestFrom';
 
 import { AppState } from 'src/app';
-import { Selector } from 'src/core';
+import { Selector } from 'src/app/core';
 import { getTracklistCursor, getTracklists, getTracks, Track, Tracklist, TracklistCursor } from 'src/tracklists';
 import { PlayerState } from './player-state';
 import { TimesState } from './times-state';

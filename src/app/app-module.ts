@@ -8,7 +8,7 @@ import { AppComponent } from './app';
 import { AppHeaderComponent } from './app-header';
 
 // modules
-import { CoreModule } from 'src/core';
+import { CoreModule } from './core';
 import { HomeModule } from './home';
 import { PlayerModule } from 'src/player';
 import { SearchModule } from 'src/search';

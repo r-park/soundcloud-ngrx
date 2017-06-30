@@ -3,7 +3,7 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/map';
 
 import { AppState } from 'src/app';
-import { Selector } from 'src/core';
+import { Selector } from 'src/app/core';
 import { User } from '../models/user';
 import { UsersState } from './users-reducer';
 

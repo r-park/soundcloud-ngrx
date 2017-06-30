@@ -2,7 +2,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 
 import { AppState } from 'src/app';
-import { Selector } from 'src/core';
+import { Selector } from 'src/app/core';
 
 
 export function getSearchQuery(): Selector<AppState,string> {
