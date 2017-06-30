@@ -4,7 +4,7 @@ import 'rxjs/add/operator/pluck';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { PLAYER_INITIAL_VOLUME } from 'src/constants';
+import { PLAYER_INITIAL_VOLUME } from 'src/app/app-config';
 import { AppState } from 'src/app';
 import { Track, TracklistCursor } from 'src/app/tracklists';
 import { PlayerState } from './state/player-state';

@@ -1,4 +1,4 @@
-import { CLIENT_ID } from 'src/constants';
+import { CLIENT_ID } from 'src/app/app-config';
 import { TrackData } from './models/track';
 import { formatTrackTitle, streamUrl, trackImageUrl, waveformUrl } from './utils';
 

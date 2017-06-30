@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { TRACKS_PER_PAGE } from 'src/constants';
+import { TRACKS_PER_PAGE } from 'src/app/app-config';
 import { testUtils } from 'src/app/utils/test';
 import { TracklistRecord } from './models/tracklist';
 import { initialState, tracklistsReducer } from './state/tracklists-reducer';

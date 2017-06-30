@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { FEATURED_TRACKLIST_ID, FEATURED_TRACKLIST_USER_ID } from 'src/constants';
+import { FEATURED_TRACKLIST_ID, FEATURED_TRACKLIST_USER_ID } from 'src/app/app-config';
 
 
 export class TracklistActions {

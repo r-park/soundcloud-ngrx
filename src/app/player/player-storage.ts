@@ -1,4 +1,4 @@
-import { PLAYER_STORAGE_KEY } from 'src/constants';
+import { PLAYER_STORAGE_KEY } from 'src/app/app-config';
 import { localStorageAdapter } from 'src/app/utils/local-storage';
 
 

@@ -1,4 +1,4 @@
-import { FEATURED_TRACKLIST_ID, FEATURED_TRACKLIST_USER_ID } from 'src/constants';
+import { FEATURED_TRACKLIST_ID, FEATURED_TRACKLIST_USER_ID } from 'src/app/app-config';
 import { TracklistActions } from './tracklist-actions';
 
 
