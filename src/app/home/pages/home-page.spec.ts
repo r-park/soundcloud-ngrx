@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { SharedModule } from 'src/shared';
+import { SharedModule } from 'src/app/shared';
 import { TracklistService } from 'src/tracklists/tracklist-service';
 import { HomePageComponent } from './home-page';
 

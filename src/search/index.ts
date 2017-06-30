@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 
-import { SharedModule } from 'src/shared';
+import { SharedModule } from 'src/app/shared';
 import { TracklistsModule } from 'src/tracklists';
 
 import { SearchBarComponent } from './components/search-bar';

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import { SharedModule } from 'src/shared';
+import { SharedModule } from 'src/app/shared';
 import { UserService } from '../user-service';
 import { UserPageComponent } from './user-page';
 

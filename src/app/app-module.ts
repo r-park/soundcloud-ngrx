@@ -12,7 +12,7 @@ import { CoreModule } from 'src/core';
 import { HomeModule } from './home';
 import { PlayerModule } from 'src/player';
 import { SearchModule } from 'src/search';
-import { SharedModule } from 'src/shared';
+import { SharedModule } from './shared';
 import { TracklistsModule } from 'src/tracklists';
 import { UsersModule } from 'src/users';
 import { AppStateModule } from './app-state';

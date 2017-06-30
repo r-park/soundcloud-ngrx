@@ -2,7 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedModule } from 'src/shared';
+import { SharedModule } from './shared';
 import { AppHeaderComponent } from './app-header';
 
 

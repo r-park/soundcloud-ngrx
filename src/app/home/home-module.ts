@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomePageComponent } from './pages/home-page';
 
 // modules
-import { SharedModule } from 'src/shared';
+import { SharedModule } from 'src/app/shared';
 import { TracklistsModule } from 'src/tracklists';
 
 // routes

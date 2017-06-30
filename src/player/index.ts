@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 
-import { SharedModule } from 'src/shared';
+import { SharedModule } from 'src/app/shared';
 
 import { PlayerComponent } from './components/player';
 import { PlayerControlsComponent } from './components/player-controls';

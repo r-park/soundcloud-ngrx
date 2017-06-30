@@ -1,6 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { SharedModule } from 'src/shared';
+import { SharedModule } from 'src/app/shared';
 import { FormatVolumePipe } from '../pipes/format-volume';
 import { PlayerService } from '../player-service';
 import { PlayerComponent } from './player';

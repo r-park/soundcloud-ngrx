@@ -40,7 +40,7 @@ const rules = {
       {
         loader: 'sass-loader',
         options: {
-          includePaths: ['src/shared'],
+          includePaths: ['src'],
           outputStyle: 'compressed',
           precision: 10,
           sourceComments: false

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 
-import { SharedModule } from 'src/shared';
+import { SharedModule } from 'src/app/shared';
 
 import { TrackCardComponent } from './components/track-card';
 import { TracklistComponent } from './components/tracklist';
