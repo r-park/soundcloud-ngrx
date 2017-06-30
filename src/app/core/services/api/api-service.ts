@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Http, Request, RequestMethod, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { API_TRACKS_URL, API_USERS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'src/constants';
-import { UserData } from 'src/users';
+import { UserData } from 'src/app/users';
 import { PaginatedData, RequestArgs, RequestOptions } from './interfaces';
 
 

@@ -4,7 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import { playerReducer, PlayerState, timesReducer, TimesState } from './player';
 import { searchReducer, SearchState } from './search';
 import { tracklistsReducer, TracklistsState, tracksReducer, TracksState } from './tracklists';
-import { usersReducer, UsersState } from '../users';
+import { usersReducer, UsersState } from './users';
 
 
 export interface AppState {

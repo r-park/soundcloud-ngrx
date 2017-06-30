@@ -14,7 +14,7 @@ import { PlayerModule } from './player';
 import { SearchModule } from './search';
 import { SharedModule } from './shared';
 import { TracklistsModule } from './tracklists';
-import { UsersModule } from 'src/users';
+import { UsersModule } from './users';
 import { AppStateModule } from './app-state';
 
 

@@ -3,7 +3,7 @@ import { BaseRequestOptions, ConnectionBackend, Http, RequestMethod, Response, R
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { API_TRACKS_URL, API_USERS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'src/constants';
-import { UserData } from 'src/users';
+import { UserData } from 'src/app/users';
 import { ApiService } from './api-service';
 import { PaginatedData } from './interfaces';
 

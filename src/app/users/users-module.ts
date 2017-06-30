@@ -2,22 +2,20 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 
-import { SharedModule } from 'src/app/shared';
-import { TracklistsModule } from 'src/app/tracklists';
-
+// components
 import { UserCardComponent } from './components/user-card';
 import { UserPageComponent } from './pages/user-page';
 
+// modules
+import { SharedModule } from '../shared';
+import { TracklistsModule } from '../tracklists';
+
+// services
 import { UserActions } from './user-actions';
 import { UserEffects } from './user-effects';
 import { UserService } from './user-service';
 
-
-export { UserActions, UserService };
-export { User, UserData, UserRecord } from './models/user';
-export { usersReducer, UsersState } from './reducers/users-reducer';
-
-
+// routes
 const routes: Routes = [
   {path: 'users/:id/:resource', component: UserPageComponent}
 ];

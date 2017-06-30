@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { testUtils } from 'src/utils/test';
 import { createUser } from './models/user';
-import { initialState, usersReducer } from './reducers/users-reducer';
+import { initialState, usersReducer } from './state/users-reducer';
 import { UserActions } from './user-actions';
 import { UserService } from './user-service';
 
