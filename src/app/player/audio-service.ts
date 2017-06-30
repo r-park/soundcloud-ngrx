@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { PLAYER_MAX_VOLUME, PLAYER_VOLUME_INCREMENT } from 'src/constants';
-import { Times } from './reducers/times-state';
+import { Times } from './state/times-state';
 import { AudioSource } from './audio-source';
 import { PlayerActions } from './player-actions';
 

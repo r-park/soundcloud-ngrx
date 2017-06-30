@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
 import { MediaQueryResults } from 'src/app/core';
-import { PlayerState, TimesState } from 'src/player';
+import { PlayerState, TimesState } from 'src/app/player';
 import { Tracklist } from '../models/tracklist';
 import { Track } from '../models/track';
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { TimesStateRecord } from 'src/player';
+import { TimesStateRecord } from 'src/app/player';
 import { AudioTimelineComponent } from './audio-timeline';
 
 

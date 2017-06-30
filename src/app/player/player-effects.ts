@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app';
-import { getPlayerTracklistCursor } from './reducers/selectors';
+import { getPlayerTracklistCursor } from './state/selectors';
 import { PlayerActions } from './player-actions';
 import { playerStorage } from './player-storage';
 

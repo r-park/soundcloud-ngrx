@@ -10,7 +10,7 @@ import { AppHeaderComponent } from './app-header';
 // modules
 import { CoreModule } from './core';
 import { HomeModule } from './home';
-import { PlayerModule } from 'src/player';
+import { PlayerModule } from './player';
 import { SearchModule } from 'src/search';
 import { SharedModule } from './shared';
 import { TracklistsModule } from 'src/tracklists';
