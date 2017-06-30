@@ -1,4 +1,4 @@
-import { Action, ActionReducer } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Map } from 'immutable';
 import { createTrack, Track, TrackData } from '../models';
 import { TracklistActions } from '../tracklist-actions';
@@ -9,7 +9,7 @@ export type TracksState = Map<number,Track>;
 const initialState: TracksState = Map<number,Track>();
 
 
-export const tracksReducer: ActionReducer<TracksState> = (state: TracksState = initialState, action: Action) => {
+export function tracksReducer(state: TracksState = initialState, action: Action): TracksState {
   switch (action.type) {
     case TracklistActions.FETCH_TRACKS_FULFILLED:
       return state.withMutations(tracks => {
@@ -21,4 +21,4 @@ export const tracksReducer: ActionReducer<TracksState> = (state: TracksState = i
     default:
       return state;
   }
-};
+}

@@ -42,7 +42,7 @@ export class PlayerService extends AudioService {
   }
 
 
-  select({trackId, tracklistId}: {trackId: number, tracklistId: string}): void {
+  select({trackId, tracklistId}: {trackId: number, tracklistId?: string}): void {
     this.store$.dispatch(
       this.actions.playSelectedTrack(trackId, tracklistId)
     );

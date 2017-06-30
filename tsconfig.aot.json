@@ -7,9 +7,9 @@
     "importHelpers": true,
     "lib": [
       "dom",
-      "es6"
+      "es2015"
     ],
-    "module": "es6",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
     "noEmitHelpers": true,
@@ -26,12 +26,12 @@
     "build",
     "dist",
     "node_modules",
-    "src/main.aot.ts",
+    "src/main.jit.ts",
     "tmp"
   ],
 
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "useWebpackText": true
+  "angularCompilerOptions": {
+    "genDir": "build",
+    "skipMetadataEmit": true
   }
 }
