@@ -3,7 +3,7 @@
 
 # SoundCloud NgRx
 
-A basic SoundCloud API client built with Angular2 and NgRx. Try the [live demo](https://soundcloud-ngrx.herokuapp.com).
+A basic SoundCloud API client built with Angular and NgRx. Try the [live demo](https://soundcloud-ngrx.herokuapp.com).
 
 ![screenshot](http://i.imgur.com/A1Vlpi2.png)
 
@@ -11,7 +11,7 @@ A basic SoundCloud API client built with Angular2 and NgRx. Try the [live demo](
 Stack
 -----
 
-- Angular2
+- Angular
 - NgRx Effects
 - NgRx Store
 - RxJS
