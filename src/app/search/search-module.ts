@@ -3,22 +3,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 
-import { SharedModule } from 'src/app/shared';
-import { TracklistsModule } from 'src/tracklists';
-
+// components
 import { SearchBarComponent } from './components/search-bar';
 import { SearchPageComponent } from './pages/search-page';
 
+// modules
+import { SharedModule } from 'src/app/shared';
+import { TracklistsModule } from 'src/tracklists';
+
+// services
 import { SearchActions } from './search-actions';
 import { SearchEffects } from './search-effects';
 import { SearchService } from './search-service';
 
-
-export { SearchActions, SearchService };
-export { searchReducer } from './reducers/search-reducer';
-export { SearchState } from './reducers/search-state';
-
-
+// routes
 const routes: Routes = [
   {path: 'search', component: SearchPageComponent}
 ];

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { AppState } from 'src/app';
-import { getSearchQuery } from './reducers/selectors';
+import { getSearchQuery } from './state/selectors';
 import { SearchActions } from './search-actions';
 
 

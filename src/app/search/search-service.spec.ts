@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { searchReducer } from './reducers/search-reducer';
+import { searchReducer } from './state/search-reducer';
 import { SearchActions } from './search-actions';
 import { SearchService } from './search-service';
 

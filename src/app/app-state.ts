@@ -2,7 +2,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 import { playerReducer, PlayerState, timesReducer, TimesState } from './player';
-import { searchReducer, SearchState } from '../search';
+import { searchReducer, SearchState } from './search';
 import { tracklistsReducer, TracklistsState, tracksReducer, TracksState } from '../tracklists';
 import { usersReducer, UsersState } from '../users';
 

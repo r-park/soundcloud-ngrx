@@ -11,7 +11,7 @@ import { AppHeaderComponent } from './app-header';
 import { CoreModule } from './core';
 import { HomeModule } from './home';
 import { PlayerModule } from './player';
-import { SearchModule } from 'src/search';
+import { SearchModule } from './search';
 import { SharedModule } from './shared';
 import { TracklistsModule } from 'src/tracklists';
 import { UsersModule } from 'src/users';
