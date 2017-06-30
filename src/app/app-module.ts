@@ -9,7 +9,7 @@ import { AppHeaderComponent } from './app-header';
 
 // modules
 import { CoreModule } from 'src/core';
-import { HomeModule } from 'src/home';
+import { HomeModule } from './home';
 import { PlayerModule } from 'src/player';
 import { SearchModule } from 'src/search';
 import { SharedModule } from 'src/shared';

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+// components
+import { HomePageComponent } from './pages/home-page';
+
+// modules
 import { SharedModule } from 'src/shared';
 import { TracklistsModule } from 'src/tracklists';
 
-import { HomePageComponent } from './pages/home-page';
-
-
+// routes
 const routes: Routes = [
   {path: '', component: HomePageComponent}
 ];
