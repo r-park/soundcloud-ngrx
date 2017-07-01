@@ -5,7 +5,7 @@ module.exports = config => {
     files: ['karma.entry.js'],
 
     preprocessors: {
-      'karma.entry.js': ['webpack', 'sourcemap']
+      'karma.entry.js': config.singleRun ? ['coverage', 'webpack', 'sourcemap'] : ['webpack', 'sourcemap']
     },
 
     webpack: require('./webpack.config'),
@@ -14,11 +14,21 @@ module.exports = config => {
       noInfo: true
     },
 
-    reporters: ['dots'],
+    coverageReporter: {
+      type: 'in-memory'
+    },
+
+    remapCoverageReporter: {
+      html: './coverage/html',
+      lcovonly: './coverage/coverage.info',
+      'text-summary': null
+    },
+
+    reporters: config.singleRun ? ['dots', 'coverage', 'remap-coverage'] : ['dots'],
 
     logLevel: config.LOG_INFO,
 
-    autoWatch: true,
+    autoWatch: false,
 
     singleRun: false,
 
