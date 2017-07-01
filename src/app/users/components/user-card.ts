@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { User } from '../models';
+import { IUser } from '../models';
 
 
 @Component({
@@ -44,5 +44,5 @@ import { User } from '../models';
 })
 export class UserCardComponent {
   @Input() resource = 'tracks';
-  @Input() user: User;
+  @Input() user: IUser;
 }

@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { AppState } from 'app';
+import { IAppState } from 'app';
 import { ApiService } from 'app/core';
 import { getCurrentTracklist } from './state/selectors';
 import { TracklistActions } from './tracklist-actions';
@@ -17,12 +17,6 @@ import { TracklistActions } from './tracklist-actions';
 
 @Injectable()
 export class TracklistEffects {
-  constructor(
-    private actions$: Actions,
-    private api: ApiService,
-    private store$: Store<AppState>,
-    private tracklistActions: TracklistActions
-  ) {}
 
   @Effect()
   loadNextTracks$ = this.actions$
@@ -33,4 +27,12 @@ export class TracklistEffects {
       .map(data => this.tracklistActions.fetchTracksFulfilled(data, tracklist.id))
       .catch(error => Observable.of(this.tracklistActions.fetchTracksFailed(error)))
     );
+
+
+  constructor(
+    private actions$: Actions,
+    private api: ApiService,
+    private store$: Store<IAppState>,
+    private tracklistActions: TracklistActions
+  ) {}
 }

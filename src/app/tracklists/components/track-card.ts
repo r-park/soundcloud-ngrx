@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { TimesState } from 'app/player';
-import { Track } from '../models';
+import { ITimesState } from 'app/player';
+import { ITrack } from '../models';
 
 
 @Component({
@@ -65,8 +65,8 @@ export class TrackCardComponent {
   @Input() compact = false;
   @Input() isPlaying = false;
   @Input() isSelected = false;
-  @Input() times: Observable<TimesState>;
-  @Input() track: Track;
+  @Input() times: Observable<ITimesState>;
+  @Input() track: ITrack;
 
   @Output() pause = new EventEmitter(false);
   @Output() play = new EventEmitter(false);

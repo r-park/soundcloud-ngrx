@@ -5,13 +5,13 @@ import { RequestMethod } from '@angular/http';
 //  REQUESTS
 //-------------------------------------
 
-export interface RequestArgs {
+export interface IRequestArgs {
   method: RequestMethod;
   search: string;
   url: string;
 }
 
-export interface RequestOptions {
+export interface IRequestOptions {
   method?: RequestMethod;
   paginate?: boolean;
   query?: string;
@@ -23,7 +23,7 @@ export interface RequestOptions {
 //  RESPONSE DATA
 //-------------------------------------
 
-export interface PaginatedData {
+export interface IPaginatedData {
   collection: any[];
   next_href?: string;
 }

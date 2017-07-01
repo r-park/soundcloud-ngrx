@@ -3,7 +3,7 @@ import { SearchStateRecord } from './search-state';
 
 
 describe('search', () => {
-  describe('SearchState', () => {
+  describe('ISearchState', () => {
     let search;
 
     beforeEach(() => {

@@ -1,7 +1,7 @@
 import { List, Map, Record } from 'immutable';
 
 
-export interface Tracklist extends Map<string,any> {
+export interface ITracklist extends Map<string,any> {
   currentPage: number;
   hasNextPage: boolean;
   hasNextPageInStore: boolean;

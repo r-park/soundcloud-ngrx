@@ -24,7 +24,7 @@ describe('search', () => {
 
 
     describe('LOAD_SEARCH_RESULTS action', () => {
-      it('should update SearchState.query with payload.query', () => {
+      it('should update ISearchState.query with payload.query', () => {
         let action = actions.loadSearchResults(query);
         let search = searchReducer(undefined, action);
         expect(search.query).toBe(query);

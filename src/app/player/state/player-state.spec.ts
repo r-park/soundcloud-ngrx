@@ -3,7 +3,7 @@ import { PlayerStateRecord } from './player-state';
 
 
 describe('player', () => {
-  describe('PlayerState', () => {
+  describe('IPlayerState', () => {
     let player;
 
     beforeEach(() => {

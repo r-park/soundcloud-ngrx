@@ -1,1 +1,1 @@
-export { createUser, User, UserData, UserRecord } from './user';
+export { createUser, IUser, IUserData, UserRecord } from './user';

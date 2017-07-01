@@ -3,17 +3,17 @@ import 'rxjs/add/operator/let';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { AppState } from 'app';
-import { User } from './models';
+import { IAppState } from 'app';
+import { IUser } from './models';
 import { getCurrentUser } from './state/selectors';
 import { UserActions } from './user-actions';
 
 
 @Injectable()
 export class UserService {
-  currentUser$: Observable<User>;
+  currentUser$: Observable<IUser>;
 
-  constructor(private actions: UserActions, private store$: Store<AppState>) {
+  constructor(private actions: UserActions, private store$: Store<IAppState>) {
     this.currentUser$ = store$.let(getCurrentUser());
   }
 

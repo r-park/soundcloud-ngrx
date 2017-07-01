@@ -1,4 +1,4 @@
-import { MediaQueryRule } from './interfaces';
+import { IMediaQueryRule } from './interfaces';
 
 
 export function em(value: number): number | string {
@@ -10,7 +10,7 @@ export function em(value: number): number | string {
 }
 
 
-export function getMedia(rule: MediaQueryRule): string {
+export function getMedia(rule: IMediaQueryRule): string {
   let media = rule.type || 'screen';
 
   if (rule.minWidth) media += ` and (min-width: ${em(rule.minWidth)})`;

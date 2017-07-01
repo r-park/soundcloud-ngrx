@@ -1,2 +1,2 @@
 export { AppModule } from './app-module';
-export { AppState } from './app-state';
+export { IAppState } from './app-state';

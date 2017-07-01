@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
-import { MediaQueryResults } from 'app/core';
-import { PlayerState, TimesState } from 'app/player';
-import { Track, Tracklist } from '../models';
+import { IMediaQueryResults } from 'app/core';
+import { IPlayerState, ITimesState } from 'app/player';
+import { ITrack, ITracklist } from '../models';
 
 
 @Component({
@@ -31,11 +31,11 @@ import { Track, Tracklist } from '../models';
 })
 export class TracklistItemsComponent {
   @Input() layout: string;
-  @Input() media: MediaQueryResults;
-  @Input() player: PlayerState;
-  @Input() times: Observable<TimesState>;
-  @Input() tracklist: Tracklist;
-  @Input() tracks: Observable<List<Track>>;
+  @Input() media: IMediaQueryResults;
+  @Input() player: IPlayerState;
+  @Input() times: Observable<ITimesState>;
+  @Input() tracklist: ITracklist;
+  @Input() tracks: Observable<List<ITrack>>;
 
   @Output() pause = new EventEmitter(false);
   @Output() play = new EventEmitter(false);

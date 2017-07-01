@@ -3,9 +3,9 @@ import { BaseRequestOptions, ConnectionBackend, Http, RequestMethod, Response, R
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { API_TRACKS_URL, API_USERS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'app/app-config';
-import { UserData } from 'app/users';
+import { IUserData } from 'app/users';
 import { ApiService } from './api-service';
-import { PaginatedData } from './interfaces';
+import { IPaginatedData } from './interfaces';
 
 
 describe('api', () => {
@@ -43,42 +43,42 @@ describe('api', () => {
 
 
     describe('requestArgs()', () => {
-      it('should set RequestArgs.url with provided url', () => {
+      it('should set IRequestArgs.url with provided url', () => {
         let requestArgs = service.requestArgs({url: API_TRACKS_URL});
         expect(requestArgs.url).toBe(API_TRACKS_URL);
       });
 
-      it('should add client id param to RequestArgs.search', () => {
+      it('should add client id param to IRequestArgs.search', () => {
         let requestArgs = service.requestArgs({url: API_TRACKS_URL});
         expect(requestArgs.search).toMatch(CLIENT_ID_PARAM);
       });
 
-      it('should NOT add client id param to RequestArgs.search if url already contains client id', () => {
+      it('should NOT add client id param to IRequestArgs.search if url already contains client id', () => {
         let requestArgs = service.requestArgs({url: `${API_TRACKS_URL}?${CLIENT_ID_PARAM}`});
         expect(requestArgs.search).not.toMatch(CLIENT_ID_PARAM);
       });
 
-      it('should add pagination params to RequestArgs.search if RequestOptions.paginate is true', () => {
+      it('should add pagination params to IRequestArgs.search if IRequestOptions.paginate is true', () => {
         let requestArgs = service.requestArgs({paginate: true, url: API_TRACKS_URL});
         expect(requestArgs.search).toMatch(PAGINATION_PARAMS);
       });
 
-      it('should NOT add pagination params to RequestArgs.search by default', () => {
+      it('should NOT add pagination params to IRequestArgs.search by default', () => {
         let requestArgs = service.requestArgs({url: API_TRACKS_URL});
         expect(requestArgs.search).not.toMatch(PAGINATION_PARAMS);
       });
 
-      it('should set RequestArgs.method to RequestMethod.Get by default', () => {
+      it('should set IRequestArgs.method to RequestMethod.Get by default', () => {
         let requestArgs = service.requestArgs({url: API_TRACKS_URL});
         expect(requestArgs.method).toEqual(RequestMethod.Get);
       });
 
-      it('should set RequestArgs.method with provided method', () => {
+      it('should set IRequestArgs.method with provided method', () => {
         let requestArgs = service.requestArgs({method: RequestMethod.Post, url: API_TRACKS_URL});
         expect(requestArgs.method).toEqual(RequestMethod.Post);
       });
 
-      it('should add provided query params to RequestArgs.search', () => {
+      it('should add provided query params to IRequestArgs.search', () => {
         let requestArgs = service.requestArgs({query: queryParam, url: API_TRACKS_URL});
         expect(requestArgs.search).toMatch(queryParam);
       });
@@ -111,7 +111,7 @@ describe('api', () => {
         it('should return response data', () => {
           backend.connections.subscribe((c: MockConnection) => c.mockRespond(paginatedDataResponse));
           service.fetch(API_TRACKS_URL)
-            .subscribe((res: PaginatedData) => {
+            .subscribe((res: IPaginatedData) => {
               expect(res).toBeDefined();
               expect(Array.isArray(res.collection)).toBe(true);
             });
@@ -134,7 +134,7 @@ describe('api', () => {
         it('should return response data', () => {
           backend.connections.subscribe((c: MockConnection) => c.mockRespond(paginatedDataResponse));
           service.fetchSearchResults(queryValue)
-            .subscribe((res: PaginatedData) => {
+            .subscribe((res: IPaginatedData) => {
               expect(res).toBeDefined();
               expect(Array.isArray(res.collection)).toBe(true);
             });
@@ -159,7 +159,7 @@ describe('api', () => {
 
           backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
           service.fetchUser(userId)
-            .subscribe((res: UserData) => {
+            .subscribe((res: IUserData) => {
               expect(res).toBeDefined();
               expect(res.id).toBe(userId);
             });
@@ -180,7 +180,7 @@ describe('api', () => {
         it('should return response data', () => {
           backend.connections.subscribe((c: MockConnection) => c.mockRespond(paginatedDataResponse));
           service.fetchUserLikes(userId)
-            .subscribe((res: PaginatedData) => {
+            .subscribe((res: IPaginatedData) => {
               expect(res).toBeDefined();
               expect(Array.isArray(res.collection)).toBe(true);
             });
@@ -201,7 +201,7 @@ describe('api', () => {
         it('should return response data', () => {
           backend.connections.subscribe((c: MockConnection) => c.mockRespond(paginatedDataResponse));
           service.fetchUserTracks(userId)
-            .subscribe((res: PaginatedData) => {
+            .subscribe((res: IPaginatedData) => {
               expect(res).toBeDefined();
               expect(Array.isArray(res.collection)).toBe(true);
             });

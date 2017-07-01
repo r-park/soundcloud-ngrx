@@ -11,11 +11,11 @@ import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Selector } from 'app/core';
-import { Tracklist } from '../models';
+import { ITracklist } from '../models';
 import { TracklistService } from '../tracklist-service';
 
 
-interface ScrollData {
+interface IScrollData {
   windowInnerHeight: number;
   windowPageYOffset: number;
   bodyScrollHeight: number;
@@ -25,7 +25,7 @@ interface ScrollData {
 @Injectable()
 export class TracklistScrollService {
   private infiniteScroll$: Observable<any>;
-  private scrollData$: Observable<ScrollData>;
+  private scrollData$: Observable<IScrollData>;
 
 
   constructor(private tracklist: TracklistService, private zone: NgZone) {
@@ -35,14 +35,14 @@ export class TracklistScrollService {
       .let(this.getScrollData());
 
     const checkPosition$ = this.scrollData$
-      .filter((data: ScrollData) => {
+      .filter((data: IScrollData) => {
         return data.windowInnerHeight + data.windowPageYOffset >= data.bodyScrollHeight - data.windowInnerHeight;
       });
 
     const pause$ = Observable.never();
 
     this.infiniteScroll$ = tracklist.tracklist$
-      .map(({isPending, hasNextPage}: Tracklist) => isPending || !hasNextPage)
+      .map(({isPending, hasNextPage}: ITracklist) => isPending || !hasNextPage)
       .switchMap(pause => pause ? pause$ : checkPosition$)
       .do(() => this.zone.run(() => this.tracklist.loadNextTracks()));
   }
@@ -54,7 +54,7 @@ export class TracklistScrollService {
       .subscribe();
   }
 
-  private getScrollData(): Selector<UIEvent,ScrollData> {
+  private getScrollData(): Selector<UIEvent,IScrollData> {
     return event$ => event$
       .map(event => {
         const { body, defaultView } = event.target as HTMLDocument;

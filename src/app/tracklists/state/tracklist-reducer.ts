@@ -3,14 +3,14 @@ import { List } from 'immutable';
 import { TRACKS_PER_PAGE } from 'app/app-config';
 import { SearchActions } from 'app/search/search-actions';
 import { UserActions } from 'app/users/user-actions';
-import { TrackData, Tracklist, TracklistRecord } from '../models';
+import { ITrackData, ITracklist, TracklistRecord } from '../models';
 import { TracklistActions } from '../tracklist-actions';
 
 
-const initialState: Tracklist = new TracklistRecord() as Tracklist;
+const initialState: ITracklist = new TracklistRecord() as ITracklist;
 
 
-export function tracklistReducer(state: Tracklist = initialState, {payload, type}: Action): Tracklist {
+export function tracklistReducer(state: ITracklist = initialState, {payload, type}: Action): ITracklist {
   switch (type) {
     case TracklistActions.FETCH_TRACKS_FULFILLED:
       return state.withMutations((tracklist: any) => {
@@ -22,20 +22,20 @@ export function tracklistReducer(state: Tracklist = initialState, {payload, type
             trackIds: mergeTrackIds(tracklist.trackIds, payload.collection)
           })
           .merge(updatePagination(tracklist, tracklist.currentPage + 1));
-      }) as Tracklist;
+      }) as ITracklist;
 
     case TracklistActions.LOAD_NEXT_TRACKS:
       return state.hasNextPageInStore ?
-             state.merge(updatePagination(state, state.currentPage + 1)) as Tracklist :
-             state.set('isPending', true) as Tracklist;
+             state.merge(updatePagination(state, state.currentPage + 1)) as ITracklist :
+             state.set('isPending', true) as ITracklist;
 
     case TracklistActions.LOAD_FEATURED_TRACKS:
     case SearchActions.LOAD_SEARCH_RESULTS:
     case UserActions.LOAD_USER_LIKES:
     case UserActions.LOAD_USER_TRACKS:
       return state.isNew ?
-             state.merge({id: payload.tracklistId, isPending: true}) as Tracklist :
-             state.merge(updatePagination(state, 1)) as Tracklist;
+             state.merge({id: payload.tracklistId, isPending: true}) as ITracklist :
+             state.merge(updatePagination(state, 1)) as ITracklist;
 
     default:
       return state;
@@ -43,7 +43,7 @@ export function tracklistReducer(state: Tracklist = initialState, {payload, type
 }
 
 
-function mergeTrackIds(trackIds: List<number>, collection: TrackData[]): List<number> {
+function mergeTrackIds(trackIds: List<number>, collection: ITrackData[]): List<number> {
   let ids = trackIds.toJS();
 
   let newIds = collection.reduce((list, trackData) => {
@@ -55,7 +55,7 @@ function mergeTrackIds(trackIds: List<number>, collection: TrackData[]): List<nu
 }
 
 
-function updatePagination(tracklist: Tracklist, page: number): any {
+function updatePagination(tracklist: ITracklist, page: number): any {
   let pageCount = Math.ceil(tracklist.trackIds.size / TRACKS_PER_PAGE);
   let currentPage = Math.min(page, pageCount);
   let hasNextPageInStore = currentPage < pageCount;

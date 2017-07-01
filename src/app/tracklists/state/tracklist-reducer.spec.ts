@@ -2,7 +2,7 @@ import { is, List } from 'immutable';
 import { TRACKS_PER_PAGE } from 'app/app-config';
 import { SearchActions } from 'app/search/search-actions';
 import { testUtils } from 'app/utils/test';
-import { Tracklist, TracklistRecord } from '../models';
+import { ITracklist, TracklistRecord } from '../models';
 import { TracklistActions } from '../tracklist-actions';
 import { tracklistReducer } from './tracklist-reducer';
 
@@ -232,7 +232,7 @@ describe('tracklists', () => {
           isPending: false,
           pageCount: 2,
           trackIds: List(testUtils.createIds(trackCount))
-        }) as Tracklist;
+        }) as ITracklist;
 
         expectedTracklist = expectedTracklist.merge({
           currentPage: 2,
@@ -253,7 +253,7 @@ describe('tracklists', () => {
         let initialTracklist = new TracklistRecord({
           hasNextPageInStore: false,
           isPending: false
-        }) as Tracklist;
+        }) as ITracklist;
 
         let tracklist = tracklistReducer(initialTracklist, actions.loadNextTracks());
 
@@ -274,7 +274,7 @@ describe('tracklists', () => {
       });
 
       it('should set tracklist id if tracklist is new', () => {
-        let initialTracklist = new TracklistRecord() as Tracklist;
+        let initialTracklist = new TracklistRecord() as ITracklist;
         let tracklist = tracklistReducer(initialTracklist, searchActions.loadSearchResults(query));
         expect(tracklist.id).toBe(tracklistId);
       });
@@ -297,7 +297,7 @@ describe('tracklists', () => {
           isPending: false,
           pageCount: 2,
           trackIds: List(testUtils.createIds(trackCount))
-        }) as Tracklist;
+        }) as ITracklist;
 
         expectedTracklist = expectedTracklist.merge({
           currentPage: 1,

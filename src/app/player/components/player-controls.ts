@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Track, TracklistCursor } from 'app/tracklists';
-import { PlayerState } from '../state/player-state';
+import { ITrack, ITracklistCursor } from 'app/tracklists';
+import { IPlayerState } from '../state/player-state';
 
 
 @Component({
@@ -30,9 +30,9 @@ import { PlayerState } from '../state/player-state';
 })
 export class PlayerControlsComponent {
   @Input() currentTime: Observable<number>;
-  @Input() cursor: TracklistCursor;
-  @Input() player: PlayerState;
-  @Input() track: Track;
+  @Input() cursor: ITracklistCursor;
+  @Input() player: IPlayerState;
+  @Input() track: ITrack;
 
   @Output() decreaseVolume = new EventEmitter(false);
   @Output() increaseVolume = new EventEmitter(false);

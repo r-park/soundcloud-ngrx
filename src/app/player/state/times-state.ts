@@ -1,7 +1,7 @@
 import { Map, Record } from 'immutable';
 
 
-export interface Times {
+export interface ITimes {
   bufferedTime: number;
   currentTime: number;
   duration: number;
@@ -9,7 +9,7 @@ export interface Times {
   percentCompleted: string;
 }
 
-export interface TimesState extends Times, Map<string,number|string> {}
+export interface ITimesState extends ITimes, Map<string,number|string> {}
 
 export const TimesStateRecord = Record({
   bufferedTime: 0,
