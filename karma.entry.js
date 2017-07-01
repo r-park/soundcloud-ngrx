@@ -17,18 +17,16 @@ require('zone.js/dist/fake-async-test');
 
 
 Error.stackTraceLimit = Infinity;
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
 
 
-var browser = require('@angular/platform-browser-dynamic/testing');
-var testing = require('@angular/core/testing');
+const testing = require('@angular/core/testing');
+const browser = require('@angular/platform-browser-dynamic/testing');
 
 testing.TestBed.initTestEnvironment(
   browser.BrowserDynamicTestingModule,
   browser.platformBrowserDynamicTesting()
 );
 
-
-// Load source files
-var context = require.context('./src', true, /\.spec\.ts/);
+// Load spec files
+const context = require.context('./src', true, /\.spec\.ts/);
 context.keys().forEach(context);

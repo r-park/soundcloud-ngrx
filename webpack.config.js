@@ -213,4 +213,20 @@ if (ENV_PRODUCTION) {
 //-------------------------------------
 if (ENV_TEST) {
   config.devtool = 'inline-source-map';
+
+  config.module.rules.push({
+    test: /\.(js|ts)$/,
+    enforce: 'post',
+    use: {
+      loader: 'istanbul-instrumenter-loader',
+      options: {
+        esModules: true
+      }
+    },
+    include: path.resolve('./src'),
+    exclude: [
+      /\.(e2e|spec)\.ts$/,
+      /node_modules/
+    ]
+  });
 }
