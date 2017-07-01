@@ -48,7 +48,7 @@ describe('player', () => {
       };
 
       track = {
-        title: 'Track Title',
+        title: 'ITrack Title',
         duration: 240000 // 4 minutes
       };
     });

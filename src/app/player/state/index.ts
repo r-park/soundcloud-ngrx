@@ -1,4 +1,4 @@
 export { playerReducer } from './player-reducer';
-export { PlayerState } from './player-state';
+export { IPlayerState } from './player-state';
 export { timesReducer } from './times-reducer';
-export { Times, TimesState, TimesStateRecord } from './times-state';
+export { ITimes, ITimesState, TimesStateRecord } from './times-state';

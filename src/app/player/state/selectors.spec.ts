@@ -58,7 +58,7 @@ describe('player', () => {
 
 
     describe('getPlayer()', () => {
-      it('should return observable that emits PlayerState on change', () => {
+      it('should return observable that emits IPlayerState on change', () => {
         let count = 0;
         let player = null;
 
@@ -94,7 +94,7 @@ describe('player', () => {
 
 
     describe('getPlayerTrack()', () => {
-      it('should return observable that emits track corresponding to PlayerState.trackId', () => {
+      it('should return observable that emits track corresponding to IPlayerState.trackId', () => {
         let count = 0;
         let track = null;
 
@@ -131,7 +131,7 @@ describe('player', () => {
 
 
     describe('getPlayerTrackId()', () => {
-      it('should return observable that emits PlayerState.trackId', () => {
+      it('should return observable that emits IPlayerState.trackId', () => {
         let count = 0;
         let trackId = null;
 
@@ -173,7 +173,7 @@ describe('player', () => {
 
 
     describe('getPlayerTracklist()', () => {
-      it('should return observable that emits tracklist with PlayerState.tracklistId', () => {
+      it('should return observable that emits tracklist with IPlayerState.tracklistId', () => {
         let count = 0;
         let tracklist = null;
 
@@ -216,7 +216,7 @@ describe('player', () => {
 
 
     describe('getPlayerTracklistCursor()', () => {
-      it('should return observable that emits player tracklist cursor when PlayerState.trackId changes', () => {
+      it('should return observable that emits player tracklist cursor when IPlayerState.trackId changes', () => {
         let count = 0;
         let cursor = null;
 
@@ -255,7 +255,7 @@ describe('player', () => {
 
 
     describe('getTimes() selector', () => {
-      it('should return observable that emits TimesState on change', () => {
+      it('should return observable that emits ITimesState on change', () => {
         let count = 0;
         let timesState = null;
 

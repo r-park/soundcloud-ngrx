@@ -5,20 +5,20 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/withLatestFrom';
 
-import { AppState } from 'app';
+import { IAppState } from 'app';
 import { Selector } from 'app/core';
-import { getTracklistCursor, getTracklists, getTracks, Track, Tracklist, TracklistCursor } from 'app/tracklists';
-import { PlayerState } from './player-state';
-import { TimesState } from './times-state';
+import { getTracklistCursor, getTracklists, getTracks, ITrack, ITracklist, ITracklistCursor } from 'app/tracklists';
+import { IPlayerState } from './player-state';
+import { ITimesState } from './times-state';
 
 
-export function getPlayer(): Selector<AppState,PlayerState> {
+export function getPlayer(): Selector<IAppState,IPlayerState> {
   return state$ => state$
     .map(state => state.player)
     .distinctUntilChanged();
 }
 
-export function getPlayerTrack(): Selector<AppState,Track> {
+export function getPlayerTrack(): Selector<IAppState,ITrack> {
   return state$ => state$
     .let(getPlayerTrackId())
     .distinctUntilChanged()
@@ -28,12 +28,12 @@ export function getPlayerTrack(): Selector<AppState,Track> {
     .distinctUntilChanged();
 }
 
-export function getPlayerTrackId(): Selector<AppState,number> {
+export function getPlayerTrackId(): Selector<IAppState,number> {
   return state$ => state$
     .map(state => state.player.trackId);
 }
 
-export function getPlayerTracklist(): Selector<AppState,Tracklist> {
+export function getPlayerTracklist(): Selector<IAppState,ITracklist> {
   return state$ => state$
     .map(state => state.player.tracklistId)
     .combineLatest(state$.let(getTracklists()),
@@ -42,7 +42,7 @@ export function getPlayerTracklist(): Selector<AppState,Tracklist> {
     .distinctUntilChanged();
 }
 
-export function getPlayerTracklistCursor(distinct: boolean = true): Selector<AppState,TracklistCursor> {
+export function getPlayerTracklistCursor(distinct: boolean = true): Selector<IAppState,ITracklistCursor> {
   return state$ => {
     let source$ = state$.let(getPlayerTrackId());
     if (distinct) source$ = source$.distinctUntilChanged();
@@ -50,7 +50,7 @@ export function getPlayerTracklistCursor(distinct: boolean = true): Selector<App
   };
 }
 
-export function getTimes(): Selector<AppState,TimesState> {
+export function getTimes(): Selector<IAppState,ITimesState> {
   return state$ => state$
     .map(state => state.times)
     .distinctUntilChanged();

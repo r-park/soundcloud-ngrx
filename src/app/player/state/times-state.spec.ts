@@ -3,7 +3,7 @@ import { TimesStateRecord } from './times-state';
 
 
 describe('player', () => {
-  describe('TimesState', () => {
+  describe('ITimesState', () => {
     let times;
 
     beforeEach(() => {

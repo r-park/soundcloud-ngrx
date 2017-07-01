@@ -1,7 +1,7 @@
 import { Map, Record } from 'immutable';
 
 
-export interface SearchState extends Map<string,any> {
+export interface ISearchState extends Map<string,any> {
   query: string;
 }
 

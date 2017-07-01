@@ -2,7 +2,7 @@ import { Map, Record } from 'immutable';
 import { formatTrackTitle, streamUrl, trackImageUrl, waveformUrl } from '../utils';
 
 
-export interface TrackData {
+export interface ITrackData {
   artwork_url: string;
   duration: number;
   favoritings_count?: number;
@@ -23,7 +23,7 @@ export interface TrackData {
   waveform_url: string;
 }
 
-export interface Track extends Map<string,any> {
+export interface ITrack extends Map<string,any> {
   artworkUrl: string;
   duration: number;
   id: number;
@@ -57,7 +57,7 @@ export const TrackRecord = Record({
   waveformUrl: null
 });
 
-export function createTrack(data: TrackData): Track {
+export function createTrack(data: ITrackData): ITrack {
   return new TrackRecord({
     artworkUrl: trackImageUrl(data),
     duration: data.duration,
@@ -73,5 +73,5 @@ export function createTrack(data: TrackData): Track {
     username: data.user.username,
     userPermalinkUrl: data.user.permalink_url,
     waveformUrl: waveformUrl(data.waveform_url)
-  }) as Track;
+  }) as ITrack;
 }

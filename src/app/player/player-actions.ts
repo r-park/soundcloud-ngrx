@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Times } from './state';
+import { ITimes } from './state';
 
 
 export class PlayerActions {
@@ -29,7 +29,7 @@ export class PlayerActions {
     };
   }
 
-  audioTimeUpdated(times: Times): Action {
+  audioTimeUpdated(times: ITimes): Action {
     return {
       type: PlayerActions.AUDIO_TIME_UPDATED,
       payload: times

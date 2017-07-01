@@ -7,7 +7,7 @@ describe('utils', () => {
     let storageKey;
 
     beforeEach(() => {
-      data = {"foo": "bar", "baz": 123}; // tslint:disable-line:quotemark
+      data = {foo: "bar", baz: 123}; // tslint:disable-line:quotemark
       storageKey = 'soundcloud-ngrx:test';
     });
 

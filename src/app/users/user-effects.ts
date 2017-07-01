@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { AppState } from 'app';
+import { IAppState } from 'app';
 import { ApiService } from 'app/core';
 import { getCurrentTracklist, TracklistActions } from 'app/tracklists';
 import { getCurrentUser } from './state/selectors';
@@ -18,13 +18,6 @@ import { UserActions } from './user-actions';
 
 @Injectable()
 export class UserEffects {
-  constructor(
-    private actions$: Actions,
-    private api: ApiService,
-    private store$: Store<AppState>,
-    private tracklistActions: TracklistActions,
-    private userActions: UserActions
-  ) {}
 
   @Effect()
   loadUser$ = this.actions$
@@ -64,4 +57,13 @@ export class UserEffects {
       .map(data => this.tracklistActions.fetchTracksFulfilled(data, payload.tracklistId))
       .catch(error => Observable.of(this.tracklistActions.fetchTracksFailed(error)))
     );
+
+
+  constructor(
+    private actions$: Actions,
+    private api: ApiService,
+    private store$: Store<IAppState>,
+    private tracklistActions: TracklistActions,
+    private userActions: UserActions
+  ) {}
 }

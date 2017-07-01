@@ -1,2 +1,2 @@
-export { createTrack, Track, TrackData, TrackRecord } from './track';
-export { Tracklist, TracklistRecord } from './tracklist';
+export { createTrack, ITrack, ITrackData, TrackRecord } from './track';
+export { ITracklist, TracklistRecord } from './tracklist';

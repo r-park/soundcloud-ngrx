@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { TimesState } from 'app/player';
+import { ITimesState } from 'app/player';
 
 
 @Component({
@@ -22,7 +22,7 @@ import { TimesState } from 'app/player';
 })
 export class WaveformTimelineComponent {
   @Input() isActive: boolean = false;
-  @Input() times: Observable<TimesState>;
+  @Input() times: Observable<ITimesState>;
   @Input() waveformUrl: string;
 
   @Output() seek = new EventEmitter<any>(false);

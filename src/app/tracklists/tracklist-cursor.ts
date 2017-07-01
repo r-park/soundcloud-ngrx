@@ -1,8 +1,8 @@
 import { Map, Record } from 'immutable';
-import { Tracklist } from './models';
+import { ITracklist } from './models';
 
 
-export interface TracklistCursor extends Map<string,number> {
+export interface ITracklistCursor extends Map<string,number> {
   currentTrackId: number;
   nextTrackId: number;
   previousTrackId: number;
@@ -15,7 +15,7 @@ export const TracklistCursorRecord = Record({
 });
 
 
-export function getTracklistCursor(trackId: number, {trackIds}: Tracklist): TracklistCursor {
+export function getTracklistCursor(trackId: number, {trackIds}: ITracklist): ITracklistCursor {
   let index = trackIds.indexOf(trackId);
   let nextTrackId = null;
   let previousTrackId = null;
@@ -34,5 +34,5 @@ export function getTracklistCursor(trackId: number, {trackIds}: Tracklist): Trac
     currentTrackId: trackId,
     nextTrackId,
     previousTrackId
-  }) as TracklistCursor;
+  }) as ITracklistCursor;
 }

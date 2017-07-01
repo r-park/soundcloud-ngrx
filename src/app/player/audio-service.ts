@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { PLAYER_MAX_VOLUME, PLAYER_VOLUME_INCREMENT } from 'app/app-config';
-import { Times } from './state';
+import { ITimes } from './state';
 import { AudioSource } from './audio-source';
 import { PlayerActions } from './player-actions';
 
@@ -56,7 +56,7 @@ export class AudioService {
     this.audio.currentTime = time;
   }
 
-  private getTimes(event: Event): Times {
+  private getTimes(event: Event): ITimes {
     const { buffered, currentTime, duration } = event.target as HTMLAudioElement;
     const bufferedTime = buffered.length ? buffered.end(0) : 0;
     return {

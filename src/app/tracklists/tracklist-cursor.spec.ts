@@ -1,17 +1,17 @@
 import { List, Record } from 'immutable';
-import { Tracklist, TracklistRecord } from './models';
-import { getTracklistCursor, TracklistCursor, TracklistCursorRecord } from './tracklist-cursor';
+import { ITracklist, TracklistRecord } from './models';
+import { getTracklistCursor, ITracklistCursor, TracklistCursorRecord } from './tracklist-cursor';
 
 
 describe('tracklists', () => {
-  describe('TracklistCursor', () => {
+  describe('ITracklistCursor', () => {
     let tracklist;
 
     beforeEach(() => {
       tracklist = new TracklistRecord({
         id: 'tracklist/1',
         trackIds: List([1, 2, 3])
-      }) as Tracklist;
+      }) as ITracklist;
     });
 
 
@@ -22,7 +22,7 @@ describe('tracklists', () => {
       });
 
       it('should contain default properties', () => {
-        let cursor = new TracklistCursorRecord() as TracklistCursor;
+        let cursor = new TracklistCursorRecord() as ITracklistCursor;
         expect(cursor.currentTrackId).toBe(null);
         expect(cursor.nextTrackId).toBe(null);
         expect(cursor.previousTrackId).toBe(null);

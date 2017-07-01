@@ -8,18 +8,18 @@ import '@ngrx/core/add/operator/enterZone';
 
 import { Inject, Injectable, InjectionToken, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { MediaQueryResults, MediaQueryRule, MediaQueryUpdate } from './interfaces';
+import { IMediaQueryResults, IMediaQueryRule, IMediaQueryUpdate } from './interfaces';
 import { getMedia } from './utils';
 
 
-export const MEDIA_QUERY_RULES = new InjectionToken<MediaQueryRule[]>('MEDIA_QUERY_RULES');
+export const MEDIA_QUERY_RULES = new InjectionToken<IMediaQueryRule[]>('MEDIA_QUERY_RULES');
 
 
 @Injectable()
 export class MediaQueryService {
-  matches$: Observable<MediaQueryResults>;
+  matches$: Observable<IMediaQueryResults>;
 
-  constructor(@Inject(MEDIA_QUERY_RULES) rules: MediaQueryRule[], zone: NgZone) {
+  constructor(@Inject(MEDIA_QUERY_RULES) rules: IMediaQueryRule[], zone: NgZone) {
     this.matches$ = Observable
       .combineLatest(...this.getMqlObservables(rules))
       .debounceTime(5)
@@ -30,7 +30,7 @@ export class MediaQueryService {
       .refCount();
   }
 
-  private getMqlObservables(rules: MediaQueryRule[]): any[] {
+  private getMqlObservables(rules: IMediaQueryRule[]): any[] {
     return rules.map(rule => {
       const mediaQueryList = window.matchMedia(getMedia(rule));
       return Observable.fromEventPattern(
@@ -44,10 +44,10 @@ export class MediaQueryService {
     });
   }
 
-  private getResults(updates: MediaQueryUpdate[]): MediaQueryResults {
+  private getResults(updates: IMediaQueryUpdate[]): IMediaQueryResults {
     return updates.reduce((acc, cur) => {
       acc[cur.rule.id] = cur.mql.matches;
       return acc;
-    }, {} as MediaQueryResults);
+    }, {} as IMediaQueryResults);
   }
 }

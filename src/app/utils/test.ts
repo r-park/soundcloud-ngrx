@@ -1,5 +1,5 @@
-import { TrackData } from 'app/tracklists';
-import { UserData } from 'app/users';
+import { ITrackData } from 'app/tracklists';
+import { IUserData } from 'app/users';
 
 
 export const testUtils = {
@@ -11,7 +11,7 @@ export const testUtils = {
     return ids;
   },
 
-  createTrack: (id: number = 1): TrackData => {
+  createTrack: (id: number = 1): ITrackData => {
     return {
       artwork_url: `https://i1.sndcdn.com/artworks-${id}-large.jpg`,
       duration: 240000, // 4 minutes
@@ -33,13 +33,13 @@ export const testUtils = {
     };
   },
 
-  createTracks: (count: number, startId: number = 1): TrackData[] => {
+  createTracks: (count: number, startId: number = 1): ITrackData[] => {
     let tracks = [];
     for (let i = startId; i <= count; i++) tracks.push(testUtils.createTrack(i));
     return tracks;
   },
 
-  createUser: (id: number = 1): UserData => {
+  createUser: (id: number = 1): IUserData => {
     return {
       avatar_url: `https://i1.sndcdn.com/avatars-${id}-large.jpg`,
       city: 'City Name',

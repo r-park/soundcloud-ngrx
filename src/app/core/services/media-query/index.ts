@@ -2,7 +2,7 @@ import { MEDIA_QUERY_RULES, MediaQueryService } from './media-query-service';
 
 
 export { MediaQueryService };
-export { MediaQueryResults } from './interfaces';
+export { IMediaQueryResults } from './interfaces';
 
 
 export const MEDIA_QUERY_PROVIDERS: any[] = [

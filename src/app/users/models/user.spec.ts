@@ -1,9 +1,9 @@
 import { is, Record } from 'immutable';
-import { createUser, User, UserRecord } from './user';
+import { createUser, IUser, UserRecord } from './user';
 
 
 describe('users', () => {
-  describe('User', () => {
+  describe('IUser', () => {
     let user;
 
     beforeEach(() => {
@@ -15,7 +15,7 @@ describe('users', () => {
     });
 
     it('should contain default properties', () => {
-      let user = new UserRecord() as User;
+      let user = new UserRecord() as IUser;
 
       expect(user.avatarUrl).toBe(null);
       expect(user.city).toBe(null);

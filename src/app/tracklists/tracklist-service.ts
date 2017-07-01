@@ -4,18 +4,18 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
-import { AppState } from 'app';
-import { Track, Tracklist } from './models';
+import { IAppState } from 'app';
+import { ITrack, ITracklist } from './models';
 import { getCurrentTracklist, getTracksForCurrentTracklist } from './state/selectors';
 import { TracklistActions } from './tracklist-actions';
 
 
 @Injectable()
 export class TracklistService {
-  tracklist$: Observable<Tracklist>;
-  tracks$: Observable<List<Track>>;
+  tracklist$: Observable<ITracklist>;
+  tracks$: Observable<List<ITrack>>;
 
-  constructor(private actions: TracklistActions, private store$: Store<AppState>) {
+  constructor(private actions: TracklistActions, private store$: Store<IAppState>) {
     this.tracklist$ = store$.let(getCurrentTracklist());
     this.tracks$ = store$.let(getTracksForCurrentTracklist());
   }

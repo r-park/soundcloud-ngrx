@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { UserData } from './models';
+import { IUserData } from './models';
 import { tracklistIdForUserLikes, tracklistIdForUserTracks } from './utils';
 
 
@@ -19,7 +19,7 @@ export class UserActions {
     };
   }
 
-  fetchUserFulfilled(user: UserData): Action {
+  fetchUserFulfilled(user: IUserData): Action {
     return {
       type: UserActions.FETCH_USER_FULFILLED,
       payload: {

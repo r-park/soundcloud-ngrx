@@ -17,7 +17,7 @@ describe('tracklists', () => {
       data = {collection: [{id: 1}], next_href: 'http://next/2'};
 
       initialState = Map({
-        currentTracklistId: 'tracklist/1',
+        'currentTracklistId': 'tracklist/1',
         'tracklist/1': new TracklistRecord({id: 'tracklist/1'}),
         'tracklist/2': new TracklistRecord({id: 'tracklist/2'})
       });

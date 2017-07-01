@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 import { Http, Request, RequestMethod, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { API_TRACKS_URL, API_USERS_URL, CLIENT_ID_PARAM, PAGINATION_PARAMS } from 'app/app-config';
-import { UserData } from 'app/users';
-import { PaginatedData, RequestArgs, RequestOptions } from './interfaces';
+import { IUserData } from 'app/users';
+import { IPaginatedData, IRequestArgs, IRequestOptions } from './interfaces';
 
 
 @Injectable()
@@ -16,7 +16,7 @@ export class ApiService {
     return this.request({url});
   }
 
-  fetchSearchResults(query: string): Observable<PaginatedData> {
+  fetchSearchResults(query: string): Observable<IPaginatedData> {
     return this.request({
       paginate: true,
       query: `q=${query}`,
@@ -24,33 +24,33 @@ export class ApiService {
     });
   }
 
-  fetchUser(userId: number): Observable<UserData> {
+  fetchUser(userId: number): Observable<IUserData> {
     return this.request({
       url: `${API_USERS_URL}/${userId}`
     });
   }
 
-  fetchUserLikes(userId: number): Observable<PaginatedData> {
+  fetchUserLikes(userId: number): Observable<IPaginatedData> {
     return this.request({
       paginate: true,
       url: `${API_USERS_URL}/${userId}/favorites`
     });
   }
 
-  fetchUserTracks(userId: number): Observable<PaginatedData> {
+  fetchUserTracks(userId: number): Observable<IPaginatedData> {
     return this.request({
       paginate: true,
       url: `${API_USERS_URL}/${userId}/tracks`
     });
   }
 
-  request(options: RequestOptions): Observable<any> {
+  request(options: IRequestOptions): Observable<any> {
     const req: Request = new Request(this.requestArgs(options));
     return this.http.request(req)
       .map((res: Response) => res.json());
   }
 
-  requestArgs(options: RequestOptions): RequestArgs {
+  requestArgs(options: IRequestOptions): IRequestArgs {
     const { method, paginate, query, url } = options;
     let search: string[] = [];
 

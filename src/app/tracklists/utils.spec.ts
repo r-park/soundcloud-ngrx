@@ -1,5 +1,5 @@
 import { CLIENT_ID } from 'app/app-config';
-import { TrackData } from './models';
+import { ITrackData } from './models';
 import { formatTrackTitle, streamUrl, trackImageUrl, waveformUrl } from './utils';
 
 
@@ -34,12 +34,12 @@ describe('tracklists', () => {
       const expectedAvatarUrl = `https://i1.sndcdn.com/avatars-000185787427-8n8dew-t500x500.jpg`;
 
       it('should transform artwork url to point to 500 pixel version', () => {
-        const track = {artwork_url: artworkUrl} as TrackData;
+        const track = {artwork_url: artworkUrl} as ITrackData;
         expect(trackImageUrl(track)).toBe(expectedArtworkUrl);
       });
 
       it('should use user avatar url if artwork url is not available', () => {
-        const track = {user: {avatar_url: avatarUrl}} as TrackData;
+        const track = {user: {avatar_url: avatarUrl}} as ITrackData;
         expect(trackImageUrl(track)).toBe(expectedAvatarUrl);
       });
     });

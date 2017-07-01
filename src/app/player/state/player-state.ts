@@ -1,7 +1,7 @@
 import { Map, Record } from 'immutable';
 
 
-export interface PlayerState extends Map<string,any> {
+export interface IPlayerState extends Map<string,any> {
   isPlaying: boolean;
   trackId: number;
   tracklistId: string;

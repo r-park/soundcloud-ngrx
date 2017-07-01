@@ -5,7 +5,7 @@ import {
   WAVEFORM_IMAGE_HOST,
   WAVEFORM_JSON_HOST
 } from 'app/app-config';
-import { TrackData } from './models';
+import { ITrackData } from './models';
 
 
 const EN_DASH = String.fromCharCode(8211);
@@ -20,7 +20,7 @@ export function streamUrl(url: string): string {
   return `${url}?${CLIENT_ID_PARAM}`;
 }
 
-export function trackImageUrl(trackData: TrackData, size: string = IMAGE_XLARGE_SIZE): string {
+export function trackImageUrl(trackData: ITrackData, size: string = IMAGE_XLARGE_SIZE): string {
   let url = trackData.artwork_url || trackData.user.avatar_url;
   return url.replace(IMAGE_DEFAULT_SIZE, size);
 }

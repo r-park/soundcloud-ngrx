@@ -37,7 +37,7 @@ describe('player', () => {
         percentCompleted: '25%'
       });
       playerServiceStub.track$ = new BehaviorSubject<any>({
-        title: 'Track Title',
+        title: 'ITrack Title',
         duration: 240000 // 4 minutes
       });
 

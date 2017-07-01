@@ -7,7 +7,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { TimesState } from 'app/player';
+import { ITimesState } from 'app/player';
 
 
 @Component({
@@ -25,7 +25,7 @@ import { TimesState } from 'app/player';
   `
 })
 export class AudioTimelineComponent {
-  @Input() times: TimesState;
+  @Input() times: ITimesState;
   @Output() seek = new EventEmitter(false);
 
   @HostListener('click', ['$event'])

@@ -1,7 +1,7 @@
 import { Map, Record } from 'immutable';
 
 
-export interface UserData {
+export interface IUserData {
   avatar_url: string;
   city?: string;
   country?: string;
@@ -15,7 +15,7 @@ export interface UserData {
   username: string;
 }
 
-export interface User extends Map<string,any> {
+export interface IUser extends Map<string,any> {
   avatarUrl: string;
   city: string;
   country: string;
@@ -45,7 +45,7 @@ export const UserRecord = Record({
   username: null
 });
 
-export function createUser(data: UserData, profile: boolean = false): User {
+export function createUser(data: IUserData, profile: boolean = false): IUser {
   let attrs = {
     avatarUrl: data.avatar_url,
     id: data.id,
@@ -66,5 +66,5 @@ export function createUser(data: UserData, profile: boolean = false): User {
     });
   }
 
-  return new UserRecord(attrs) as User;
+  return new UserRecord(attrs) as IUser;
 }

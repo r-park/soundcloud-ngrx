@@ -1,8 +1,8 @@
-export interface MediaQueryResults {
+export interface IMediaQueryResults {
   [key: string]: boolean;
 }
 
-export interface MediaQueryRule {
+export interface IMediaQueryRule {
   id: string;
   maxWidth?: number;
   minWidth?: number;
@@ -10,7 +10,7 @@ export interface MediaQueryRule {
   type?: string;
 }
 
-export interface MediaQueryUpdate {
+export interface IMediaQueryUpdate {
   mql: MediaQueryList;
-  rule: MediaQueryRule;
+  rule: IMediaQueryRule;
 }

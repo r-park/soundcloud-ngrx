@@ -1,7 +1,7 @@
 import { is } from 'immutable';
 import { PlayerActions } from '../player-actions';
 import { timesReducer } from './times-reducer';
-import { TimesState, TimesStateRecord } from './times-state';
+import { ITimesState, TimesStateRecord } from './times-state';
 
 
 describe('player', () => {
@@ -23,7 +23,7 @@ describe('player', () => {
 
     describe('AUDIO_ENDED action', () => {
       it('should reset state.times to zero', () => {
-        let timesState = new TimesStateRecord(times) as TimesState;
+        let timesState = new TimesStateRecord(times) as ITimesState;
         timesState = timesReducer(timesState, actions.audioEnded());
 
         expect(is(timesState, new TimesStateRecord())).toBe(true);
@@ -33,7 +33,7 @@ describe('player', () => {
 
     describe('AUDIO_TIME_UPDATED action', () => {
       it('should update state.times', () => {
-        let timesState = new TimesStateRecord() as TimesState;
+        let timesState = new TimesStateRecord() as ITimesState;
         timesState = timesReducer(timesState, actions.audioTimeUpdated(times));
 
         expect(timesState.bufferedTime).toBe(200);
@@ -47,7 +47,7 @@ describe('player', () => {
 
     describe('PLAY_SELECTED_TRACK action', () => {
       it('should reset state.times to zero', () => {
-        let timesState = new TimesStateRecord(times) as TimesState;
+        let timesState = new TimesStateRecord(times) as ITimesState;
         timesState = timesReducer(timesState, actions.playSelectedTrack(1));
 
         expect(is(timesState, new TimesStateRecord())).toBe(true);
