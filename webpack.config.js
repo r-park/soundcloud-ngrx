@@ -1,14 +1,11 @@
 const path = require('path');
-const pkg = require('./package.json');
 
-const BannerPlugin = require('webpack/lib/BannerPlugin');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NgcWebpackPlugin = require('ngc-webpack').NgcWebpackPlugin;
-const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 
@@ -22,11 +19,10 @@ const ENV_DEVELOPMENT = NODE_ENV === 'development';
 const ENV_PRODUCTION = NODE_ENV === 'production';
 const ENV_TEST = NODE_ENV === 'test';
 
-const PACKAGE_NAME = pkg.name;
-const PACKAGE_VERSION = pkg.version;
-
 const SERVER_HOST = '0.0.0.0';
 const SERVER_PORT = 3000;
+
+const SOUNDCLOUD_CLIENT_ID = JSON.stringify(process.env.SOUNDCLOUD_CLIENT_ID || 'd02c42795f3bcac39f84eee0ae384b00');
 
 
 //=========================================================
@@ -84,11 +80,15 @@ config.module = {
   ]
 };
 
+config.output = {
+  path: path.resolve('./dist'),
+  publicPath: '/'
+};
+
 config.plugins = [
   new CheckerPlugin(),
   new DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
-    'process.env.SOUNDCLOUD_CLIENT_ID': JSON.stringify(process.env.SOUNDCLOUD_CLIENT_ID)
+    SOUNDCLOUD_CLIENT_ID
   }),
   new ContextReplacementPlugin(
     /angular([\\/])core([\\/])@angular/,
@@ -98,49 +98,30 @@ config.plugins = [
 
 
 //=====================================
-//  DEVELOPMENT or PRODUCTION
-//-------------------------------------
-if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
-  config.entry = {
-    polyfills: './src/polyfills.ts'
-  };
-
-  config.output = {
-    path: path.resolve('./dist'),
-    publicPath: '/'
-  };
-
-  config.plugins.push(
-    new CommonsChunkPlugin({
-      name: 'polyfills',
-      chunks: ['polyfills']
-    }),
-    new CommonsChunkPlugin({
-      name: 'vendor',
-      chunks: ['main'],
-      minChunks: module => /node_modules/.test(module.resource)
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      hash: false,
-      inject: false,
-      template: './src/index.html'
-    })
-  );
-}
-
-
-//=====================================
 //  DEVELOPMENT
 //-------------------------------------
 if (ENV_DEVELOPMENT) {
   config.devtool = 'cheap-module-source-map';
 
-  config.entry.main = './src/main.jit.ts';
+  config.entry = {
+    main: './src/main.jit.ts',
+    polyfills: './src/polyfills.ts'
+  };
 
   config.output.filename = '[name].js';
 
-  config.plugins.push(new ProgressPlugin());
+  config.plugins.push(
+    new CommonsChunkPlugin({
+      name: ['main', 'polyfills'],
+      minChunks: Infinity
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      hash: false,
+      inject: true,
+      template: './src/index.html'
+    })
+  );
 
   config.devServer = {
     contentBase: './src',
@@ -150,11 +131,13 @@ if (ENV_DEVELOPMENT) {
     stats: {
       cached: true,
       cachedAssets: true,
-      chunks: true,
+      chunks: false,
       chunkModules: false,
       colors: true,
       hash: false,
-      reasons: true,
+      maxModules: 300,
+      modules: false,
+      reasons: false,
       timings: true,
       version: false
     },
@@ -171,11 +154,29 @@ if (ENV_DEVELOPMENT) {
 if (ENV_PRODUCTION) {
   config.devtool = 'hidden-source-map';
 
-  config.entry.main = './src/main.aot.ts';
+  config.entry = {
+    main: './src/main.aot.ts',
+    polyfills: './src/polyfills.ts'
+  };
 
   config.output.filename = '[name].[chunkhash].js';
 
   config.plugins.push(
+    new CommonsChunkPlugin({
+      name: 'polyfills',
+      chunks: ['polyfills']
+    }),
+    new CommonsChunkPlugin({
+      name: 'vendor',
+      chunks: ['main'],
+      minChunks: module => /node_modules/.test(module.resource)
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      hash: false,
+      inject: true,
+      template: './src/index.html'
+    }),
     new NgcWebpackPlugin({
       disabled: false,
       tsConfig: path.resolve('tsconfig.aot.json')
@@ -199,9 +200,6 @@ if (ENV_PRODUCTION) {
         screw_ie8: true // eslint-disable-line camelcase
       },
       sourceMaps: false
-    }),
-    new BannerPlugin({
-      banner: `${PACKAGE_NAME} v${PACKAGE_VERSION} -- ${new Date().toString()}`
     }),
     new WebpackMd5Hash()
   );

@@ -1,3 +1,5 @@
+declare const SOUNDCLOUD_CLIENT_ID;
+
 //=========================================================
 //  APP CONFIG
 //---------------------------------------------------------
@@ -11,7 +13,7 @@ export const API_BASE_URL = 'https://api.soundcloud.com';
 export const API_TRACKS_URL = `${API_BASE_URL}/tracks`;
 export const API_USERS_URL = `${API_BASE_URL}/users`;
 
-export const CLIENT_ID = process.env.SOUNDCLOUD_CLIENT_ID || 'd02c42795f3bcac39f84eee0ae384b00';
+export const CLIENT_ID = SOUNDCLOUD_CLIENT_ID;
 export const CLIENT_ID_PARAM = `client_id=${CLIENT_ID}`;
 
 export const PAGINATION_LIMIT = 60;
