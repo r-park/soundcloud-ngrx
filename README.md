@@ -1,28 +1,6 @@
-[![CircleCI](https://circleci.com/gh/r-park/soundcloud-ngrx.svg?style=shield&circle-token=1a1c9e0d11ebc084768c68fa31349e93f48634e6)](https://circleci.com/gh/r-park/soundcloud-ngrx)
+# Personal experiment to get rid of NgRx
 
-
-# SoundCloud NgRx
-
-A basic SoundCloud API client built with Angular and NgRx. Try the [live demo](https://soundcloud-ngrx.herokuapp.com).
-
-![screenshot](http://i.imgur.com/A1Vlpi2.png)
-
-
-Stack
------
-
-- Angular with AOT compilation
-- NgRx Effects
-- NgRx Store
-- RxJS
-- Immutable
-- Ava
-- Circle CI
-- Express
-- Heroku
-- Karma
-- Typescript
-- Webpack
+Check [this](https://github.com/r-park/soundcloud-ngrx) for original repo.
 
 
 Quick Start
@@ -34,6 +12,11 @@ $ cd soundcloud-ngrx
 $ npm install
 $ npm start
 ```
+
+To Do
+-----
+
+- Merge seprate reducers in track list module.
 
 
 NPM Commands
