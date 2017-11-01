@@ -42,6 +42,11 @@ export class UserService {
 
     // triggers
 
+    // case UserActions.LOAD_USER:
+    //   return state.set('currentUserId', payload.userId);
+
+    // +++
+
     // loadUser$ = this.actions$
     //   .ofType(UserActions.LOAD_USER)
     //   .withLatestFrom(this.store$.let(getCurrentUser()), (action, user) => ({
