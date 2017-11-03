@@ -34,6 +34,7 @@ export class TracklistService {
     this.allTracksSubject = new BehaviorSubject(new Map<number,ITrack>());
     this.allTracks$ = this.allTracksSubject.asObservable();
 
+    // assumption here
     this.tracks$ = this.tracklist$.withLatestFrom(this.allTracks$, (tracklist, tracks) => {
       return tracklist.trackIds
         .slice(0, tracklist.currentPage * TRACKS_PER_PAGE)

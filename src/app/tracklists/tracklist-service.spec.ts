@@ -7,12 +7,16 @@ import { initialState, tracklistsReducer } from './state/tracklists-reducer';
 import { tracksReducer } from './state/tracks-reducer';
 import { TracklistActions } from './tracklist-actions';
 import { TracklistService } from './tracklist-service';
+import { ApiService } from '../core/services/api/api-service';
+import { BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
 
 
 describe('tracklists', () => {
   describe('TracklistService', () => {
     let actions: TracklistActions;
     let service: TracklistService;
+    let backend: MockBackend;
     let store: Store<any>;
 
 
@@ -33,7 +37,17 @@ describe('tracklists', () => {
         ],
         providers: [
           TracklistActions,
-          TracklistService
+          TracklistService,
+          ApiService,
+          BaseRequestOptions,
+          MockBackend,
+          {
+            provide: Http,
+            deps: [MockBackend, BaseRequestOptions],
+            useFactory: (backend: ConnectionBackend, options: BaseRequestOptions): Http => {
+              return new Http(backend, options);
+            }
+          }
         ]
       });
 
