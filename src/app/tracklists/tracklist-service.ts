@@ -82,28 +82,26 @@ export class TracklistService {
     //     .catch(error => Observable.of(this.tracklistActions.fetchTracksFailed(error)))
     //   );
 
-    const tracklist = this.tracklistSubject.getValue();
-    let newTrackList;
+    let tracklist = this.tracklistSubject.getValue();
 
     if (tracklist.hasNextPageInStore) {
-      newTrackList = tracklist.merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1)) as ITracklist;
-      this.tracklistSubject.next(newTrackList);
+      tracklist = tracklist.merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1)) as ITracklist;
+      this.tracklistSubject.next(tracklist);
 
     } else {
-      newTrackList = tracklist.set('isPending', true) as ITracklist;
-      this.tracklistSubject.next(newTrackList);
+      tracklist = tracklist.set('isPending', true) as ITracklist;
+      this.tracklistSubject.next(tracklist);
 
-      this.api.fetch(newTrackList.nextUrl).subscribe(data => {
-        newTrackList
-          .merge({
+      this.api.fetch(tracklist.nextUrl).subscribe(data => {
+        const newTracklist = tracklist.withMutations((tracklist: any) => {
+          tracklist.merge({
             isNew: false,
             isPending: false,
             nextUrl: data.next_href || null,
-            trackIds: TracklistService.mergeTrackIds(newTrackList.trackIds, data.collection)
-          })
-          .merge(TracklistService.updatePagination(newTrackList, newTrackList.currentPage + 1));
+            trackIds: TracklistService.mergeTrackIds(tracklist.trackIds, data.collection)
+          }).merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1));
+        }) as ITracklist;
 
-        this.tracklistSubject.next(newTrackList);
 
         let allTacks = this.allTracksSubject.getValue();
         data.collection.forEach((d: ITrackData) => {
@@ -111,6 +109,7 @@ export class TracklistService {
         });
 
         this.allTracksSubject.next(allTacks);
+        this.tracklistSubject.next(newTracklist);
       });
     }
   }
@@ -223,15 +222,14 @@ export class TracklistService {
     this.tracklistSubject.next(tracklist);
 
     this.api.fetchSearchResults(query).subscribe(data => {
-      const newTracklist = tracklist
-        .merge({
+      const newTracklist = tracklist.withMutations((tracklist: any) => {
+        tracklist.merge({
           isNew: false,
           isPending: false,
           nextUrl: data.next_href || null,
           trackIds: TracklistService.mergeTrackIds(tracklist.trackIds, data.collection)
-        })
-        .merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1)) as ITracklist;
-      this.tracklistSubject.next(newTracklist);
+        }).merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1));
+      }) as ITracklist;
 
       let allTacks = this.allTracksSubject.getValue();
       data.collection.forEach((d: ITrackData) => {
@@ -239,6 +237,7 @@ export class TracklistService {
       });
 
       this.allTracksSubject.next(allTacks);
+      this.tracklistSubject.next(newTracklist);
     });
   }
 
@@ -250,15 +249,14 @@ export class TracklistService {
     this.tracklistSubject.next(tracklist);
 
     this.api.fetchUserLikes(userId).subscribe(data => {
-      const newTracklist = tracklist
-        .merge({
+      const newTracklist = tracklist.withMutations((tracklist: any) => {
+        tracklist.merge({
           isNew: false,
           isPending: false,
           nextUrl: data.next_href || null,
           trackIds: TracklistService.mergeTrackIds(tracklist.trackIds, data.collection)
-        })
-        .merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1)) as ITracklist;
-      this.tracklistSubject.next(newTracklist);
+        }).merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1));
+      }) as ITracklist;
 
       let allTacks = this.allTracksSubject.getValue();
       data.collection.forEach((d: ITrackData) => {
@@ -266,6 +264,7 @@ export class TracklistService {
       });
 
       this.allTracksSubject.next(allTacks);
+      this.tracklistSubject.next(newTracklist);
     });
   }
 
@@ -276,15 +275,14 @@ export class TracklistService {
     this.tracklistSubject.next(tracklist);
 
     this.api.fetchUserTracks(userId).subscribe(data => {
-      const newTracklist = tracklist
-        .merge({
+      const newTracklist = tracklist.withMutations((tracklist: any) => {
+        tracklist.merge({
           isNew: false,
           isPending: false,
           nextUrl: data.next_href || null,
           trackIds: TracklistService.mergeTrackIds(tracklist.trackIds, data.collection)
-        })
-        .merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1)) as ITracklist;
-      this.tracklistSubject.next(newTracklist);
+        }).merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1));
+      }) as ITracklist;
 
       let allTacks = this.allTracksSubject.getValue();
       data.collection.forEach((d: ITrackData) => {
@@ -292,6 +290,7 @@ export class TracklistService {
       });
 
       this.allTracksSubject.next(allTacks);
+      this.tracklistSubject.next(newTracklist);
     });
   }
 
