@@ -30,7 +30,6 @@ export class UserPageComponent implements OnDestroy {
     route.params
       .takeUntil(this.ngOnDestroy$)
       .do(({id, resource}: {id: string, resource: string}) => {
-        // user.loadResource(id, resource);
         tracklistService.loadResource(id, resource);
         this.resource = resource;
       })

@@ -21,7 +21,7 @@ import { Subscriber } from 'rxjs/Subscriber';
 export class TracklistService {
   tracklist$: Observable<ITracklist>;
   tracks$: Observable<List<ITrack>>;
-  private allTracks$: Observable<Map<number,ITrack>>;
+  allTracks$: Observable<Map<number,ITrack>>;
 
   private tracklistSubject: BehaviorSubject<ITracklist>;
   private allTracksSubject: BehaviorSubject<Map<number,ITrack>>;
@@ -46,10 +46,7 @@ export class TracklistService {
   }
 
   loadFeaturedTracks(): void {
-    const tracklistId = FEATURED_TRACKLIST_ID;
-    const userId = FEATURED_TRACKLIST_USER_ID;
-
-    this.loadFavoriteTracks(userId, tracklistId);
+    this.loadFavoriteTracks(FEATURED_TRACKLIST_USER_ID, FEATURED_TRACKLIST_ID);
   }
 
   loadNextTracks(): void {

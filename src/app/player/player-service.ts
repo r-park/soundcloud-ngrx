@@ -47,11 +47,13 @@ export class PlayerService extends AudioService {
 
     // this.track$ = store$.let(getPlayerTrack());
     this.track$ = this.player$.map(player => player.trackId).distinctUntilChanged()
-      .withLatestFrom(this.tracklistService.tracks$, (trackId, tracks) => {
+      .withLatestFrom(this.tracklistService.allTracks$, (trackId, tracks) => {
         return tracks.get(trackId);
       }).filter(track => !!track).distinctUntilChanged();
 
-    this.track$.subscribe(track => this.play(track.streamUrl));
+    this.track$.subscribe(track => {
+      this.play(track.streamUrl);
+    });
 
 
     this.timeSubject = new BehaviorSubject(new TimesStateRecord() as ITimesState);
@@ -62,25 +64,6 @@ export class PlayerService extends AudioService {
 
 
   select({trackId, tracklistId}: {trackId: number, tracklistId?: string}): void {
-    // this.store$.dispatch(
-    //   this.actions.playSelectedTrack(trackId, tracklistId)
-    // );
-
-    // triggers
-
-    // case PlayerActions.PLAY_SELECTED_TRACK:
-    //   return state.merge({
-    //     trackId: payload.trackId,
-    //     tracklistId: payload.tracklistId || state.get('tracklistId')
-    //   }) as IPlayerState;
-
-    // +++
-
-    // case PlayerActions.PLAY_SELECTED_TRACK:
-    //   return new TimesStateRecord() as ITimesState;
-
-    // becomes
-
     const player = this.playerSubject.getValue();
     const newPlayer = player.merge({
       trackId,
@@ -106,13 +89,6 @@ export class PlayerService extends AudioService {
         this.playerSubject.next(player);
         break;
       case PlayerActions.AUDIO_ENDED:
-
-        // audioEnded$ = this.actions$
-        //   .ofType(PlayerActions.AUDIO_ENDED)
-        //   .withLatestFrom(this.store$.let(getPlayerTracklistCursor(false)), (action, cursor) => cursor)
-        //   .filter(cursor => !!cursor.nextTrackId)
-        //   .map(cursor => this.playerActions.playSelectedTrack(cursor.nextTrackId));
-
         player = this.playerSubject.getValue();
         player.set('isPlaying', false);
         this.playerSubject.next(player);
