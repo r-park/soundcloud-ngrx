@@ -17,8 +17,6 @@ To Do
 -----
 
 - Remove cache in memory.
-- Merge seprate reducers in track list module.
-- Merge tracklist and tracks.
 
 
 NPM Commands

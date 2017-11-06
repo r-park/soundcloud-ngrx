@@ -13,16 +13,19 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FEATURED_TRACKLIST_ID, FEATURED_TRACKLIST_USER_ID, TRACKS_PER_PAGE } from '../app-config';
 import { createTrack, ITrackData } from './models/track';
 
+import { IPaginatedData } from '../core/services/api/interfaces';
+import { Subscriber } from 'rxjs/Subscriber';
+
 
 @Injectable()
 export class TracklistService {
-  // todo: merge tracklist and tracks
   tracklist$: Observable<ITracklist>;
   tracks$: Observable<List<ITrack>>;
   private allTracks$: Observable<Map<number,ITrack>>;
 
   private tracklistSubject: BehaviorSubject<ITracklist>;
   private allTracksSubject: BehaviorSubject<Map<number,ITrack>>;
+
 
   constructor(private actions: TracklistActions, private store$: Store<IAppState>, private api: ApiService) {
     // this.tracklist$ = store$.let(getCurrentTracklist());
@@ -34,7 +37,7 @@ export class TracklistService {
     this.allTracksSubject = new BehaviorSubject(new Map<number,ITrack>());
     this.allTracks$ = this.allTracksSubject.asObservable();
 
-    // assumption here
+    // assumption here?
     this.tracks$ = this.tracklist$.withLatestFrom(this.allTracks$, (tracklist, tracks) => {
       return tracklist.trackIds
         .slice(0, tracklist.currentPage * TRACKS_PER_PAGE)
@@ -43,10 +46,6 @@ export class TracklistService {
   }
 
   loadFeaturedTracks(): void {
-    // this.store$.dispatch(
-    //   this.actions.loadFeaturedTracks()
-    // );
-
     const tracklistId = FEATURED_TRACKLIST_ID;
     const userId = FEATURED_TRACKLIST_USER_ID;
 
@@ -54,34 +53,6 @@ export class TracklistService {
   }
 
   loadNextTracks(): void {
-    // this.store$.dispatch(
-    //   this.actions.loadNextTracks()
-    // );
-
-    // case TracklistActions.LOAD_NEXT_TRACKS:
-    //   return state.set(
-    //     state.get('currentTracklistId'),
-    //     tracklistReducer(state.get(state.get('currentTracklistId')), action)
-    //   );
-
-    // +++
-
-    // case TracklistActions.LOAD_NEXT_TRACKS:
-    //   return state.hasNextPageInStore ?
-    //     state.merge(updatePagination(state, state.currentPage + 1)) as ITracklist :
-    //     state.set('isPending', true) as ITracklist;
-
-    // +++
-
-    // loadNextTracks$ = this.actions$
-    //   .ofType(TracklistActions.LOAD_NEXT_TRACKS)
-    //   .withLatestFrom(this.store$.let(getCurrentTracklist()), (action, tracklist) => tracklist)
-    //   .filter(tracklist => tracklist.isPending)
-    //   .switchMap(tracklist => this.api.fetch(tracklist.nextUrl)
-    //     .map(data => this.tracklistActions.fetchTracksFulfilled(data, tracklist.id))
-    //     .catch(error => Observable.of(this.tracklistActions.fetchTracksFailed(error)))
-    //   );
-
     let tracklist = this.tracklistSubject.getValue();
 
     if (tracklist.hasNextPageInStore) {
@@ -92,29 +63,10 @@ export class TracklistService {
       tracklist = tracklist.set('isPending', true) as ITracklist;
       this.tracklistSubject.next(tracklist);
 
-      this.api.fetch(tracklist.nextUrl).subscribe(data => {
-        const newTracklist = tracklist.withMutations((tracklist: any) => {
-          tracklist.merge({
-            isNew: false,
-            isPending: false,
-            nextUrl: data.next_href || null,
-            trackIds: TracklistService.mergeTrackIds(tracklist.trackIds, data.collection)
-          }).merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1));
-        }) as ITracklist;
-
-
-        let allTacks = this.allTracksSubject.getValue();
-        data.collection.forEach((d: ITrackData) => {
-          allTacks.set(d.id, createTrack(d));
-        });
-
-        this.allTracksSubject.next(allTacks);
-        this.tracklistSubject.next(newTracklist);
-      });
+      this.api.fetch(tracklist.nextUrl).subscribe(this.tracksFetchedHandler(tracklist));
     }
   }
 
-  // moved from UserService
   loadResource(userId: number|string, resource: string): void {
     switch (resource) {
       case 'likes':
@@ -205,10 +157,6 @@ export class TracklistService {
   }
 
   loadUserTracks(userId: number|string): void {
-    // this.store$.dispatch(
-    //   this.actions.loadUserTracks(userId)
-    // );
-
     const tracklistId = tracklistIdForUserTracks(userId);
     userId = parseInt(userId as any, 10);
 
@@ -221,24 +169,7 @@ export class TracklistService {
     tracklist = tracklist.merge({id: tracklistId, isPending: true}) as ITracklist;
     this.tracklistSubject.next(tracklist);
 
-    this.api.fetchSearchResults(query).subscribe(data => {
-      const newTracklist = tracklist.withMutations((tracklist: any) => {
-        tracklist.merge({
-          isNew: false,
-          isPending: false,
-          nextUrl: data.next_href || null,
-          trackIds: TracklistService.mergeTrackIds(tracklist.trackIds, data.collection)
-        }).merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1));
-      }) as ITracklist;
-
-      let allTacks = this.allTracksSubject.getValue();
-      data.collection.forEach((d: ITrackData) => {
-        allTacks.set(d.id, createTrack(d));
-      });
-
-      this.allTracksSubject.next(allTacks);
-      this.tracklistSubject.next(newTracklist);
-    });
+    this.api.fetchSearchResults(query).subscribe(this.tracksFetchedHandler(tracklist));
   }
 
 
@@ -248,24 +179,7 @@ export class TracklistService {
     tracklist = tracklist.merge({id: tracklistId, isPending: true}) as ITracklist;
     this.tracklistSubject.next(tracklist);
 
-    this.api.fetchUserLikes(userId).subscribe(data => {
-      const newTracklist = tracklist.withMutations((tracklist: any) => {
-        tracklist.merge({
-          isNew: false,
-          isPending: false,
-          nextUrl: data.next_href || null,
-          trackIds: TracklistService.mergeTrackIds(tracklist.trackIds, data.collection)
-        }).merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1));
-      }) as ITracklist;
-
-      let allTacks = this.allTracksSubject.getValue();
-      data.collection.forEach((d: ITrackData) => {
-        allTacks.set(d.id, createTrack(d));
-      });
-
-      this.allTracksSubject.next(allTacks);
-      this.tracklistSubject.next(newTracklist);
-    });
+    this.api.fetchUserLikes(userId).subscribe(this.tracksFetchedHandler(tracklist));
   }
 
   private loadTracks(userId: any, tracklistId: string): void {
@@ -274,7 +188,11 @@ export class TracklistService {
     tracklist = tracklist.merge({id: tracklistId, isPending: true}) as ITracklist;
     this.tracklistSubject.next(tracklist);
 
-    this.api.fetchUserTracks(userId).subscribe(data => {
+    this.api.fetchUserTracks(userId).subscribe(this.tracksFetchedHandler(tracklist));
+  }
+
+  private tracksFetchedHandler(tracklist: ITracklist): Subscriber<IPaginatedData> {
+    return Subscriber.create((data: IPaginatedData) => {
       const newTracklist = tracklist.withMutations((tracklist: any) => {
         tracklist.merge({
           isNew: false,
@@ -283,6 +201,7 @@ export class TracklistService {
           trackIds: TracklistService.mergeTrackIds(tracklist.trackIds, data.collection)
         }).merge(TracklistService.updatePagination(tracklist, tracklist.currentPage + 1));
       }) as ITracklist;
+
 
       let allTacks = this.allTracksSubject.getValue();
       data.collection.forEach((d: ITrackData) => {
