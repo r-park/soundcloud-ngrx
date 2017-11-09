@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
-import { TRACKS_PER_PAGE } from 'app/app-config';
+import { StoreModule } from '@ngrx/store';
+import { FEATURED_TRACKLIST_ID, FEATURED_TRACKLIST_USER_ID, TRACKS_PER_PAGE } from 'app/app-config';
 import { testUtils } from 'app/utils/test';
 import { TracklistRecord } from './models';
 import { initialState, tracklistsReducer } from './state/tracklists-reducer';
@@ -10,14 +10,13 @@ import { TracklistService } from './tracklist-service';
 import { ApiService } from '../core/services/api/api-service';
 import { BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { Observable } from 'rxjs/Observable';
 
 
 describe('tracklists', () => {
   describe('TracklistService', () => {
-    let actions: TracklistActions;
     let service: TracklistService;
-    let backend: MockBackend;
-    let store: Store<any>;
+    let apiService: ApiService;
 
 
     beforeEach(() => {
@@ -51,9 +50,8 @@ describe('tracklists', () => {
         ]
       });
 
-      actions = injector.get(TracklistActions);
       service = injector.get(TracklistService);
-      store = injector.get(Store);
+      apiService = injector.get(ApiService);
     });
 
 
@@ -68,22 +66,15 @@ describe('tracklists', () => {
           tracklist = value;
         });
 
-        // mount tracklist, making it current tracklist
-        store.dispatch(actions.mountTracklist('tracklist/1'));
-        expect(count).toBe(1);
-        expect(tracklist.id).toBe('tracklist/1');
+        spyOn(apiService, 'fetchUserLikes').and.returnValue(Observable.of({collection: [tracks[0]]}));
+        service.loadFeaturedTracks();
 
-        // load track into tracklist
-        store.dispatch(actions.fetchTracksFulfilled({collection: [tracks[0]]}, 'tracklist/1'));
-        expect(count).toBe(2);
+        expect(apiService.fetchUserLikes).toHaveBeenCalledWith(FEATURED_TRACKLIST_USER_ID);
 
-        // loading track that already exists in tracklist: should not emit
-        store.dispatch(actions.fetchTracksFulfilled({collection: [tracks[0]]}, 'tracklist/1'));
-        expect(count).toBe(2);
-
-        // dispatching unrelated action: should not emit
-        store.dispatch({type: 'UNDEFINED'});
-        expect(count).toBe(2);
+        expect(count).toBe(3);
+        expect(tracklist.id).toBe(FEATURED_TRACKLIST_ID);
+        expect(tracklist.nextUrl).toBeNull();
+        expect(tracklist.trackIds.toJS()).toEqual([tracks[0].id]);
       });
     });
 
@@ -91,7 +82,7 @@ describe('tracklists', () => {
     describe('tracks$ observable', () => {
       it('should emit the list of tracks for current tracklist', () => {
         let count = 0;
-        let trackData = testUtils.createTracks(TRACKS_PER_PAGE * 2);
+        let trackData = testUtils.createTracks(TRACKS_PER_PAGE * 2 + 1);
         let tracks = null;
 
         service.tracks$.subscribe(value => {
@@ -99,46 +90,21 @@ describe('tracklists', () => {
           tracks = value;
         });
 
-        // mount the tracklist, making it current tracklist
-        store.dispatch(actions.mountTracklist('tracklist/1'));
-        expect(count).toBe(1);
-        expect(tracks.size).toBe(0);
-
-        // load two pages of tracks into tracklist; should emit first page of tracks
-        store.dispatch(actions.fetchTracksFulfilled({collection: trackData}, 'tracklist/1'));
-        expect(count).toBe(2);
-        expect(tracks.size).toBe(TRACKS_PER_PAGE);
-
-        // go to page two; should emit first and second page of tracks
-        store.dispatch(actions.loadNextTracks());
-        expect(count).toBe(3);
-        expect(tracks.size).toBe(TRACKS_PER_PAGE * 2);
-
-        // dispatching unrelated action: should not emit
-        store.dispatch({type: 'UNDEFINED'});
-        expect(count).toBe(3);
-      });
-    });
-
-
-    describe('loadFeaturedTracks()', () => {
-      it('should call store.dispatch() with LOAD_FEATURED_TRACKS action', () => {
-        spyOn(store, 'dispatch');
+        spyOn(apiService, 'fetchUserLikes').and.returnValue(Observable.of({collection: trackData}));
         service.loadFeaturedTracks();
 
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledWith(actions.loadFeaturedTracks());
-      });
-    });
+        expect(count).toBe(3);
 
+        // load two pages of tracks into tracklist; should emit first page of tracks
+        expect(tracks.size).toEqual(TRACKS_PER_PAGE);
 
-    describe('loadNextTracks()', () => {
-      it('should call store.dispatch() with LOAD_NEXT_TRACKS action', () => {
-        spyOn(store, 'dispatch');
+        // go to page two; should emit first and second page of tracks
         service.loadNextTracks();
 
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledWith(actions.loadNextTracks());
+        expect(count).toBe(4);
+
+        expect(tracks.size).toEqual(TRACKS_PER_PAGE * 2);
+
       });
     });
   });
