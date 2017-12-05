@@ -1,39 +1,9 @@
-import { is, Record } from 'immutable';
+import { is } from 'immutable';
 import { CLIENT_ID_PARAM } from 'app/app-config';
 import { createTrack, TrackRecord } from './track';
 
 
 describe('tracklists', () => {
-  describe('TrackRecord', () => {
-    let track;
-
-    beforeEach(() => {
-      track = new TrackRecord();
-    });
-
-    it('should be an instance of Immutable.Record', () => {
-      expect(track instanceof Record).toBe(true);
-    });
-
-    it('should contain default properties', () => {
-      expect(track.artworkUrl).toBe(null);
-      expect(track.duration).toBe(null);
-      expect(track.id).toBe(null);
-      expect(track.liked).toBe(null);
-      expect(track.likesCount).toBe(null);
-      expect(track.permalinkUrl).toBe(null);
-      expect(track.playbackCount).toBe(null);
-      expect(track.streamable).toBe(null);
-      expect(track.streamUrl).toBe(null);
-      expect(track.title).toBe(null);
-      expect(track.userId).toBe(null);
-      expect(track.username).toBe(null);
-      expect(track.userPermalinkUrl).toBe(null);
-      expect(track.waveformUrl).toBe(null);
-    });
-  });
-
-
   describe('createTrack() factory function', () => {
     it('should create TrackRecord instance from provided track data', () => {
       let trackData = {
