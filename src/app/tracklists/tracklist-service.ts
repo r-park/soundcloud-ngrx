@@ -27,7 +27,7 @@ export class TracklistService {
   private allTracksSubject: BehaviorSubject<Map<number,ITrack>>;
 
 
-  constructor(private actions: TracklistActions, private store$: Store<IAppState>, private api: ApiService) {
+  constructor(private api: ApiService) {
     this.tracklistSubject = new BehaviorSubject(new TracklistRecord() as ITracklist);
     this.tracklist$ = this.tracklistSubject.asObservable();
 
@@ -40,6 +40,14 @@ export class TracklistService {
         .slice(0, tracklist.currentPage * TRACKS_PER_PAGE)
         .map(id => tracks.get(id)) as List<ITrack>;
     });
+  }
+
+  mountTracklist(tracklist: ITracklist): void {
+    this.tracklistSubject.next(tracklist);
+  }
+
+  mountAllTracks(tracks: Map<number,ITrack>): void {
+    this.allTracksSubject.next(tracks);
   }
 
   loadFeaturedTracks(): void {

@@ -2,10 +2,9 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/pluck';
 
 import { Injectable } from '@angular/core';
-import { Action, Store } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { PLAYER_INITIAL_VOLUME } from 'app/app-config';
-import { IAppState } from 'app';
 import { ITrack, ITracklistCursor } from 'app/tracklists';
 import { IPlayerState, PlayerStateRecord } from './state/player-state';
 import { ITimesState, TimesStateRecord } from './state';
@@ -13,9 +12,8 @@ import { AudioService } from './audio-service';
 import { AudioSource } from './audio-source';
 import { PlayerActions } from './player-actions';
 import { playerStorage } from './player-storage';
-import { TracklistService } from '../tracklists/tracklist-service';
+import { getTracklistCursor, TracklistService } from '../tracklists';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { getTracklistCursor } from '../tracklists/tracklist-cursor';
 
 
 @Injectable()
@@ -30,8 +28,8 @@ export class PlayerService extends AudioService {
   private timeSubject: BehaviorSubject<ITimesState>;
 
 
-  constructor(private actions: PlayerActions, audio: AudioSource, private tracklistService: TracklistService,
-              private store$: Store<IAppState>) {
+  constructor(private actions: PlayerActions, audio: AudioSource,
+              private tracklistService: TracklistService) {
     super(actions, audio);
 
     this.events$.subscribe(action => this.dispatchAction(action));
@@ -63,7 +61,7 @@ export class PlayerService extends AudioService {
   }
 
 
-  select({trackId, tracklistId}: {trackId: number, tracklistId?: string}): void {
+  select({ trackId, tracklistId }: { trackId: number, tracklistId?: string }): void {
     const player = this.playerSubject.getValue();
     const newPlayer = player.merge({
       trackId,
@@ -74,13 +72,15 @@ export class PlayerService extends AudioService {
     this.timeSubject.next(new TimesStateRecord() as ITimesState);
   }
 
-  private dispatchAction({payload, type}: Action): void {
+  dispatchAction({ payload, type }: Action): void {
     let player;
     switch (type) {
       case PlayerActions.AUDIO_PLAYING:
         player = this.playerSubject.getValue();
-        player.set('isPlaying', true);
-        this.playerSubject.next(player);
+        if (!player.get('isPlaying')) {
+          player = player.set('isPlaying', true);
+          this.playerSubject.next(player);
+        }
         break;
 
       case PlayerActions.AUDIO_PAUSED:
@@ -98,7 +98,7 @@ export class PlayerService extends AudioService {
           .combineLatest(this.tracklistService.tracklist$, getTracklistCursor)
           .filter(cursor => !!cursor.nextTrackId)
           .subscribe(cursor => {
-            this.select({trackId: cursor.nextTrackId});
+            this.select({ trackId: cursor.nextTrackId });
           });
 
         sub.unsubscribe();

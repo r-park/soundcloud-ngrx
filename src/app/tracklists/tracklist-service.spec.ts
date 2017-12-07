@@ -1,11 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
 import { FEATURED_TRACKLIST_ID, FEATURED_TRACKLIST_USER_ID, TRACKS_PER_PAGE } from 'app/app-config';
 import { testUtils } from 'app/utils/test';
 import { TracklistRecord } from './models';
-import { initialState, tracklistsReducer } from './state/tracklists-reducer';
-import { tracksReducer } from './state/tracks-reducer';
-import { TracklistActions } from './tracklist-actions';
 import { TracklistService } from './tracklist-service';
 import { ApiService } from '../core/services/api/api-service';
 import { BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
@@ -22,21 +18,7 @@ describe('tracklists', () => {
 
     beforeEach(() => {
       let injector = TestBed.configureTestingModule({
-        imports: [
-          StoreModule.provideStore(
-            {
-              tracklists: tracklistsReducer,
-              tracks: tracksReducer
-            },
-            {
-              tracklists: initialState
-                .set('tracklist/1', new TracklistRecord({ id: 'tracklist/1' }))
-                .set('tracklist/2', new TracklistRecord({ id: 'tracklist/2' }))
-            }
-          )
-        ],
         providers: [
-          TracklistActions,
           TracklistService,
           ApiService,
           BaseRequestOptions,
