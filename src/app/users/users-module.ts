@@ -12,7 +12,6 @@ import { TracklistsModule } from '../tracklists';
 
 // services
 import { UserActions } from './user-actions';
-import { UserEffects } from './user-effects';
 import { UserService } from './user-service';
 
 // routes
@@ -29,7 +28,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     SharedModule,
-    EffectsModule.run(UserEffects),
     TracklistsModule
   ],
   providers: [
