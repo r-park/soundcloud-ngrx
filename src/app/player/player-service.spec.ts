@@ -6,8 +6,9 @@ import { BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
 import { TracklistService } from '../tracklists';
 import { MockBackend } from '@angular/http/testing';
 import { ApiService } from '../core/services/api';
-import { List } from 'immutable';
+import { is, List } from 'immutable';
 import { ITracklist, TracklistRecord, TrackRecord } from 'app/tracklists/models';
+import { ITimesState, TimesStateRecord } from './state';
 
 
 describe('player', () => {
@@ -18,26 +19,6 @@ describe('player', () => {
 
     beforeEach(() => {
       let injector = TestBed.configureTestingModule({
-        // imports: [
-        //   StoreModule.provideStore(
-        //     {
-        //       player: playerReducer,
-        //       tracklists: tracklistsReducer,
-        //       tracks: tracksReducer
-        //     },
-        //     {
-        //       tracklists: Map({
-        //         'tracklist/1': new TracklistRecord({id: 'tracklist/1', trackIds: List([1,2,3])}),
-        //         'tracklist/2': new TracklistRecord({id: 'tracklist/2', trackIds: List([1])})
-        //       }),
-        //
-        //       tracks: Map()
-        //         .set(1, new TrackRecord({id: 1, streamUrl: 'http://stream/1'}))
-        //         .set(2, new TrackRecord({id: 2, streamUrl: 'http://stream/2'}))
-        //         .set(3, new TrackRecord({id: 3, streamUrl: 'http://stream/3'}))
-        //     }
-        //   )
-        // ],
         providers: [
           AUDIO_SOURCE_PROVIDER,
           PlayerActions,
@@ -107,7 +88,6 @@ describe('player', () => {
       });
     });
 
-
     describe('player$', () => {
       it('should stream the player state', () => {
         let count = 0;
@@ -133,9 +113,28 @@ describe('player', () => {
         playerService.select({ trackId: 1 });
         expect(count).toBe(3);
 
+        playerService.dispatchAction(actions.audioPaused());
+        expect(count).toBe(4);
+        expect(player.isPlaying).toBe(false);
+
         // dispatching unrelated action should not emit
         playerService.dispatchAction({ type: 'UNDEFINED' });
-        expect(count).toBe(3);
+        expect(count).toBe(4);
+      });
+
+      it('should set trackId and tracklistId to provided value', () => {
+        const trackId = 1;
+        let player = null;
+        const tracklistId = 'tracklist/1';
+
+
+        playerService.player$.subscribe(value => {
+          player = value;
+        });
+
+        playerService.select({ trackId: 1, tracklistId });
+        expect(player.trackId).toBe(trackId);
+        expect(player.tracklistId).toBe(tracklistId);
       });
     });
 
@@ -174,5 +173,55 @@ describe('player', () => {
         expect(playerService.play).toHaveBeenCalledWith(track.streamUrl);
       });
     });
+
+    describe('times$', () => {
+      it('should update player current time', () => {
+        let time = null;
+        let updatedTime = new TimesStateRecord() as ITimesState;
+        updatedTime = updatedTime.set('currentTime', 10) as ITimesState;
+
+        playerService.times$.subscribe(value => {
+          time = value;
+        });
+
+        expect(time.currentTime).toBe(0);
+
+        playerService.dispatchAction(actions.audioTimeUpdated(updatedTime));
+        expect(time.currentTime).toBe(10);
+      });
+
+      it('should reset state.times to zero if track switched', () => {
+        let time = null;
+        let updatedTime = new TimesStateRecord() as ITimesState;
+        updatedTime = updatedTime.set('currentTime', 10) as ITimesState;
+
+        playerService.times$.subscribe(value => {
+          time = value;
+        });
+
+        playerService.dispatchAction(actions.audioTimeUpdated(updatedTime));
+        expect(time.currentTime).toBe(10);
+
+        playerService.select({ trackId: 1 });
+        expect(is(time, new TimesStateRecord())).toBe(true);
+      });
+
+      it('should reset state.times to zero if track ended', () => {
+        let time = null;
+        let updatedTime = new TimesStateRecord() as ITimesState;
+        updatedTime = updatedTime.set('currentTime', 10) as ITimesState;
+
+        playerService.times$.subscribe(value => {
+          time = value;
+        });
+
+        playerService.dispatchAction(actions.audioTimeUpdated(updatedTime));
+        expect(time.currentTime).toBe(10);
+
+        playerService.dispatchAction(actions.audioEnded());
+        expect(is(time, new TimesStateRecord())).toBe(true);
+      });
+    });
   });
 });
+

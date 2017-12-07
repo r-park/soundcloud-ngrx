@@ -85,12 +85,14 @@ export class PlayerService extends AudioService {
 
       case PlayerActions.AUDIO_PAUSED:
         player = this.playerSubject.getValue();
-        player.set('isPlaying', false);
-        this.playerSubject.next(player);
+        if (player.get('isPlaying')) {
+          player = player.set('isPlaying', false);
+          this.playerSubject.next(player);
+        }
         break;
       case PlayerActions.AUDIO_ENDED:
         player = this.playerSubject.getValue();
-        player.set('isPlaying', false);
+        player = player.set('isPlaying', false);
         this.playerSubject.next(player);
         this.timeSubject.next(new TimesStateRecord() as ITimesState);
 
@@ -111,7 +113,7 @@ export class PlayerService extends AudioService {
         break;
       case PlayerActions.AUDIO_VOLUME_CHANGED:
         player = this.playerSubject.getValue();
-        player.set('volume', payload.volume);
+        player = player.set('volume', payload.volume);
         this.playerSubject.next(player);
         playerStorage.volume = payload.volume;
         break;
