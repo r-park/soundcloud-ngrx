@@ -1,12 +1,9 @@
 import 'rxjs/add/operator/let';
 
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
-import { IAppState } from 'app';
 import { ITrack, ITracklist, TracklistRecord } from './models';
-import { TracklistActions } from './tracklist-actions';
 import { tracklistIdForUserLikes, tracklistIdForUserTracks } from '../users/utils';
 import { ApiService } from '../core/services/api';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';

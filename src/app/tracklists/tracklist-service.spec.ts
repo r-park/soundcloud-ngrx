@@ -8,6 +8,7 @@ import { BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
 import { is, List } from 'immutable';
+import 'rxjs/add/observable/of';
 
 
 describe('tracklists', () => {

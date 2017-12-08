@@ -1,16 +1,10 @@
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/let';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/withLatestFrom';
-
 import { List } from 'immutable';
 import { IAppState } from 'app';
 import { TRACKS_PER_PAGE } from 'app/app-config';
 import { Selector } from 'app/core';
 import { ITrack, ITracklist } from '../models';
-import { TracklistsState } from './tracklists-reducer';
-import { TracksState } from './tracks-reducer';
+import { TracksState } from './tracks-state';
+import { TracklistsState } from './tracklists-state';
 
 
 export function getTracklists(): Selector<IAppState,TracklistsState> {

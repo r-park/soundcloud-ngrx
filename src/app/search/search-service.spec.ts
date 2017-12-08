@@ -1,8 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
-import { searchReducer } from './state';
 import { SearchService } from './search-service';
-import { TracklistService } from '../tracklists/tracklist-service';
+import { TracklistService } from '../tracklists';
 
 
 describe('search', () => {
@@ -12,15 +10,11 @@ describe('search', () => {
 
     class MockTracklistService {
       // noinspection TsLint
-      // noinspection JSUnusedLocalSymbols
       loadSearchTracks(query: string, tracklistId: string): void { }
     }
 
     beforeEach(() => {
       let injector = TestBed.configureTestingModule({
-        imports: [
-          StoreModule.provideStore({ search: searchReducer })
-        ],
         providers: [
           SearchService,
           { provide: TracklistService, useClass: MockTracklistService }

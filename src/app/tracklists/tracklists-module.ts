@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
 
 // components
 import { TrackCardComponent } from './components/track-card';
@@ -13,8 +12,6 @@ import { WaveformTimelineComponent } from './components/waveform-timeline';
 import { SharedModule } from '../shared';
 
 // services
-import { TracklistActions } from './tracklist-actions';
-import { TracklistEffects } from './tracklist-effects';
 import { TracklistService } from './tracklist-service';
 
 
@@ -32,10 +29,8 @@ import { TracklistService } from './tracklist-service';
   imports: [
     RouterModule,
     SharedModule,
-    EffectsModule.run(TracklistEffects)
   ],
   providers: [
-    TracklistActions,
     TracklistService
   ]
 })
