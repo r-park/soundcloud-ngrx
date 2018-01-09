@@ -1,49 +1,24 @@
 import 'rxjs/add/operator/let';
 
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { IAppState } from 'app';
-import { IUser } from './models';
-import { getCurrentUser } from './state/selectors';
-import { UserActions } from './user-actions';
+import { createUser, IUser } from './models';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ApiService } from '../core/services/api';
 
 
 @Injectable()
 export class UserService {
   currentUser$: Observable<IUser>;
+  private userSubject: ReplaySubject<IUser>;
 
-  constructor(private actions: UserActions, private store$: Store<IAppState>) {
-    this.currentUser$ = store$.let(getCurrentUser());
+  constructor(private api: ApiService) {
+    this.userSubject = new ReplaySubject<IUser>(1);
+    this.currentUser$ = this.userSubject.asObservable();
   }
 
-  loadResource(userId: number|string, resource: string): void {
-    switch (resource) {
-      case 'likes':
-        this.loadUserLikes(userId);
-        break;
-
-      case 'tracks':
-        this.loadUserTracks(userId);
-        break;
-    }
-  }
-
-  loadUser(userId: number|string): void {
-    this.store$.dispatch(
-      this.actions.loadUser(userId)
-    );
-  }
-
-  loadUserLikes(userId: number|string): void {
-    this.store$.dispatch(
-      this.actions.loadUserLikes(userId)
-    );
-  }
-
-  loadUserTracks(userId: number|string): void {
-    this.store$.dispatch(
-      this.actions.loadUserTracks(userId)
-    );
+  loadUser(userId: number | string): void {
+    userId = parseInt(userId as any, 10);
+    this.api.fetchUser(userId).subscribe(data => this.userSubject.next(createUser(data, true)));
   }
 }

@@ -1,118 +1,66 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
 import { testUtils } from 'app/utils/test';
-import { createUser } from './models';
-import { initialState, usersReducer } from './state/users-reducer';
-import { UserActions } from './user-actions';
 import { UserService } from './user-service';
+import { BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
+import { ApiService } from '../core/services/api';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 
 describe('users', () => {
   describe('UserService', () => {
     let service: UserService;
-    let store: Store<any>;
-    let userActions: UserActions;
+    let apiService: ApiService;
+    let testUserData;
 
 
     beforeEach(() => {
       let injector = TestBed.configureTestingModule({
-        imports: [
-          StoreModule.provideStore(
-            {
-              users: usersReducer
-            },
-            {
-              users: initialState
-                .set(123, createUser(testUtils.createUser(123)))
-                .set(456, createUser(testUtils.createUser(456)))
-            }
-          )
-        ],
         providers: [
-          UserActions,
-          UserService
+          UserService,
+          ApiService,
+          BaseRequestOptions,
+          MockBackend,
+          {
+            provide: Http,
+            deps: [MockBackend, BaseRequestOptions],
+            useFactory: (backend: ConnectionBackend, options: BaseRequestOptions): Http => {
+              return new Http(backend, options);
+            }
+          }
         ]
       });
 
       service = injector.get(UserService);
-      store = injector.get(Store);
-      userActions = injector.get(UserActions);
+      apiService = injector.get(ApiService);
+
+      testUserData = testUtils.createUser(1);
     });
 
 
     describe('currentUser$ observable', () => {
       it('should emit the current user from UsersState', () => {
-        let count = 0;
         let user = null;
+        let testUserData2 = testUtils.createUser(456);
 
         service.currentUser$.subscribe(value => {
-          count++;
           user = value;
         });
 
-        // auto-emitting initial value
-        expect(count).toBe(1);
-        expect(user).not.toBeDefined();
+        spyOn(apiService, 'fetchUser').and
+          .returnValues(Observable.of(testUserData), Observable.of(testUserData2));
 
         // load user
-        store.dispatch(userActions.loadUser(123));
-        expect(count).toBe(2);
-        expect(user.id).toBe(123);
+        service.loadUser(1);
 
-        // loading same user should not emit
-        store.dispatch(userActions.loadUser(123));
-        expect(count).toBe(2);
+        expect(user.id).toBe(1);
 
         // load different user
-        store.dispatch(userActions.loadUser(456));
-        expect(count).toBe(3);
+        service.loadUser(2);
         expect(user.id).toBe(456);
-
-        // dispatching unrelated action should not emit
-        store.dispatch({type: 'UNDEFINED'});
-        expect(count).toBe(3);
       });
     });
 
-
-    describe('loadResource()', () => {
-      it('should call store.dispatch() with LOAD_USER_LIKES action if resource param is `likes`', () => {
-        spyOn(store, 'dispatch');
-        service.loadResource(1, 'likes');
-
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledWith(userActions.loadUserLikes(1));
-      });
-
-      it('should call store.dispatch() with LOAD_USER_TRACKS action if resource param is `tracks`', () => {
-        spyOn(store, 'dispatch');
-        service.loadResource(1, 'tracks');
-
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledWith(userActions.loadUserTracks(1));
-      });
-    });
-
-
-    describe('loadUserLikes()', () => {
-      it('should call store.dispatch() with LOAD_USER_LIKES action', () => {
-        spyOn(store, 'dispatch');
-        service.loadUserLikes(1);
-
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledWith(userActions.loadUserLikes(1));
-      });
-    });
-
-
-    describe('loadUserTracks()', () => {
-      it('should call store.dispatch() with LOAD_USER_TRACKS action', () => {
-        spyOn(store, 'dispatch');
-        service.loadUserTracks(1);
-
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledWith(userActions.loadUserTracks(1));
-      });
-    });
   });
 });

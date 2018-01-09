@@ -1,36 +1,33 @@
 import { TestBed } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
-import { searchReducer } from './state/search-reducer';
-import { SearchActions } from './search-actions';
 import { SearchService } from './search-service';
+import { TracklistService } from '../tracklists';
 
 
 describe('search', () => {
   describe('SearchService', () => {
-    let actions: SearchActions;
     let service: SearchService;
-    let store: Store<any>;
+    let mockTracklistService: TracklistService;
 
+    class MockTracklistService {
+      // noinspection TsLint
+      loadSearchTracks(query: string, tracklistId: string): void { }
+    }
 
     beforeEach(() => {
       let injector = TestBed.configureTestingModule({
-        imports: [
-          StoreModule.provideStore({search: searchReducer})
-        ],
         providers: [
-          SearchActions,
-          SearchService
+          SearchService,
+          { provide: TracklistService, useClass: MockTracklistService }
         ]
       });
 
-      actions = injector.get(SearchActions);
       service = injector.get(SearchService);
-      store = injector.get(Store);
+      mockTracklistService = injector.get(TracklistService);
     });
 
 
     describe('query$ observable', () => {
-      it('should stream the current query from store', () => {
+      it('should stream the current query', () => {
         let count = 0;
         let query = null;
 
@@ -44,50 +41,43 @@ describe('search', () => {
         expect(query).toBe(null);
 
         // query 1
-        store.dispatch(actions.loadSearchResults('query 1'));
+        service.loadSearchResults('query 1');
         expect(count).toBe(2);
         expect(query).toBe('query 1');
 
         // same query: should not emit
-        store.dispatch(actions.loadSearchResults('query 1'));
+        service.loadSearchResults('query 1');
         expect(count).toBe(2);
 
         // query 2
-        store.dispatch(actions.loadSearchResults('query 2'));
+        service.loadSearchResults('query 2');
         expect(count).toBe(3);
         expect(query).toBe('query 2');
-
-        // dispatching unrelated action: should not emit
-        store.dispatch({type: 'UNDEFINED'});
-        expect(count).toBe(3);
       });
     });
 
 
-    describe('actions', () => {
-      describe('loadSearchResults()', () => {
-        it('should call store.dispatch() with LOAD_SEARCH_RESULTS action', () => {
-          let query = 'test';
+    describe('loadSearchResults()', () => {
+      it('should call loadSearchTracks', () => {
+        let query = 'test';
 
-          spyOn(store, 'dispatch');
-          service.loadSearchResults(query);
+        spyOn(mockTracklistService, 'loadSearchTracks');
+        service.loadSearchResults(query);
 
-          expect(store.dispatch).toHaveBeenCalledTimes(1);
-          expect(store.dispatch).toHaveBeenCalledWith(actions.loadSearchResults(query));
-        });
+        expect(mockTracklistService.loadSearchTracks).toHaveBeenCalledTimes(1);
+        expect(mockTracklistService.loadSearchTracks).toHaveBeenCalledWith(query, `search/${query}`);
+      });
 
-        it('should NOT dispatch action if query param is empty or invalid', () => {
-          spyOn(store, 'dispatch');
+      it('should not call loadSearchTracks if parameter if empty or imvalid', () => {
+        spyOn(mockTracklistService, 'loadSearchTracks');
+        service.loadSearchResults(undefined);
+        expect(mockTracklistService.loadSearchTracks).not.toHaveBeenCalled();
 
-          service.loadSearchResults(undefined);
-          expect(store.dispatch).not.toHaveBeenCalled();
+        service.loadSearchResults(null);
+        expect(mockTracklistService.loadSearchTracks).not.toHaveBeenCalled();
 
-          service.loadSearchResults(null);
-          expect(store.dispatch).not.toHaveBeenCalled();
-
-          service.loadSearchResults('');
-          expect(store.dispatch).not.toHaveBeenCalled();
-        });
+        service.loadSearchResults('');
+        expect(mockTracklistService.loadSearchTracks).not.toHaveBeenCalled();
       });
     });
   });

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 // components
 import { AppComponent } from './app';
 import { AppHeaderComponent } from './app-header';
+import './rxjs-operators';
 
 // modules
 import { CoreModule } from './core';
@@ -15,7 +16,6 @@ import { SearchModule } from './search';
 import { SharedModule } from './shared';
 import { TracklistsModule } from './tracklists';
 import { UsersModule } from './users';
-import { AppStateModule } from './app-state';
 
 
 @NgModule({
@@ -29,7 +29,6 @@ import { AppStateModule } from './app-state';
   imports: [
     BrowserModule,
     RouterModule.forRoot([], {useHash: false}),
-    AppStateModule,
     CoreModule,
     HomeModule,
     PlayerModule,

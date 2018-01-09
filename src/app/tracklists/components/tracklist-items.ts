@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
 import { IMediaQueryResults } from 'app/core';
@@ -21,9 +21,7 @@ import { ITrack, ITracklist } from '../models';
         [isSelected]="track.id === player.trackId"
         [times]="times"
         [track]="track"
-        (pause)="pause.emit()"
-        (play)="track.id === player.trackId ? play.emit() : select.emit({trackId: track.id, tracklistId: tracklist.id})"
-        (seek)="seek.emit($event)"></track-card>
+        [tracklist]="tracklist"></track-card>
     </div>
 
     <loading-indicator *ngIf="tracklist.isPending || tracklist.hasNextPage"></loading-indicator>
@@ -36,11 +34,6 @@ export class TracklistItemsComponent {
   @Input() times: Observable<ITimesState>;
   @Input() tracklist: ITracklist;
   @Input() tracks: Observable<List<ITrack>>;
-
-  @Output() pause = new EventEmitter(false);
-  @Output() play = new EventEmitter(false);
-  @Output() seek = new EventEmitter(false);
-  @Output() select = new EventEmitter(false);
 
   get hasLineClamp(): boolean {
     return '-webkit-line-clamp' in document.body.style;

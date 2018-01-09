@@ -1,26 +1,27 @@
 import 'rxjs/add/operator/let';
 
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { IAppState } from 'app';
-import { getSearchQuery } from './state/selectors';
-import { SearchActions } from './search-actions';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { TracklistService } from '../tracklists';
+import { tracklistIdForSearch } from './utils';
 
 
 @Injectable()
 export class SearchService {
   query$: Observable<string>;
 
-  constructor(private actions: SearchActions, private store$: Store<IAppState>) {
-    this.query$ = store$.let(getSearchQuery());
+  private querySubject: BehaviorSubject<string>;
+
+  constructor(private tracklistService: TracklistService) {
+    this.querySubject = new BehaviorSubject(null);
+    this.query$ = this.querySubject.asObservable();
   }
 
   loadSearchResults(query: string): void {
-    if (typeof query === 'string' && query.length) {
-      this.store$.dispatch(
-        this.actions.loadSearchResults(query)
-      );
+    if (query && this.querySubject.getValue() !== query) {
+      this.querySubject.next(query);
+      this.tracklistService.loadSearchTracks(query, tracklistIdForSearch(query));
     }
   }
 }

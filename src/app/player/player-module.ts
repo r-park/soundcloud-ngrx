@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
 
 // components
 import { PlayerComponent } from './components/player';
@@ -12,7 +11,6 @@ import { SharedModule } from 'app/shared';
 // services
 import { AUDIO_SOURCE_PROVIDER } from './audio-source';
 import { PlayerActions } from './player-actions';
-import { PlayerEffects } from './player-effects';
 import { PlayerService } from './player-service';
 
 
@@ -29,7 +27,6 @@ import { PlayerService } from './player-service';
     PlayerComponent
   ],
   imports: [
-    EffectsModule.run(PlayerEffects),
     SharedModule
   ],
   providers: [

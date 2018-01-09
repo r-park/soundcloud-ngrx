@@ -10,28 +10,6 @@ describe('users', () => {
       user = new UserRecord();
     });
 
-    it('should be an instance of Immutable.Record', () => {
-      expect(user instanceof Record).toBe(true);
-    });
-
-    it('should contain default properties', () => {
-      let user = new UserRecord() as IUser;
-
-      expect(user.avatarUrl).toBe(null);
-      expect(user.city).toBe(null);
-      expect(user.country).toBe(null);
-      expect(user.followersCount).toBe(0);
-      expect(user.followingsCount).toBe(0);
-      expect(user.fullName).toBe(null);
-      expect(user.id).toBe(null);
-      expect(user.likesCount).toBe(0);
-      expect(user.playlistCount).toBe(0);
-      expect(user.profile).toBe(false);
-      expect(user.trackCount).toBe(0);
-      expect(user.username).toBe(null);
-    });
-
-
     describe('createUser() factory function', () => {
       it('should create UserRecord instance from provided user data', () => {
         let userData = {
