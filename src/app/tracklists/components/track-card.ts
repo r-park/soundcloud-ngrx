@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ITimesState } from 'app/player';
-import { ITrack } from '../models';
+import { ITrack, ITracklist } from '../models';
+import { PlayerService } from '../../player';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { ITrack } from '../models';
           <audio-timeline
             *ngIf="isSelected"
             [times]="times | async"
-            (seek)="seek.emit($event)"></audio-timeline>      
+            (seek)="player.seek($event)"></audio-timeline>      
         </div>
 
         <a class="track-card__username" [routerLink]="['/users', track.userId, 'tracks']">{{track.username}}</a>
@@ -31,13 +32,13 @@ import { ITrack } from '../models';
           [isActive]="isSelected"
           [times]="times"
           [waveformUrl]="track.waveformUrl"
-          (seek)="seek.emit($event)"></waveform-timeline>
+          (seek)="player.seek($event)"></waveform-timeline>
 
         <div class="track-card__actions" *ngIf="track.streamable">
           <div class="cell">
             <icon-button
               [icon]="isPlaying ? 'pause' : 'play'"
-              (onClick)="isPlaying ? pause.emit() : play.emit()"></icon-button>
+              (onClick)="isPlaying ? player.pause() : playTrack()"></icon-button>
             <span class="meta-duration">{{track.duration | formatTime:'ms'}}</span>
           </div>
 
@@ -62,13 +63,18 @@ import { ITrack } from '../models';
   `
 })
 export class TrackCardComponent {
+
   @Input() compact = false;
   @Input() isPlaying = false;
   @Input() isSelected = false;
+  @Input() tracklist: ITracklist;
   @Input() times: Observable<ITimesState>;
   @Input() track: ITrack;
 
-  @Output() pause = new EventEmitter(false);
-  @Output() play = new EventEmitter(false);
-  @Output() seek = new EventEmitter(false);
+  constructor(public player: PlayerService) {
+  }
+
+  playTrack(): void {
+    this.player.selectOrPlay({trackId: this.track.id, tracklistId: this.tracklist.id});
+  }
 }

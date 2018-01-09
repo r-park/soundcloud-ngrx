@@ -121,4 +121,14 @@ export class PlayerService extends AudioService {
         break;
     }
   }
+
+  selectOrPlay({ trackId, tracklistId }: { trackId: number, tracklistId?: string }): void {
+    const player = this.playerSubject.getValue();
+
+    if (trackId === player.trackId) {
+      this.play();
+    } else {
+      this.select({trackId, tracklistId});
+    }
+  }
 }

@@ -19,11 +19,7 @@ import { TracklistScrollService } from './tracklist-scroll-service';
       [player]="player.player$ | async"
       [times]="player.times$"
       [tracklist]="tracklist.tracklist$ | async"
-      [tracks]="tracklist.tracks$"
-      (pause)="player.pause()"
-      (play)="player.play()"
-      (seek)="player.seek($event)"
-      (select)="player.select($event)"></tracklist-items>
+      [tracks]="tracklist.tracks$"></tracklist-items>
   `
 })
 export class TracklistComponent implements OnDestroy, OnInit {
